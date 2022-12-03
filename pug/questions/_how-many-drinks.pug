@@ -1,9 +1,12 @@
-dl.how-many-drinks
-  dt 
-    .title(:style="{'font-weight': howManyDrinks}") How many alcoholic drinks do you #[strong need] to have in a week?
-  dd
-    form
-      .field
-        input(type="range" min="3" max="13" v-model="howManyDrinks")
-      .field
-        input(type="text" min="3" max="13" v-model="howManyDrinks" readonly disabled)
+.how-many-drinks
+  dl.question
+    dt 
+      .title How many alcoholic drinks do you #[strong need] to have in a week?
+    dd
+      form(@submit.prevent="answerQuestion('howManyDrinks')")
+        .field
+          input(type="range" :min="ui.howManyDrinks.min" :max="ui.howManyDrinks.max" v-model="answers.howManyDrinks")
+        .field
+          input(type="number" :min="ui.howManyDrinks.min" :max="ui.howManyDrinks.max" v-model="answers.howManyDrinks" readonly disabled)
+        .button-row
+          button(type="submit") Proceed

@@ -1,0 +1,13 @@
+.rorschach
+  dl.question
+    dt 
+      .title Which of these images looks like your mother?
+    dd
+      form(@submit.prevent="answerQuestion('rorschach')")
+        ul.options(:count="questions.rorschach.options.length")
+          li(v-for="option,key in questions.rorschach.options")
+            label(:class="{'active': answers.rorschach == option.text, 'inactive': answers.rorschach && answers.rorschach != option.text }")
+              input(type="radio" :value="option.text" v-model="answers.rorschach")
+              img(:src="'img/rorschach/'+(key+1)+'.png'")
+        .button-row
+          button(type="submit" :disabled="!answers.rorschach") Proceed

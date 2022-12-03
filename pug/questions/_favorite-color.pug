@@ -1,12 +1,15 @@
-dl.favorite-color
-  dt 
-    .title Which of these colors calms your thoughts?
-  dd
-    forn
-      ul.options(:count="questions[0].options.length")
-        li(v-for="(option, key) in questions[0].options") 
-          label(:style="{'background-color':option.hex}" :class="{'active': option.name == answers.favColor, 'inactive': (answers.favColor && option.name != answers.favColor)}")
-            input(type="radio" :value="option.name" v-model="answers.favColor")
-            .text
-              span(:class="{ 'dark': option.light }") {{option.name}}
-              small(v-if="option.small") {{option.small}}
+.favorite-color
+  dl.question
+    dt 
+      .title Which of these colors calms your thoughts?
+    dd
+      form(@submit.prevent="answerQuestion('favoriteColor')")
+        ul.options(:count="questions.colors.options.length")
+          li(v-for="(option, key) in questions.colors.options") 
+            label(:style="{'background-color':option.hex}" :class="{'active': option.name == answers.favoriteColor, 'inactive': (answers.favoriteColor && option.name != answers.favoriteColor)}")
+              input(type="radio" :value="option.name" v-model="answers.favoriteColor")
+              .text
+                span(:class="{ 'dark': option.light }") {{option.name}}
+                small(v-if="option.small") {{option.small}}
+        .button-row
+          button(type="submit" :disabled="!answers.favoriteColor") Proceed

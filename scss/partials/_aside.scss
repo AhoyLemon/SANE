@@ -1,0 +1,7 @@
+aside { @include position(fixed,0,0,null,0); width:260px;
+  .notices { display: grid; gap:$gap; }
+  .notice { padding:1rem; background:white; color:#111;
+    dt { text-transform: uppercase; font-weight: 300; letter-spacing: 0.1em; font-size:90%; }
+    dd { font-weight: 600; font-size:125%; line-height: 90%; }
+  }
+}

@@ -7,7 +7,7 @@
     <link href="css/site.css" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
-    <meta http-equiv="last-modified" content="2022-12-03T15:34:43.927Z">
+    <meta http-equiv="last-modified" content="2022-12-03T22:20:23.414Z">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Caudex&amp;family=Zen+Dots&amp;display=swap" rel="stylesheet">
@@ -15,45 +15,153 @@
   </head>
   <body>
     <div id="app" v-cloak>
-      <main style="min-height:100vh; display:flex; align-items:center; justify-content:center; padding:calc(2rem + 35vh) 2rem 2rem 2rem;">
+      <aside>
+        <ul class="notices">
+          <li class="notice" v-if="ui.aside.showNametag" :style="{ 'background-color': ui.aside.nametagBackground }">
+            <dl>
+              <dt>Your name</dt>
+              <dd>{{answers.yourName}}</dd>
+            </dl>
+          </li>
+        </ul>
+      </aside>
+      <main style="min-height:100vh; display:flex; align-items:end; justify-content:center; padding:4rem;">
         <div class="inner">
           <div class="questions">
             <!-- Multiple Choice-->
             <template v-if="current.question == 1">
-              <dl class="favorite-color">
-                <dt> 
-                  <div class="title">Which of these colors calms your thoughts?</div>
-                </dt>
-                <dd>
-                  <forn>
-                    <ul class="options" :count="questions[0].options.length">
-                      <li v-for="(option, key) in questions[0].options"> 
-                        <label :style="{'background-color':option.hex}" :class="{'active': option.name == answers.favColor, 'inactive': (answers.favColor &amp;&amp; option.name != answers.favColor)}">
-                          <input type="radio" :value="option.name" v-model="answers.favColor">
-                          <div class="text"><span :class="{ 'dark': option.light }">{{option.name}}</span><small v-if="option.small">{{option.small}}</small></div>
-                        </label>
-                      </li>
-                    </ul>
-                  </forn>
-                </dd>
-              </dl>
+              <div class="how-many-drinks">
+                <dl class="question">
+                  <dt> 
+                    <div class="title">How many alcoholic drinks do you <strong>need</strong> to have in a week?</div>
+                  </dt>
+                  <dd>
+                    <form @submit.prevent="answerQuestion('howManyDrinks')">
+                      <div class="field">
+                        <input type="range" :min="ui.howManyDrinks.min" :max="ui.howManyDrinks.max" v-model="answers.howManyDrinks">
+                      </div>
+                      <div class="field">
+                        <input type="number" :min="ui.howManyDrinks.min" :max="ui.howManyDrinks.max" v-model="answers.howManyDrinks" readonly disabled>
+                      </div>
+                      <div class="button-row">
+                        <button type="submit">Proceed</button>
+                      </div>
+                    </form>
+                  </dd>
+                </dl>
+              </div>
             </template>
             <template v-if="current.question == 2">
-              <dl class="how-many-drinks">
-                <dt> 
-                  <div class="title" :style="{'font-weight': howManyDrinks}">How many alcoholic drinks do you <strong>need</strong> to have in a week?</div>
-                </dt>
-                <dd>
-                  <form>
-                    <div class="field">
-                      <input type="range" min="3" max="13" v-model="howManyDrinks">
-                    </div>
-                    <div class="field">
-                      <input type="text" min="3" max="13" v-model="howManyDrinks" readonly disabled>
-                    </div>
-                  </form>
-                </dd>
-              </dl>
+              <div class="your-name">
+                <dl class="question">
+                  <dt> 
+                    <div class="title">What is your true name?</div>
+                  </dt>
+                  <dd>
+                    <form @submit.prevent="answerQuestion('yourName')">
+                      <div class="field">
+                        <input type="text" v-model="answers.yourName" placeholder="Enter what you should be called." :minlength="ui.validName.min" :maxlength="ui.validName.max">
+                      </div>
+                      <div class="button-row">
+                        <button type="submit" :disabled="!validNameEntered">Proceed</button>
+                      </div>
+                    </form>
+                  </dd>
+                </dl>
+              </div>
+            </template>
+            <template v-if="current.question == 3">
+              <div class="favorite-color">
+                <dl class="question">
+                  <dt> 
+                    <div class="title">Which of these colors calms your thoughts?</div>
+                  </dt>
+                  <dd>
+                    <form @submit.prevent="answerQuestion('favoriteColor')">
+                      <ul class="options" :count="questions.colors.options.length">
+                        <li v-for="(option, key) in questions.colors.options"> 
+                          <label :style="{'background-color':option.hex}" :class="{'active': option.name == answers.favoriteColor, 'inactive': (answers.favoriteColor &amp;&amp; option.name != answers.favoriteColor)}">
+                            <input type="radio" :value="option.name" v-model="answers.favoriteColor">
+                            <div class="text"><span :class="{ 'dark': option.light }">{{option.name}}</span><small v-if="option.small">{{option.small}}</small></div>
+                          </label>
+                        </li>
+                      </ul>
+                      <div class="button-row">
+                        <button type="submit" :disabled="!answers.favoriteColor">Proceed</button>
+                      </div>
+                    </form>
+                  </dd>
+                </dl>
+              </div>
+            </template>
+            <template v-if="current.question == 4">
+              <div class="rorschach">
+                <dl class="question">
+                  <dt> 
+                    <div class="title">Which of these images looks like your mother?</div>
+                  </dt>
+                  <dd>
+                    <form @submit.prevent="answerQuestion('rorschach')">
+                      <ul class="options" :count="questions.rorschach.options.length">
+                        <li v-for="option,key in questions.rorschach.options">
+                          <label :class="{'active': answers.rorschach == option.text, 'inactive': answers.rorschach &amp;&amp; answers.rorschach != option.text }">
+                            <input type="radio" :value="option.text" v-model="answers.rorschach"><img :src="'img/rorschach/'+(key+1)+'.png'">
+                          </label>
+                        </li>
+                      </ul>
+                      <div class="button-row">
+                        <button type="submit" :disabled="!answers.rorschach">Proceed</button>
+                      </div>
+                    </form>
+                  </dd>
+                </dl>
+              </div>
+            </template>
+            <template v-if="current.question == 5">
+              <div class="you-think" :class="{'crazy': ui.youThink.saneHover }">
+                <dl class="question">
+                  <dt> 
+                    <div class="title">Do you think you are <span class="sane-holder"> <span class="sane">sane?</span><span class="crazy">crazy</span></span></div>
+                  </dt>
+                  <dd>
+                    <form @submit.prevent="answerQuestion('youThink')">
+                      <ul class="options">
+                        <li v-for="option in questions.youThink.options" @mouseover="saneHover(true)" @mouseleave="saneHover(false)">
+                          <label :class="{'active': option.text == answers.youThink, 'inactive': (answers.youThink &amp;&amp; option.text != answers.youThink)}">
+                            <input type="radio" :value="option.text" v-model="answers.youThink">
+                            <div class="text"><span>{{option.text}}</span></div>
+                          </label>
+                        </li>
+                      </ul>
+                      <div class="button-row">
+                        <button type="submit" :disabled="!answers.youThink">Proceed</button>
+                      </div>
+                    </form>
+                  </dd>
+                </dl>
+              </div>
+            </template>
+            <template v-if="current.question == 6">
+              <div class="sink">
+                <figure>
+                  <picture><img src="img/sink.jpg" alt="A messy sink"></picture>
+                </figure>
+                <dl class="question">
+                  <dt> 
+                    <div class="title">Why did you let it get like this?</div>
+                  </dt>
+                  <dd>
+                    <form @submit.prevent="answerQuestion('sink')">
+                      <div class="field">
+                        <textarea v-model="answers.sink" :minlength="ui.sink.min" :maxlength="ui.sink.max" placeholder="Explain your reasoning in this area."></textarea>
+                      </div>
+                      <div class="button-row">
+                        <button type="submit" :disabled="!answers.sink">Proceed</button>
+                      </div>
+                    </form>
+                  </dd>
+                </dl>
+              </div>
             </template>
           </div>
         </div>
@@ -62,7 +170,7 @@
     <div class="javascripts">
       <script src="js/libraries/vue.full.js"></script>
       <script>const testing = true;</script>
-      <script src="js/min/site.min.js?updated2022-12-03T15:34:43.927Z"></script>
+      <script src="js/min/site.min.js?updated2022-12-03T22:20:23.414Z"></script>
     </div>
   </body>
 </html>

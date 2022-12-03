@@ -1,0 +1,6 @@
+aside
+  ul.notices
+    li.notice(v-if="ui.aside.showNametag" :style="{ 'background-color': ui.aside.nametagBackground }")
+      dl
+        dt Your name
+        dd {{answers.yourName}}

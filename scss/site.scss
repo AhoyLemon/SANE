@@ -13,11 +13,16 @@
 @import "partials/_extends";
 @import "partials/_default";
 
+
+
+@import "partials/aside";
+
+
 html { background-size:cover; background-image:url(../img/bg/bg1.jpg); background-attachment: fixed; background-position: top center; }
 
 .inner { max-width: 920px; margin-left:auto; margin-right: auto; }
 
-dl { 
+.question { 
   dt { font-family: $headline; font-size:3rem; text-align: center; line-height: 112%; margin-bottom: 1em;
     text-shadow:  1px 1px 1px #616161,
                   1px 2px 1px #717171,
@@ -31,35 +36,93 @@ dl {
     }
 }
 
+.sink {
+  figure { margin-bottom: 2rem; }
+}
 
-
-.favorite-color {
-  .options { display:grid; grid-template-columns: repeat(3,1fr); gap:$gap;  }
-  label { height:8rem; display: flex; justify-content: center; position:relative; cursor: pointer; font-family: $serif; align-items: center;
-    .text { text-align: center; }
-    span { line-height: 90%;}
-    small { font-size:0.9em; }
-    opacity: 50%;
+form { display:grid; gap:$gap;
+  button { cursor: pointer; }
+  label { cursor: pointer; opacity: 50%; position: relative; display: flex; justify-content: center; font-family: $serif; align-items: center;
+    input { max-width: 100%; }
+    input[type="radio"] { position: absolute; top:5px; left:5px; transform:scale(1.5); transform-origin: top left; }
     &.active { opacity: 100%;
       box-shadow: 0.5rem 0.5rem 0 #111;
     }
     &.inactive { opacity: 20%; }
     transition: opacity 0.8s linear;
   }
+  input[type="text"], 
+  textarea { display:block; width:100%; font-size:2rem; padding:0.5em; background:rgba(0,0,0,0.75); color:rgb(64, 197, 34); border:1px solid rgb(43, 43, 43); font-family: $sans-serif; 
+    &:placeholder { color:rgb(95, 119, 90); }
+  }
+  .button-row { text-align: right;
+    button { font-family: $sans-serif; padding:0.25em 0.75em; font-weight: 300; text-transform: uppercase; font-size:1.5rem; border:1px solid rgba(0,0,0,0.25);
+      &[type="submit"] { background:#eee; color:#194d91;
+        &:not([disabled]) {
+          &:hover, &:focus { background:#194d91; color:#eee; }
+        }
+      }
+      &[disabled] { opacity: 0.7; filter:grayscale(0.6); cursor: not-allowed; }
+    }
+  }
+}
+
+.rorschach {
+  .options { display:grid; grid-template-columns: repeat(4,1fr); gap:$gap; margin-left: -200px; margin-right: -200px;
+    li { 
+      &:nth-child(1) { transform: translate(10px,10px) rotate(-4deg); }
+      &:nth-child(2) { transform: translate(-8px,6px) rotate(2deg); }
+      &:nth-child(3) { transform: translate(2px,-16px) rotate(-1.3deg); }
+      &:nth-child(4) { transform: translate(-9px,3px) rotate(2.7deg); }
+    }
+  }
+}
+
+.you-think { 
+  .options {  display:grid; grid-template-columns: repeat(2,1fr); gap:$gap;
+    label { height: 4rem; background:#111; font-size:2em; }
+  }
+  .sane-holder { position: relative;
+    .sane { opacity: 1; }
+    .crazy { position: absolute; top:0; left:0; opacity: 0; }
+  }
+
+  &.crazy {
+    .sane-holder {
+      .sane { opacity: 0; }
+      .crazy { opacity: 1; }
+    }
+  }
+
+}
+
+
+.favorite-color {
+  .options { display:grid; grid-template-columns: repeat(3,1fr); gap:$gap;  }
+  label { height:8rem;
+    .text { text-align: center; }
+    span { line-height: 90%;}
+    small { font-size:0.9em; }
+  }
   span { font-size:3rem; font-weight: $bold; display:block;
     &.dark { color:#111; }
   }
   small { display:block; }
-  input[type="radio"] { position: absolute; top:5px; left:5px; transform:scale(2.5); transform-origin: top left; }
 }
 
 
 
 
 .how-many-drinks {
-  form {  display:grid; gap:$gap; grid-template-columns: 1fr 6em;
-    input { max-width: 100%; width:100%; }
-    input[type="range"] { font-size:3rem; }
-    input[type="text"] { font-family: $font-family; color:$copy; background:transparent; border:none; font-size:3rem; text-align: right; }
+  form { grid-template-columns: 1fr 6em;
+    input { width:100%; }
+    input[type="range"] { height: 3rem; }
+    input[type="number"] { font-family: $font-family; color:$copy; background:transparent; border:none; font-size:3rem; text-align: right; appearance: textfield; -moz-appearance: textfield; }
   }
+}
+
+
+
+.your-name { 
+  input { font-family:$sans-serif; width:100%; font-size:2rem; padding:0.5em; text-align: center; }
 }

@@ -1,5 +1,5 @@
-const questions = [
-  { 
+const questions = {
+  colors:  { 
     type: "multipleChoice",
     question: "Which of these colors do you prefer?",
     options: [
@@ -11,10 +11,24 @@ const questions = [
       { name: "green", hex: "#77BFA3", light:true }
     ]
   },
-  {
+  drinks: {
     type: "range",
     title: "How many alcoholic drinks do you drink in a week?",
     min: 3,
     max: 99
+  },
+  rorschach: {
+    options: [
+      { text: "death moth" },
+      { text: "smiling skull" },
+      { text: "stab victim" },
+      { text: "blood prints" }
+    ]
+  },
+  youThink: {
+    options: [
+      { text: "yes" },
+      { text: "no" }
+    ]
   }
-]
+}

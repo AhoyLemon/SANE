@@ -1,0 +1,10 @@
+.your-name
+  dl.question
+    dt 
+      .title What is your true name?
+    dd
+      form(@submit.prevent="answerQuestion('yourName')")
+        .field
+          input(type="text" v-model="answers.yourName" placeholder="Enter what you should be called." :minlength="ui.validName.min" :maxlength="ui.validName.max")
+        .button-row
+          button(type="submit" :disabled="!validNameEntered") Proceed

@@ -1,0 +1,65 @@
+
+//GLOBALS, GET DEFAULTS
+@import "globals/_reset";
+@import "globals/_variables";
+@import "globals/_mixins";
+@import "globals/_extends";
+
+// LIBRARIES (if any)
+
+// SITE SPECIFIC
+@import "partials/_variables";
+@import "partials/_z-index";
+@import "partials/_extends";
+@import "partials/_default";
+
+html { background-size:cover; background-image:url(../img/bg/bg1.jpg); background-attachment: fixed; background-position: top center; }
+
+.inner { max-width: 920px; margin-left:auto; margin-right: auto; }
+
+dl { 
+  dt { font-family: $headline; font-size:3rem; text-align: center; line-height: 112%; margin-bottom: 1em;
+    text-shadow:  1px 1px 1px #616161,
+                  1px 2px 1px #717171,
+                  1px 3px 1px #616161,
+                  1px 4px 1px #616161,
+                  1px 5px 1px #616161,
+                  1px 7px 6px rgba(16,16,16,0.4),
+                  1px 14px 10px rgba(16,16,16,0.2),
+                  1px 20px 35px rgba(16,16,16,0.2),
+                  1px 25px 60px rgba(16,16,16,0.4);
+    }
+}
+
+
+
+.favorite-color {
+  .options { display:grid; grid-template-columns: repeat(3,1fr); gap:$gap;  }
+  label { height:8rem; display: flex; justify-content: center; position:relative; cursor: pointer; font-family: $serif; align-items: center;
+    .text { text-align: center; }
+    span { line-height: 90%;}
+    small { font-size:0.9em; }
+    opacity: 50%;
+    &.active { opacity: 100%;
+      box-shadow: 0.5rem 0.5rem 0 #111;
+    }
+    &.inactive { opacity: 20%; }
+    transition: opacity 0.8s linear;
+  }
+  span { font-size:3rem; font-weight: $bold; display:block;
+    &.dark { color:#111; }
+  }
+  small { display:block; }
+  input[type="radio"] { position: absolute; top:5px; left:5px; transform:scale(2.5); transform-origin: top left; }
+}
+
+
+
+
+.how-many-drinks {
+  form {  display:grid; gap:$gap; grid-template-columns: 1fr 6em;
+    input { max-width: 100%; width:100%; }
+    input[type="range"] { font-size:3rem; }
+    input[type="text"] { font-family: $font-family; color:$copy; background:transparent; border:none; font-size:3rem; text-align: right; }
+  }
+}

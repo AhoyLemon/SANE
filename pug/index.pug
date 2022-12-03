@@ -1,0 +1,41 @@
+- var pageTitle = null;
+include partials/_variables
+include partials/_mixins
+
+doctype html
+html(lang="en")
+  
+  include partials/_head.pug
+    
+  body
+    #app(v-cloak)
+
+      main(style="min-height:100vh; display:flex; align-items:center; justify-content:center; padding:calc(2rem + 35vh) 2rem 2rem 2rem;")
+        .inner
+          .questions
+            // Multiple Choice
+            dl.favorite-color
+              dt 
+                .title Which of these colors calms your thoughts?
+              dd
+                forn
+                  ul.options(:count="questions[0].options.length")
+                    li(v-for="(option, key) in questions[0].options") 
+                      label(:style="{'background-color':option.hex}" :class="{'active': option.name == answers.favColor, 'inactive': (answers.favColor && option.name != answers.favColor)}")
+                        input(type="radio" :value="option.name" v-model="answers.favColor")
+                        .text
+                          span(:class="{ 'dark': option.light }") {{option.name}}
+                          small(v-if="option.small") {{option.small}}
+            
+            // Range
+            //adl.how-many-drinks
+              dt 
+                .title(:style="{'font-weight': howManyDrinks}") How many alcoholic drinks do you #[strong need] to have in a week?
+              dd
+                form
+                  .field
+                    input(type="range" min="3" max="13" v-model="howManyDrinks")
+                  .field
+                    input(type="text" min="3" max="13" v-model="howManyDrinks" readonly disabled)
+
+    include partials/_javascripts

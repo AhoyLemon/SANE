@@ -1,0 +1,9 @@
+dl.how-many-drinks
+  dt 
+    .title(:style="{'font-weight': howManyDrinks}") How many alcoholic drinks do you #[strong need] to have in a week?
+  dd
+    form
+      .field
+        input(type="range" min="3" max="13" v-model="howManyDrinks")
+      .field
+        input(type="text" min="3" max="13" v-model="howManyDrinks" readonly disabled)

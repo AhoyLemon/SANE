@@ -7,7 +7,7 @@
     <link href="css/site.css" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
-    <meta http-equiv="last-modified" content="2022-12-03T06:24:40.279Z">
+    <meta http-equiv="last-modified" content="2022-12-03T15:34:43.927Z">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Caudex&amp;family=Zen+Dots&amp;display=swap" rel="stylesheet">
@@ -19,35 +19,42 @@
         <div class="inner">
           <div class="questions">
             <!-- Multiple Choice-->
-            <dl class="favorite-color">
-              <dt> 
-                <div class="title">Which of these colors calms your thoughts?</div>
-              </dt>
-              <dd>
-                <forn>
-                  <ul class="options" :count="questions[0].options.length">
-                    <li v-for="(option, key) in questions[0].options"> 
-                      <label :style="{'background-color':option.hex}" :class="{'active': option.name == answers.favColor, 'inactive': (answers.favColor &amp;&amp; option.name != answers.favColor)}">
-                        <input type="radio" :value="option.name" v-model="answers.favColor">
-                        <div class="text"><span :class="{ 'dark': option.light }">{{option.name}}</span><small v-if="option.small">{{option.small}}</small></div>
-                      </label>
-                    </li>
-                  </ul>
-                </forn>
-              </dd>
-            </dl>
-            <!-- Range-->
-            <!--adl.how-many-drinks
-            dt 
-              .title(:style="{'font-weight': howManyDrinks}") How many alcoholic drinks do you <strong>need</strong> to have in a week?
-            dd
-              form
-                .field
-                  input(type="range" min="3" max="13" v-model="howManyDrinks")
-                .field
-                  input(type="text" min="3" max="13" v-model="howManyDrinks" readonly disabled)
-            
-            -->
+            <template v-if="current.question == 1">
+              <dl class="favorite-color">
+                <dt> 
+                  <div class="title">Which of these colors calms your thoughts?</div>
+                </dt>
+                <dd>
+                  <forn>
+                    <ul class="options" :count="questions[0].options.length">
+                      <li v-for="(option, key) in questions[0].options"> 
+                        <label :style="{'background-color':option.hex}" :class="{'active': option.name == answers.favColor, 'inactive': (answers.favColor &amp;&amp; option.name != answers.favColor)}">
+                          <input type="radio" :value="option.name" v-model="answers.favColor">
+                          <div class="text"><span :class="{ 'dark': option.light }">{{option.name}}</span><small v-if="option.small">{{option.small}}</small></div>
+                        </label>
+                      </li>
+                    </ul>
+                  </forn>
+                </dd>
+              </dl>
+            </template>
+            <template v-if="current.question == 2">
+              <dl class="how-many-drinks">
+                <dt> 
+                  <div class="title" :style="{'font-weight': howManyDrinks}">How many alcoholic drinks do you <strong>need</strong> to have in a week?</div>
+                </dt>
+                <dd>
+                  <form>
+                    <div class="field">
+                      <input type="range" min="3" max="13" v-model="howManyDrinks">
+                    </div>
+                    <div class="field">
+                      <input type="text" min="3" max="13" v-model="howManyDrinks" readonly disabled>
+                    </div>
+                  </form>
+                </dd>
+              </dl>
+            </template>
           </div>
         </div>
       </main>
@@ -55,7 +62,7 @@
     <div class="javascripts">
       <script src="js/libraries/vue.full.js"></script>
       <script>const testing = true;</script>
-      <script src="js/min/site.min.js?updated2022-12-03T06:24:40.279Z"></script>
+      <script src="js/min/site.min.js?updated2022-12-03T15:34:43.927Z"></script>
     </div>
   </body>
 </html>

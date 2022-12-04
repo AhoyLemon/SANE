@@ -5,7 +5,7 @@ var app = new Vue({
     questions: questions,
 
     current: {
-      question: 1
+      question: 12
     },
 
     ui: {
@@ -38,6 +38,13 @@ var app = new Vue({
         min: 35,
         max: 103,
         placeholder: null
+      },
+
+      enterCode: {
+        code: randomNumber(101,999) + randomFrom(codeLetters) + randomNumber(11,99),
+        errorMessage: null,
+        errorMessageAgain: null,
+        showFollowUpQuestions: false
       }
     },
 
@@ -52,7 +59,13 @@ var app = new Vue({
       ashamed: null,
       hats: null,
       hatsExplanation: null,
-      loveObject: null
+      loveObject: null,
+      enterCode: null,
+      enterCodeAgain: null,
+      enterCodeFollowUp: {
+        confirmed: null,
+        questions: []
+      }
     }
   },
 
@@ -63,10 +76,38 @@ var app = new Vue({
       return false;
     },
 
+    changeFavoriteColor(o) {
+      const self = this;
+      self.ui.favoriteColor.opposite = o;
+    },
+
+    validateCode(w) {
+      const self = this;
+      if (w == 1) {
+        const enteredCode = self.answers.enterCode.trim().toUpperCase();
+        if (!enteredCode || enteredCode.length < 3) {
+          self.ui.enterCode.errorMessage = `You must enter the code <tt>${self.ui.enterCode.code}</tt>`;
+        } else if (enteredCode == self.ui.enterCode.code) {
+          self.current.question++;
+        } else {
+          self.ui.enterCode.errorMessage = `That is not the correct code. Enter <tt>${self.ui.enterCode.code}</tt>`;
+        }
+      } else if (w == 2) {
+        const enteredCode = self.answers.enterCodeAgain.trim();
+        if (!enteredCode || enteredCode.length < 3) {
+          self.ui.enterCode.errorMessageAgain = `You must enter the Personal Code (PC) given to you earlier.`;
+        } else if (enteredCode == self.ui.enterCode.code) {
+          self.current.question++;
+        } else {
+          self.ui.enterCode.errorMessageAgain = `That is not the correct code. Enter the Personal Code (PC) given to you earlier.`;
+        }
+      }
+      
+    },
+
     answerQuestion(q) {
       const self = this;
       
-
       if (q == "yourName") {
         self.answers.yourName = self.answers.yourName.slice(0, -1)
         self.ui.aside.showNametag = true;
@@ -74,8 +115,6 @@ var app = new Vue({
         self.ui.aside.nametagBackground = self.ui.favoriteColor.opposite;
         self.ui.aside.showNametag = true;
       }
-
-
 
       // Advance to next question, unless...
       if (q == "hats") {
@@ -90,15 +129,19 @@ var app = new Vue({
           self.ui.hatsExplanation.placeholder = "You enjoy how hats disguise your appearance. Has anyone ever seen the real you?"
         }
         self.ui.hatsExplanation.demand = true;
+      } else if (q == "enterCode1") {
+        self.validateCode(1);
+      } else if (q == "enterCode2") {
+        self.validateCode(2);
       } else {
+
+        // This isn't a special round, go ahead and just advance to the next one.
+        
         self.current.question++;
       }
       
-    },
-    changeFavoriteColor(o) {
-      const self = this;
-      self.ui.favoriteColor.opposite = o;
     }
+    
   },
 
   computed: {
@@ -121,6 +164,17 @@ var app = new Vue({
         return "That's quite a lot.";
       } else {
         return "Please be honest."
+      }
+    },
+    computedFollowUpQuestionsFinished() {
+      const self = this;
+
+      if (!self.questions.enterCode2FollowUp.questions || !self.answers.enterCodeFollowUp.questions) {
+        return false;
+      } else if (self.questions.enterCode2FollowUp.questions.length == self.answers.enterCodeFollowUp.questions.length) {
+        return true;
+      } else {
+        return false;
       }
     }
   },

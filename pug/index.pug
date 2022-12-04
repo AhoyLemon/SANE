@@ -37,5 +37,9 @@ html(lang="en")
               include questions/_hats.pug
             template(v-if="current.question == 10")
               include questions/_love-object.pug
+            template(v-if="current.question == 11")
+              include questions/_enter-code-1.pug
+            template(v-if="current.question == 12")
+              include questions/_enter-code-2.pug
 
     include partials/_javascripts

@@ -1,0 +1,18 @@
+.enter-code.enter-code-1
+  dl.question
+    dt 
+      .title 
+        | Your Personal Code is 
+        tt {{ui.enterCode.code}}
+      .subtitle(style="padding-top:2rem;")
+        | Enter your Personal Code (PC) in the space below.
+
+    dd
+      form(@submit.prevent="answerQuestion('enterCode1')")
+        .field.code-holder
+          input.simple(type="text" v-model="answers.enterCode" autocomplete="off" maxlength="7")
+        .error-message.centered(v-if="ui.enterCode.errorMessage")
+          span(v-html="ui.enterCode.errorMessage")
+        .button-row
+          button(type="reset" :disabled="!answers.enterCode") Reset
+          button(type="submit" :disabled="!answers.enterCode || answers.enterCode.length < 4") Proceed

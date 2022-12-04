@@ -67,6 +67,71 @@ const questions = {
       { text: "lead crystal glass", slug:"glass" },
       { text: "a camera that costs about $6,000", slug:"camera" }
     ]
+  },
+
+  enterCode2FollowUp: {
+    confirmOptions: [
+      { text: 'Yes' },
+      { text: "No" },
+    ],
+    questions: [
+      {
+        title: "Do you forget a lot of things?",
+        options: [
+          { text: 'Yes' },
+          { text: "No" },
+          { text: "I don't know"}
+        ] 
+      },
+      {
+        title: "Forgetfulness is a sign of depression. Are you depressed?",
+        options: [
+          { text: 'Yes' },
+          { text: "No" },
+          { text: "Sometimes"}
+        ] 
+      },
+      {
+        title: "Forgetfulness is caused by stress and anxiety. Which is a bigger problem for you?",
+        options: [
+          { text: 'stress' },
+          { text: "anxiety" },
+          { text: "both" }
+        ] 
+      },
+      {
+        title: "Would you describe your forgetfulness as...",
+        options: [
+          { text: 'Typical' },
+          { text: "Problematic" },
+          { text: "I don't know"}
+        ] 
+      },
+      {
+        title: "Everyone will forget you after you die. Is this a problem?",
+        options: [
+          { text: 'Yes' },
+          { text: "No" },
+          { text: "I don't know"}
+        ] 
+      },
+      {
+        title: "Will you forget those who have loved you, and will it be hard?",
+        options: [
+          { text: 'Yes I will forget them, and yes it will be hard.' },
+          { text: "Yes I will forget them but it will be easy." },
+          { text: "I will try to not forget them, but it will be hard if I do."}
+        ] 
+      },
+      {
+        title: "Are you jealous of people smarter than you?",
+        options: [
+          { text: 'no' },
+          { text: "very" },
+          { text: "it is difficult to be truthful"}
+        ] 
+      }
+    ]
   }
 
 }

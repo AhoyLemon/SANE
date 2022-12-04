@@ -14,3 +14,7 @@ h5 { font-size: clamp(1.2rem, 2.26vw, 1.333rem); }
 p { margin-bottom: 1rem; }
 
 img { max-width: 100%; }
+
+html { background-size:cover; background-image:url(../img/bg/bg1.jpg); background-attachment: fixed; background-position: top center; }
+
+.inner { width: 100%; max-width: 920px; margin-left:auto; margin-right: auto; }

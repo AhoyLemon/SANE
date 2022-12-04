@@ -1,0 +1,83 @@
+form { display:grid; gap:$gap;
+  button { cursor: pointer; }
+
+  // Radio Holder (mainly)
+  label { cursor: pointer; opacity: 50%; position: relative; display: flex; justify-content: center; font-family: $serif; align-items: center;
+    input { max-width: 100%; }
+    input[type="radio"] { position: absolute; top:5px; left:5px; transform:scale(1.5); transform-origin: top left; }
+    .text { text-align: center; }
+    span { line-height: 90%;}
+    small { font-size:0.9em; display:block; }
+    .dark { color:#111; }
+    &.active { opacity: 100%; }
+    &.inactive { opacity: 20%; }
+    transition: opacity 0.8s linear;
+  }
+  input[type="number"].simple { appearance: textfield; -moz-appearance: textfield;}
+
+  input[type="text"], 
+  textarea { display:block; width:100%; font-size:2rem; padding:0.5em; background:rgba(0,0,0,0.75); color:rgb(64, 197, 34); border:2px solid rgb(43, 43, 43); font-family: $sans-serif;  outline: none;
+    &:placeholder { color:rgb(95, 119, 90); }
+    &:focus { border-color:rgb(64, 197, 34); }
+  }
+  input[type="number"],
+  input[type="password"] { background:rgba(0,0,0,0.75); color:rgb(64, 197, 34); border:2px solid rgb(43, 43, 43); outline:none;
+    &:placeholder { color:rgb(95, 119, 90); }
+    &:focus { border-color:rgb(64, 197, 34); }
+  }
+
+  // Option Grid
+  .options { display:grid; gap:$gap; 
+    &[count="2"] { grid-template-columns: repeat(2,1fr);}
+    &[count="3"] { grid-template-columns: repeat(3,1fr);}
+    &[count="4"] { grid-template-columns: repeat(4,1fr);}
+    &[count="5"] { grid-template-columns: repeat(5,1fr);}
+  }
+
+  .error-message { color:rgb(221, 85, 85); font-size: 130%;
+    &.centered { text-align: center; }
+  }
+
+  .options.wider { margin-left: -100px; margin-right: -100px; }
+
+  // Likert Scale
+  .likert { position: relative;
+    &:before { content:""; background:blue; height:5px; @include position(absolute,16px,30px,null,30px); }
+
+    .inside { width:100%;
+      .text { text-align: center; font-size:1.75em; font-family: $sans-serif; line-height: 105%; }
+    }
+    .radio-holder {  text-align: center;
+      input[type="radio"] { @include position(relative,unset,unset,unset,unset); display:inline-block; cursor:pointer; }
+    }
+  }
+
+  // Enter Code
+  .code-holder { text-align: center;
+    input { font-family: monospace; font-size:3rem; width:9ch; padding:0.25em 0.75em; display: inline-block; text-transform: uppercase; }
+  }
+
+
+  // Submit / Cancel Buttons
+  .button-row { text-align: right;
+    button { font-family: $sans-serif; padding:0.25em 0.75em; font-weight: 300; text-transform: uppercase; font-size:1.5rem; border:1px solid rgba(0,0,0,0.25); transition: opacity 0.3s linear;
+      &[type="submit"] { background:#eee; color:#194d91;
+        &:not([disabled]) {
+          &:hover, &:focus { background:#194d91; color:#eee; }
+        }
+      }
+
+      &[type="reset"] { background:#eee; color:#940808;
+        &:not([disabled]) {
+          &:hover, &:focus { background:#940808; color:#eee; }
+        }
+      }
+
+
+      &[disabled] { opacity: 0.01; filter:grayscale(0.6); cursor: not-allowed; }
+
+
+
+    }
+  }
+}

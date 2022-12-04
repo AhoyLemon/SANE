@@ -7,7 +7,7 @@
     <link href="css/site.css" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
-    <meta http-equiv="last-modified" content="2022-12-04T05:09:05.268Z">
+    <meta http-equiv="last-modified" content="2022-12-04T22:22:49.808Z">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Caudex&amp;family=Zen+Dots&amp;display=swap" rel="stylesheet">
@@ -271,12 +271,97 @@
                       <ul class="options wider" :count="questions.loveObject.options.length">
                         <li v-for="option,key in questions.loveObject.options">
                           <label :class="{'active': answers.loveObject == option.text, 'inactive': answers.loveObject &amp;&amp; answers.loveObject != option.text }">
-                            <input type="radio" :value="option.text" v-model="answers.loveObject"><img :src="'img/objects/'+option.slug+'.jpg'">
+                            <input type="radio" :value="option.text" v-model="answers.loveObject"><img :src="'img/objects/'+option.slug+'.jpg'" :alt="option.text">
                           </label>
                         </li>
                       </ul>
                       <div class="button-row">
                         <button type="submit" :disabled="!answers.loveObject">Proceed</button>
+                      </div>
+                    </form>
+                  </dd>
+                </dl>
+              </div>
+            </template>
+            <template v-if="current.question == 11">
+              <div class="enter-code enter-code-1">
+                <dl class="question">
+                  <dt> 
+                    <div class="title">
+                       Your Personal Code is 
+                      <tt>{{ui.enterCode.code}}</tt>
+                    </div>
+                    <div class="subtitle" style="padding-top:2rem;">Enter your Personal Code (PC) in the space below.</div>
+                  </dt>
+                  <dd>
+                    <form @submit.prevent="answerQuestion('enterCode1')">
+                      <div class="field code-holder">
+                        <input class="simple" type="text" v-model="answers.enterCode" autocomplete="off" maxlength="7">
+                      </div>
+                      <div class="error-message centered" v-if="ui.enterCode.errorMessage"><span v-html="ui.enterCode.errorMessage"></span></div>
+                      <div class="button-row">
+                        <button type="reset" :disabled="!answers.enterCode">Reset</button>
+                        <button type="submit" :disabled="!answers.enterCode || answers.enterCode.length &lt; 4">Proceed</button>
+                      </div>
+                    </form>
+                  </dd>
+                </dl>
+              </div>
+            </template>
+            <template v-if="current.question == 12">
+              <div class="enter-code enter-code-2">
+                <dl class="question" v-if="!ui.enterCode.showFollowUpQuestions">
+                  <dt> 
+                    <div class="subtitle" style="padding-top:2rem;">Enter your Personal Code (PC) in the space below.</div>
+                  </dt>
+                  <dd>
+                    <form @submit.prevent="answerQuestion('enterCode2')">
+                      <div class="field code-holder">
+                        <input class="simple" type="text" v-model="answers.enterCodeAgain" autocomplete="off" maxlength="7">
+                      </div>
+                      <div class="error-message centered" v-if="ui.enterCode.errorMessageAgain"><span v-html="ui.enterCode.errorMessageAgain"></span></div>
+                      <div class="button-row">
+                        <button type="reset" :disabled="!ui.enterCode.errorMessageAgain" @click="ui.enterCode.showFollowUpQuestions = true">I forgot my Personal Code</button>
+                        <button type="submit" :disabled="!answers.enterCodeAgain || answers.enterCodeAgain.length &lt; 4">Proceed</button>
+                      </div>
+                    </form>
+                  </dd>
+                </dl>
+                <dl class="question" v-if="ui.enterCode.showFollowUpQuestions">
+                  <dt>
+                    <div class="subtitle">Did you forget your Personal Code?</div>
+                  </dt>
+                  <dd>
+                    <form @submit.prevent="answerQuestion('enterCode2FollowUp')">
+                      <ul class="options" count="2">
+                        <li>
+                          <label :class="{'active': answers.enterCodeFollowUp.confirmed == 'Yes' }">
+                            <input type="radio" value="Yes" v-model="answers.enterCodeFollowUp.confirmed" required>
+                            <div class="text">Yes</div>
+                          </label>
+                        </li>
+                        <li>
+                          <label>
+                            <input type="radio" value="No" v-model="answers.enterCodeFollowUp.confirmed" required @click="ui.enterCode.showFollowUpQuestions = false; answers.enterCodeFollowUp.confirmed = null">
+                            <div class="text">No</div>
+                          </label>
+                        </li>
+                      </ul>
+                      <div class="follow-up-questions" v-if="answers.enterCodeFollowUp.confirmed === 'Yes'">
+                        <fieldset class="follow-up-question" v-for="followUpQuestion,fuqkey in questions.enterCode2FollowUp.questions">
+                          <div class="field-title">{{followUpQuestion.title}}</div>
+                          <ul class="options" :count="followUpQuestion.options.length">
+                            <li v-for="fuqOption,key in followUpQuestion.options">
+                              <label :class="{'active': fuqOption.text == answers.enterCodeFollowUp.questions[fuqkey], 'inactive': (answers.enterCodeFollowUp.questions[fuqkey] &amp;&amp; fuqOption.text != answers.enterCodeFollowUp.questions[fuqkey])}">
+                                <input type="radio" :value="fuqOption.text" v-model="answers.enterCodeFollowUp.questions[fuqkey]" required>
+                                <div class="text"><span>{{fuqOption.text}}</span></div>
+                              </label>
+                            </li>
+                          </ul>
+                        </fieldset>
+                        <div class="button-row">
+                          <button type="submit" :disabled="!computedFollowUpQuestionsFinished">Proceed</button>
+                        </div>
                       </div>
                     </form>
                   </dd>
@@ -290,7 +375,7 @@
     <div class="javascripts">
       <script src="js/libraries/vue.full.js"></script>
       <script>const testing = true;</script>
-      <script src="js/min/site.min.js?updated2022-12-04T05:09:05.268Z"></script>
+      <script src="js/min/site.min.js?updated2022-12-04T22:22:49.808Z"></script>
     </div>
   </body>
 </html>

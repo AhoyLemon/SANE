@@ -43,13 +43,11 @@
 }
 
 
-
-
 .how-many-drinks {
   form { grid-template-columns: 1fr 6em;
     input { width:100%; }
     input[type="range"] { height: 3rem; }
-    input[type="number"] { font-family: $font-family; color:$copy; background:transparent; border:none; font-size:3rem; text-align: right; appearance: textfield; -moz-appearance: textfield; }
+    input[type="number"] { font-family: $font-family; color:$copy; background:transparent; border:none; font-size:3rem; text-align: right; }
   }
 }
 
@@ -61,4 +59,25 @@
 
 .ashamed {
   .options { display:grid; grid-template-columns: repeat(4,1fr);}
+}
+
+.enter-code {
+  dt { position: relative; user-select: none;
+    &:after { @include position(absolute,-15px,-15px,-15px,-15px); content:""; display:block; }
+    tt { transform: scale(1.4); display:inline-block; padding-left:0.65em; padding-right: 0.65em; }
+  }
+  .error-message { position: relative; user-select: none;
+    &:after { @include position(absolute,-15px,-15px,-15px,-15px); content:""; display:block; }
+    tt { transform: scale(1.4) translateY(-0.1em); display:inline-block; padding-left:0.65em; padding-right: 0.65em; }
+  }
+
+  label { padding:0.5em 1.5em; color:$white; font-size:1.25em; background:rgba(0,0,0,0.45); opacity:0.85;
+    &.active { background-color:rgba(14, 11, 106, 0.85); opacity: 1; }
+    &.inactive { opacity:0.35; }
+  }
+
+  .follow-up-question {
+    .field-title { margin-bottom: 0.35em; }
+    
+  }
 }

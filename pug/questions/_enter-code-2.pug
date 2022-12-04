@@ -1,0 +1,47 @@
+.enter-code.enter-code-2
+  dl.question(v-if="!ui.enterCode.showFollowUpQuestions")
+    dt 
+      .subtitle(style="padding-top:2rem;")
+        | Enter your Personal Code (PC) in the space below.
+
+    dd
+      form(@submit.prevent="answerQuestion('enterCode2')")
+        .field.code-holder
+          input.simple(type="text" v-model="answers.enterCodeAgain" autocomplete="off" maxlength="7")
+        .error-message.centered(v-if="ui.enterCode.errorMessageAgain")
+          span(v-html="ui.enterCode.errorMessageAgain")
+        .button-row
+          button(type="reset" :disabled="!ui.enterCode.errorMessageAgain" @click="ui.enterCode.showFollowUpQuestions = true") I forgot my Personal Code
+          button(type="submit" :disabled="!answers.enterCodeAgain || answers.enterCodeAgain.length < 4") Proceed
+  dl.question(v-if="ui.enterCode.showFollowUpQuestions")
+    dt
+      .subtitle Did you forget your Personal Code?
+    dd
+      form(@submit.prevent="answerQuestion('enterCode2FollowUp')")
+        ul.options(count="2")
+          li
+            label(:class="{'active': answers.enterCodeFollowUp.confirmed == 'Yes' }")
+              input(type="radio" value="Yes" v-model="answers.enterCodeFollowUp.confirmed" required)
+              .text Yes
+          li
+            label
+              input(type="radio" value="No" v-model="answers.enterCodeFollowUp.confirmed" required @click="ui.enterCode.showFollowUpQuestions = false; answers.enterCodeFollowUp.confirmed = null")
+              .text No
+          //- li(v-for="option in questions.enterCode2FollowUp.confirmOptions")
+          //-   label(:class="{'active': option.text == answers.enterCodeFollowUp.confirmed, 'inactive': (answers.enterCodeFollowUp.confirmed && option.text != answers.enterCodeFollowUp.confirmed)}" )
+          //-     input(type="radio" :value="option.text" v-model="answers.enterCodeFollowUp.confirmed" required)
+          //-     .text
+                span {{option.text}}
+        .follow-up-questions(v-if="answers.enterCodeFollowUp.confirmed === 'Yes'")
+          fieldset.follow-up-question(v-for="followUpQuestion,fuqkey in questions.enterCode2FollowUp.questions")
+            .field-title {{followUpQuestion.title}}
+            ul.options(:count="followUpQuestion.options.length")
+              li(v-for="fuqOption,key in followUpQuestion.options")
+                label(:class="{'active': fuqOption.text == answers.enterCodeFollowUp.questions[fuqkey], 'inactive': (answers.enterCodeFollowUp.questions[fuqkey] && fuqOption.text != answers.enterCodeFollowUp.questions[fuqkey])}" )
+                  input(type="radio" :value="fuqOption.text" v-model="answers.enterCodeFollowUp.questions[fuqkey]" required)
+                  .text
+                    span {{fuqOption.text}}
+          .button-row
+            button(type="submit" :disabled="!computedFollowUpQuestionsFinished") Proceed
+
+

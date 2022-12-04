@@ -1,0 +1,16 @@
+.ashamed
+  dl.question
+    dt 
+      .title Are you ashamed of what you've done?
+    dd
+      form(@submit.prevent="answerQuestion('ashamed')")
+        ul.options.likert(:count="questions.ashamed.options.length")
+          li(v-for="option,key in questions.ashamed.options")
+            label(:class="{'active': answers.ashamed == option.text, 'inactive': answers.ashamed && answers.ashamed != option.text }")
+              .inside
+                .radio-holder 
+                  input(type="radio" :value="option.text" v-model="answers.ashamed")
+                .text
+                  span {{option.text}}
+        .button-row
+          button(type="submit" :disabled="!answers.ashamed") Proceed

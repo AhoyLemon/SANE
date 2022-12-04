@@ -1,0 +1,13 @@
+.love-object
+  dl.question
+    dt 
+      .title Which of these objects do you love?
+    dd
+      form(@submit.prevent="answerQuestion('loveObject')")
+        ul.options.wider(:count="questions.loveObject.options.length")
+          li(v-for="option,key in questions.loveObject.options")
+            label(:class="{'active': answers.loveObject == option.text, 'inactive': answers.loveObject && answers.loveObject != option.text }")
+              input(type="radio" :value="option.text" v-model="answers.loveObject")
+              img(:src="'img/objects/'+option.slug+'.jpg'")
+        .button-row
+          button(type="submit" :disabled="!answers.loveObject") Proceed

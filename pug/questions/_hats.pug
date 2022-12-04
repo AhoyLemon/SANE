@@ -1,0 +1,24 @@
+.hats
+  dl.question
+    dt 
+      .title Do you like hats?
+    dd(v-if="!ui.hatsExplanation.demand")
+      form(@submit.prevent="answerQuestion('hats')")
+        ul.options.likert(:count="questions.hats.options.length")
+          li(v-for="option,key in questions.hats.options")
+            label(:class="{'active': answers.hats == option.text, 'inactive': answers.hats && answers.hats != option.text }")
+              .inside
+                .radio-holder 
+                  input(type="radio" :value="option.text" v-model="answers.hats")
+                .text
+                  span {{option.text}}
+        .button-row
+          button(type="submit" :disabled="!answers.hats") Proceed
+    dt(v-if="ui.hatsExplanation.demand")
+      .subtitle Please Explain.
+    dd(v-if="ui.hatsExplanation.demand")
+      form(@submit.prevent="answerQuestion('hatsExplanation')")
+        .field
+          textarea(v-model="answers.hatsExplanation" :minlength="ui.hatsExplanation.min" :maxlength="ui.hatsExplanation.max" :placeholder="ui.hatsExplanation.placeholder")
+        .button-row
+          button(type="submit" :disabled="!answers.hatsExplanation") Proceed

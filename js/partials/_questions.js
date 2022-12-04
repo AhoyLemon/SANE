@@ -30,5 +30,43 @@ const questions = {
       { text: "yes" },
       { text: "no" }
     ]
+  },
+
+  foodHappy: {
+    options: [
+      { text: "😚" },
+      { text: "🤫" },
+      { text: "😱" },
+      { text: "🤓" },
+      { text: "🫥" },
+    ]
+  },
+
+  ashamed: {
+    options: [
+      { text: "strongly disagree" },
+      { text: "slightly disagree" },
+      { text: "modestly do agree" },
+      { text: "extremely agree" },
+    ]
+  },
+
+  hats: {
+    options: [
+      { text: "strongly disagree" },
+      { text: "slightly disagree" },
+      { text: "modestly do agree" },
+      { text: "extremely agree" },
+    ]
+  },
+
+  loveObject: {
+    options: [
+      { text: "a potato", slug:"potato" },
+      { text: "a u-turn sign", slug:"uturn" },
+      { text: "lead crystal glass", slug:"glass" },
+      { text: "a camera that costs about $6,000", slug:"camera" }
+    ]
   }
+
 }

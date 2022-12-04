@@ -8,5 +8,7 @@
           input(type="range" :min="ui.howManyDrinks.min" :max="ui.howManyDrinks.max" v-model="answers.howManyDrinks")
         .field
           input(type="number" :min="ui.howManyDrinks.min" :max="ui.howManyDrinks.max" v-model="answers.howManyDrinks" readonly disabled)
+        .error-message
+          span {{computedDrinksError}}
         .button-row
-          button(type="submit") Proceed
+          button(type="submit" :disabled="answers.howManyDrinks < ui.howManyDrinks.min") Proceed

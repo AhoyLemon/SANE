@@ -29,5 +29,13 @@ html(lang="en")
               include questions/_you-think.pug
             template(v-if="current.question == 6")
               include questions/_sink.pug
+            template(v-if="current.question == 7")
+              include questions/_food-happy.pug
+            template(v-if="current.question == 8")
+              include questions/_ashamed.pug 
+            template(v-if="current.question == 9")
+              include questions/_hats.pug
+            template(v-if="current.question == 10")
+              include questions/_love-object.pug
 
     include partials/_javascripts

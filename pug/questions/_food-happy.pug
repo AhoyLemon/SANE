@@ -1,0 +1,17 @@
+.food-happy
+  figure
+    picture
+      img(src="img/burger.jpg" alt="a cheeseburger about to be eaten")
+  dl.question
+    dt 
+      .title Do you think this will actually make you happy?
+    dd
+      form(@submit.prevent="answerQuestion('foodHappy')")
+        ul.options(:count="questions.foodHappy.options.length")
+          li(v-for="option,key in questions.foodHappy.options")
+            label(:class="{'active': answers.foodHappy == option.text, 'inactive': answers.foodHappy && answers.foodHappy != option.text }")
+              input(type="radio" :value="option.text" v-model="answers.foodHappy")
+              .text
+                span {{option.text}}
+        .button-row
+          button(type="submit" :disabled="!answers.foodHappy") Proceed

@@ -1,0 +1,64 @@
+.rorschach {
+  .options {
+    li { 
+      &:nth-child(1) { transform: translate(10px,10px) rotate(-4deg); }
+      &:nth-child(2) { transform: translate(-8px,6px) rotate(2deg); }
+      &:nth-child(3) { transform: translate(2px,-16px) rotate(-1.3deg); }
+      &:nth-child(4) { transform: translate(-9px,3px) rotate(2.7deg); }
+    }
+  }
+}
+
+.you-think { 
+  .options {
+    label { height: 4rem; background:#111; font-size:2em; }
+  }
+  .sane-holder { position: relative;
+    .sane { opacity: 1; }
+    .crazy { position: absolute; top:0; left:0; opacity: 0; }
+  }
+
+  &.crazy {
+    .sane-holder {
+      .sane { opacity: 0; }
+      .crazy { opacity: 1; }
+    }
+  }
+
+}
+
+.food-happy {
+  .options {
+    .text { font-size:7.25em; line-height: 80%;}
+    label {
+      &.active { box-shadow: none;}
+    }
+  }
+}
+
+
+.favorite-color {
+  label { height:8rem; }
+  span { font-size:3rem; font-weight: $bold; display:block; }
+}
+
+
+
+
+.how-many-drinks {
+  form { grid-template-columns: 1fr 6em;
+    input { width:100%; }
+    input[type="range"] { height: 3rem; }
+    input[type="number"] { font-family: $font-family; color:$copy; background:transparent; border:none; font-size:3rem; text-align: right; appearance: textfield; -moz-appearance: textfield; }
+  }
+}
+
+
+
+.your-name { 
+  input { font-family:$sans-serif; width:100%; font-size:2rem; padding:0.5em; text-align: center; }
+}
+
+.ashamed {
+  .options { display:grid; grid-template-columns: repeat(4,1fr);}
+}

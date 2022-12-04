@@ -7,7 +7,7 @@
     <link href="css/site.css" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
-    <meta http-equiv="last-modified" content="2022-12-04T04:33:32.024Z">
+    <meta http-equiv="last-modified" content="2022-12-04T05:09:05.268Z">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Caudex&amp;family=Zen+Dots&amp;display=swap" rel="stylesheet">
@@ -82,7 +82,7 @@
                       <ul class="options" :count="3">
                         <li v-for="(option, key) in questions.colors.options"> 
                           <label :style="{'background-color':option.hex}" :class="{'active': option.name == answers.favoriteColor, 'inactive': (answers.favoriteColor &amp;&amp; option.name != answers.favoriteColor)}">
-                            <input type="radio" :value="option.name" v-model="answers.favoriteColor">
+                            <input type="radio" :value="option.name" v-model="answers.favoriteColor" @change="changeFavoriteColor(option.opposite)">
                             <div class="text"><span :class="{ 'dark': option.light }">{{option.name}}</span><small v-if="option.small">{{option.small}}</small></div>
                           </label>
                         </li>
@@ -290,7 +290,7 @@
     <div class="javascripts">
       <script src="js/libraries/vue.full.js"></script>
       <script>const testing = true;</script>
-      <script src="js/min/site.min.js?updated2022-12-04T04:33:32.024Z"></script>
+      <script src="js/min/site.min.js?updated2022-12-04T05:09:05.268Z"></script>
     </div>
   </body>
 </html>

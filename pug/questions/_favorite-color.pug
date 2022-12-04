@@ -7,7 +7,7 @@
         ul.options(:count="3")
           li(v-for="(option, key) in questions.colors.options") 
             label(:style="{'background-color':option.hex}" :class="{'active': option.name == answers.favoriteColor, 'inactive': (answers.favoriteColor && option.name != answers.favoriteColor)}")
-              input(type="radio" :value="option.name" v-model="answers.favoriteColor")
+              input(type="radio" :value="option.name" v-model="answers.favoriteColor" @change="changeFavoriteColor(option.opposite)")
               .text
                 span(:class="{ 'dark': option.light }") {{option.name}}
                 small(v-if="option.small") {{option.small}}

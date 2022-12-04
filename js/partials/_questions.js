@@ -3,12 +3,12 @@ const questions = {
     type: "multipleChoice",
     question: "Which of these colors do you prefer?",
     options: [
-      { name: "red", hex: "#C1292E" },
-      { name: "blue", hex: "#235789" },
-      { name: "violent", hex: "#42033D" },
-      { name: "yellow", hex: "#F1D302", light:true },
-      { name: "black", small:"(the color of death)", hex: "#010101" },
-      { name: "green", hex: "#77BFA3", light:true }
+      { name: "red", hex: "#C1292E", opposite:"#3ed6d1" },
+      { name: "blue", hex: "#235789", opposite:"#f89434"  },
+      { name: "violent", hex: "#42033D", opposite:"#61ee6d"  },
+      { name: "yellow", hex: "#F1D302", light:true, opposite:"#87B5FD" },
+      { name: "black", small:"(the color of death)", hex: "#010101", opposite:"#ccc" },
+      { name: "green", hex: "#77BFA3", light:true, opposite:"#f05592" }
     ]
   },
   drinks: {

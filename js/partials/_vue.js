@@ -5,7 +5,7 @@ var app = new Vue({
     questions: questions,
 
     current: {
-      question: 1
+      question: 2
     },
 
     ui: {
@@ -17,8 +17,10 @@ var app = new Vue({
 
       howManyDrinks: {
         min: 3,
-        max: 21,
-        errorMessage: "Please be honest for accurate results."
+        max: 21
+      },
+      favoriteColor: {
+        opposite: "#fff"
       },
       sink: {
         min: 27,
@@ -69,8 +71,13 @@ var app = new Vue({
         self.answers.yourName = self.answers.yourName.slice(0, -1)
         self.ui.aside.showNametag = true;
       } else if (q == "favoriteColor") {
-        self.ui.aside.nametagBackground = "#F33";
+        self.ui.aside.nametagBackground = self.ui.favoriteColor.opposite;
+        self.ui.aside.showNametag = true;
       }
+
+
+
+      // Advance to next question, unless...
       if (q == "hats") {
         
         if (self.answers.hats == 'strongly disagree') {
@@ -87,6 +94,10 @@ var app = new Vue({
         self.current.question++;
       }
       
+    },
+    changeFavoriteColor(o) {
+      const self = this;
+      self.ui.favoriteColor.opposite = o;
     }
   },
 

@@ -6,7 +6,7 @@
       form(@submit.prevent="answerQuestion('loveObject')")
         ul.options.wider(:count="questions.loveObject.options.length")
           li(v-for="option,key in questions.loveObject.options")
-            label(:class="{'active': answers.loveObject == option.text, 'inactive': answers.loveObject && answers.loveObject != option.text }")
+            label(:class="{'active': answers.loveObject == option.text, 'inactive': answers.loveObject && answers.loveObject != option.text }" :title="option.title")
               input(type="radio" :value="option.text" v-model="answers.loveObject")
               img(:src="'img/objects/'+option.slug+'.jpg'" :alt="option.text")
         .button-row

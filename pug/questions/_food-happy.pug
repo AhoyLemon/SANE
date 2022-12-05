@@ -7,7 +7,7 @@
       .title Do you think this will actually make you happy?
     dd
       form(@submit.prevent="answerQuestion('foodHappy')")
-        ul.options(:count="questions.foodHappy.options.length")
+        ul.options(count="2")
           li(v-for="option,key in questions.foodHappy.options")
             label(:class="{'active': answers.foodHappy == option.text, 'inactive': answers.foodHappy && answers.foodHappy != option.text }")
               input(type="radio" :value="option.text" v-model="answers.foodHappy")

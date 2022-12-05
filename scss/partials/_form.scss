@@ -5,6 +5,7 @@ form { display:grid; gap:$gap;
   label { cursor: pointer; opacity: 50%; position: relative; display: flex; justify-content: center; font-family: $serif; align-items: center;
     input { max-width: 100%; }
     input[type="radio"] { position: absolute; top:5px; left:5px; transform:scale(1.5); transform-origin: top left; }
+    input[type="checkbox"] { position: absolute; top:5px; left:5px; transform:scale(1.5); transform-origin: top left; }
     .text { text-align: center; }
     span { line-height: 90%;}
     small { font-size:0.9em; display:block; }
@@ -13,7 +14,7 @@ form { display:grid; gap:$gap;
     &.inactive { opacity: 20%; }
     transition: opacity 0.8s linear;
   }
-  input[type="number"].simple { appearance: textfield; -moz-appearance: textfield;}
+  input[type="number"].simple { appearance: textfield; -moz-appearance: textfield; }
 
   input[type="text"], 
   textarea { display:block; width:100%; font-size:2rem; padding:0.5em; background:rgba(0,0,0,0.75); color:rgb(64, 197, 34); border:2px solid rgb(43, 43, 43); font-family: $sans-serif;  outline: none;
@@ -34,7 +35,7 @@ form { display:grid; gap:$gap;
     &[count="5"] { grid-template-columns: repeat(5,1fr);}
   }
 
-  .error-message { color:rgb(221, 85, 85); font-size: 130%;
+  .error-message { color:$error; font-size: 130%;
     &.centered { text-align: center; }
   }
 
@@ -60,6 +61,11 @@ form { display:grid; gap:$gap;
 
   // Submit / Cancel Buttons
   .button-row { text-align: right;
+    &.split { display:grid; grid-template-columns: 1fr auto; gap:($gap * 2);
+      *:first-child { text-align: left; }
+      *:last-child { text-align: right; }
+    }
+
     button { font-family: $sans-serif; padding:0.25em 0.75em; font-weight: 300; text-transform: uppercase; font-size:1.5rem; border:1px solid rgba(0,0,0,0.25); transition: opacity 0.3s linear;
       &[type="submit"] { background:#eee; color:#194d91;
         &:not([disabled]) {
@@ -72,12 +78,20 @@ form { display:grid; gap:$gap;
           &:hover, &:focus { background:#940808; color:#eee; }
         }
       }
-
-
       &[disabled] { opacity: 0.01; filter:grayscale(0.6); cursor: not-allowed; }
 
+    }
+  }
 
-
+  // Character Count
+  .character-count { text-align: left !important; font-family: monospace;
+    .min, .max { padding-top:1em;}
+    .current { font-size:200%; padding-left: 0.25em; padding-right: 0.25em;}
+    &.has-error { 
+      .current { color:$error; }
+    }
+    &.too-short {
+      .min { color:$error; }
     }
   }
 }

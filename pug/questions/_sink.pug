@@ -9,5 +9,12 @@
       form(@submit.prevent="answerQuestion('sink')")
         .field
           textarea(v-model="answers.sink" :minlength="ui.sink.min" :maxlength="ui.sink.max" placeholder="Explain your reasoning in this area.")
-        .button-row
+        .button-row.split
+          .character-count-holder
+            .character-count(v-if="computedMessCharacters && computedMessCharacters.display" :class="{'has-error': computedMessCharacters.error, 'too-short': computedMessCharacters.status == 'tooShort'}")
+              span.min {{computedMessCharacters.min}}
+              | /
+              span.current {{computedMessCharacters.current}}
+              | / 
+              span.max {{computedMessCharacters.max}}
           button(type="submit" :disabled="!answers.sink") Proceed

@@ -34,11 +34,9 @@ const questions = {
 
   foodHappy: {
     options: [
-      { text: "😚" },
-      { text: "🤫" },
-      { text: "😱" },
-      { text: "🤓" },
-      { text: "🫥" },
+      { text: "Yes, I choose to believe it will." },
+      { text: "No, I do not think it will." },
+      { text: "Nothing can do that." },
     ]
   },
 
@@ -62,10 +60,10 @@ const questions = {
 
   loveObject: {
     options: [
-      { text: "a potato", slug:"potato" },
-      { text: "a u-turn sign", slug:"uturn" },
-      { text: "lead crystal glass", slug:"glass" },
-      { text: "a camera that costs about $6,000", slug:"camera" }
+      { text: "a potato", slug:"potato", title: "A Potato" },
+      { text: "a u-turn sign", slug:"uturn", title: "A Sign That Signifies U-Turns Are Allowed Here" },
+      { text: "lead crystal glass", slug:"glass", title: "A Lead Crystal Glass, Which Is Unsafe To Drink From" },
+      { text: "a camera that costs about $6,000", slug:"camera", title:"A Leica M10-D digital Rangefinder camera, MSRP $8,000 USD." }
     ]
   },
 
@@ -124,7 +122,7 @@ const questions = {
         ] 
       },
       {
-        title: "Are you jealous of people smarter than you?",
+        title: "Is it difficult to remember?",
         options: [
           { text: 'no' },
           { text: "very" },
@@ -132,6 +130,23 @@ const questions = {
         ] 
       }
     ]
+  },
+
+  breatheNormally: {
+    why: {
+      options: [
+        { text: "Because of the medications I am on" },
+        { text: "Because of my issues with my weight and/or food" },
+        { text: "Because of my struggles with anxiety" },
+        { text: "Because of my upbringing/family/the way I was raised" },
+        { text: "Because of the way my nose is shaped" },
+        { text: "Because of my unusual/unappealing face" },
+        { text: "Because of my the thoughts I try to keep to myself" },
+        { text: "Because I cannot stop dwelling on my regrets" },
+        { text: "Because there is probably a carbon monoxide leak" },
+        { text: "Because I am nervous about what this test will uncover" },
+      ]
+    }
   }
 
 }

@@ -5,7 +5,7 @@ var app = new Vue({
     questions: questions,
 
     current: {
-      question: 12
+      question: 13
     },
 
     ui: {
@@ -17,7 +17,7 @@ var app = new Vue({
 
       howManyDrinks: {
         min: 3,
-        max: 21
+        max: 14
       },
       favoriteColor: {
         opposite: "#fff"
@@ -45,6 +45,11 @@ var app = new Vue({
         errorMessage: null,
         errorMessageAgain: null,
         showFollowUpQuestions: false
+      },
+      breatheNormally: {
+        phase: 1,
+        timer: null,
+        ms: 0
       }
     },
 
@@ -65,6 +70,9 @@ var app = new Vue({
       enterCodeFollowUp: {
         confirmed: null,
         questions: []
+      },
+      breatheNormally: {
+        why: []
       }
     }
   },
@@ -79,6 +87,12 @@ var app = new Vue({
     changeFavoriteColor(o) {
       const self = this;
       self.ui.favoriteColor.opposite = o;
+    },
+
+    resetPersonalCode() {
+      const self = this;
+      self.ui.enterCode.code = randomNumber(101,999) + randomFrom(codeLetters) + randomNumber(11,99);
+      return true;
     },
 
     validateCode(w) {
@@ -101,6 +115,36 @@ var app = new Vue({
         } else {
           self.ui.enterCode.errorMessageAgain = `That is not the correct code. Enter the Personal Code (PC) given to you earlier.`;
         }
+      }
+      
+    },
+
+    startBreathing(phase) {
+      const self = this;
+      if (phase == 1) {
+        self.ui.breatheNormally.ms = 0;
+        self.ui.breatheNormally.timer = setInterval(function() {
+          self.ui.breatheNormally.ms += 0.01;
+          if (self.ui.breatheNormally.ms >= 5.6) {
+            clearInterval(self.ui.breatheNormally.timer);
+            self.ui.breatheNormally.timer = null;
+            self.ui.breatheNormally.phase = 3;
+            self.ui.breatheNormally.ms = 0;
+          }
+        }, 10);
+        self.ui.breatheNormally.phase = 2;
+      } else if (phase == 3) {
+        self.ui.breatheNormally.ms = 0;
+        self.ui.breatheNormally.timer = setInterval(function() {
+          self.ui.breatheNormally.ms += 0.01;
+          if (self.ui.breatheNormally.ms >= 11.2) {
+            clearInterval(self.ui.breatheNormally.timer);
+            self.ui.breatheNormally.timer = null;
+            self.ui.breatheNormally.phase = 5;
+            self.ui.breatheNormally.ms = 0;
+          }
+        }, 10);
+        self.ui.breatheNormally.phase = 4;
       }
       
     },
@@ -153,6 +197,16 @@ var app = new Vue({
         return false;
       }
     },
+    computedDrinksOutput() {
+      const self = this;
+      if (self.answers.howManyDrinks < 1) {
+        return ""
+      } else if (self.answers.howManyDrinks < self.ui.howManyDrinks.max) {
+        return self.answers.howManyDrinks
+      } else {
+        return self.answers.howManyDrinks + "+";
+      }
+    },
     computedDrinksError() {
       const self = this;
       
@@ -166,6 +220,93 @@ var app = new Vue({
         return "Please be honest."
       }
     },
+    computedMessCharacters() {
+      const self = this;
+      if (!self.answers.sink) {
+        return {
+          display:false,
+          current: 0,
+          min: self.ui.sink.min,
+          max: self.ui.sink.min,
+          error: true,
+          status: "empty"
+        }
+      } else {
+        const current = self.answers.sink.length
+        if (current < self.ui.sink.min)  {
+          return {
+            display:true,
+            current: current,
+            min: self.ui.sink.min,
+            max: self.ui.sink.max,
+            error: true,
+            status: "tooShort"
+          }
+        } else if (current > self.ui.sink.max) {
+          return {
+            display:true,
+            current: current,
+            min: self.ui.sink.min,
+            max: self.ui.sink.max,
+            error: true,
+            status: "tooLong"
+          }
+        } else {
+          return {
+            display:true,
+            current: current,
+            min: self.ui.sink.min,
+            max: self.ui.sink.max,
+            error: false,
+            status: "valid"
+          }
+        }
+      }
+    },
+    computedHatsCharacters() {
+      const self = this;
+      const rules = self.ui.hatsExplanation;
+      if (!self.answers.hatsExplanation) {
+        return {
+          display:false,
+          current: 0,
+          min: rules.min,
+          max: rules.min,
+          error: true,
+          status: "empty"
+        }
+      } else {
+        const current = self.answers.hatsExplanation.length
+        if (current < rules.min)  {
+          return {
+            display:true,
+            current: current,
+            min: rules.min,
+            max: rules.max,
+            error: true,
+            status: "tooShort"
+          }
+        } else if (current > rules.max) {
+          return {
+            display:true,
+            current: current,
+            min: rules.min,
+            max: rules.max,
+            error: true,
+            status: "tooLong"
+          }
+        } else {
+          return {
+            display:true,
+            current: current,
+            min: rules.min,
+            max: rules.max,
+            error: false,
+            status: "valid"
+          }
+        }
+      }
+    },
     computedFollowUpQuestionsFinished() {
       const self = this;
 
@@ -175,6 +316,20 @@ var app = new Vue({
         return true;
       } else {
         return false;
+      }
+    },
+    computedBreathSecondsOutput() {
+      const self = this;
+      if (!self.ui.breatheNormally || !self.ui.breatheNormally.ms) {
+        return null
+      } else {
+        let parts = self.ui.breatheNormally.ms.toString().split('.');
+        let seconds = parseInt(parts[0]);
+        if (seconds < 10) {
+          seconds = "0" + seconds;
+        }
+        let ms = parts[1].substring(0,2);
+        return `<span class="big">${seconds}</span><span class="small">${ms}</span>`;
       }
     }
   },

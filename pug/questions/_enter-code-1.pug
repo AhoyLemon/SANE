@@ -14,5 +14,5 @@
         .error-message.centered(v-if="ui.enterCode.errorMessage")
           span(v-html="ui.enterCode.errorMessage")
         .button-row
-          button(type="reset" :disabled="!answers.enterCode") Reset
+          button(type="reset" @click="resetPersonalCode()") Reset
           button(type="submit" :disabled="!answers.enterCode || answers.enterCode.length < 4") Proceed

@@ -7,7 +7,7 @@
     <link href="css/site.css" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
-    <meta http-equiv="last-modified" content="2022-12-04T22:22:49.808Z">
+    <meta http-equiv="last-modified" content="2022-12-05T05:52:06.470Z">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Caudex&amp;family=Zen+Dots&amp;display=swap" rel="stylesheet">
@@ -41,10 +41,10 @@
                         <input type="range" :min="ui.howManyDrinks.min" :max="ui.howManyDrinks.max" v-model="answers.howManyDrinks">
                       </div>
                       <div class="field">
-                        <input type="number" :min="ui.howManyDrinks.min" :max="ui.howManyDrinks.max" v-model="answers.howManyDrinks" readonly disabled>
+                        <div class="readout">{{computedDrinksOutput}}</div>
                       </div>
-                      <div class="error-message"><span>{{computedDrinksError}}</span></div>
-                      <div class="button-row">
+                      <div class="button-row split" style="grid-column: span 2">
+                        <div class="error-message"><span v-if="computedDrinksError">{{computedDrinksError}}</span></div>
                         <button type="submit" :disabled="answers.howManyDrinks &lt; ui.howManyDrinks.min">Proceed</button>
                       </div>
                     </form>
@@ -156,7 +156,10 @@
                       <div class="field">
                         <textarea v-model="answers.sink" :minlength="ui.sink.min" :maxlength="ui.sink.max" placeholder="Explain your reasoning in this area."></textarea>
                       </div>
-                      <div class="button-row">
+                      <div class="button-row split">
+                        <div class="character-count-holder">
+                          <div class="character-count" v-if="computedMessCharacters &amp;&amp; computedMessCharacters.display" :class="{'has-error': computedMessCharacters.error, 'too-short': computedMessCharacters.status == 'tooShort'}"><span class="min">{{computedMessCharacters.min}}</span>/<span class="current">{{computedMessCharacters.current}}</span>/ <span class="max">{{computedMessCharacters.max}}</span></div>
+                        </div>
                         <button type="submit" :disabled="!answers.sink">Proceed</button>
                       </div>
                     </form>
@@ -175,7 +178,7 @@
                   </dt>
                   <dd>
                     <form @submit.prevent="answerQuestion('foodHappy')">
-                      <ul class="options" :count="questions.foodHappy.options.length">
+                      <ul class="options" count="2">
                         <li v-for="option,key in questions.foodHappy.options">
                           <label :class="{'active': answers.foodHappy == option.text, 'inactive': answers.foodHappy &amp;&amp; answers.foodHappy != option.text }">
                             <input type="radio" :value="option.text" v-model="answers.foodHappy">
@@ -252,7 +255,10 @@
                       <div class="field">
                         <textarea v-model="answers.hatsExplanation" :minlength="ui.hatsExplanation.min" :maxlength="ui.hatsExplanation.max" :placeholder="ui.hatsExplanation.placeholder"></textarea>
                       </div>
-                      <div class="button-row">
+                      <div class="button-row split">
+                        <div class="character-count-holder">
+                          <div class="character-count" v-if="computedHatsCharacters &amp;&amp; computedHatsCharacters.display" :class="{'has-error': computedHatsCharacters.error, 'too-short': computedHatsCharacters.status == 'tooShort'}"><span class="min">{{computedHatsCharacters.min}}</span>/<span class="current">{{computedHatsCharacters.current}}</span>/ <span class="max">{{computedHatsCharacters.max}}</span></div>
+                        </div>
                         <button type="submit" :disabled="!answers.hatsExplanation">Proceed</button>
                       </div>
                     </form>
@@ -270,7 +276,7 @@
                     <form @submit.prevent="answerQuestion('loveObject')">
                       <ul class="options wider" :count="questions.loveObject.options.length">
                         <li v-for="option,key in questions.loveObject.options">
-                          <label :class="{'active': answers.loveObject == option.text, 'inactive': answers.loveObject &amp;&amp; answers.loveObject != option.text }">
+                          <label :class="{'active': answers.loveObject == option.text, 'inactive': answers.loveObject &amp;&amp; answers.loveObject != option.text }" :title="option.title">
                             <input type="radio" :value="option.text" v-model="answers.loveObject"><img :src="'img/objects/'+option.slug+'.jpg'" :alt="option.text">
                           </label>
                         </li>
@@ -300,7 +306,7 @@
                       </div>
                       <div class="error-message centered" v-if="ui.enterCode.errorMessage"><span v-html="ui.enterCode.errorMessage"></span></div>
                       <div class="button-row">
-                        <button type="reset" :disabled="!answers.enterCode">Reset</button>
+                        <button type="reset" @click="resetPersonalCode()">Reset</button>
                         <button type="submit" :disabled="!answers.enterCode || answers.enterCode.length &lt; 4">Proceed</button>
                       </div>
                     </form>
@@ -368,6 +374,84 @@
                 </dl>
               </div>
             </template>
+            <template v-if="current.question == 13">
+              <div class="breathe-normally">
+                <dl class="question" v-if="ui.breatheNormally.phase &lt; 5">
+                  <dt>
+                    <div class="title">Breathe normally.</div>
+                  </dt>
+                  <dt v-if="ui.breatheNormally.phase == 1">
+                    <div class="please">
+                      <p>Stare straight ahead and breathe normally for 20 seconds. A timer will take care of the count down for you.</p>
+                      <p>When you are ready, click begin.</p>
+                    </div>
+                  </dt>
+                  <dd v-if="ui.breatheNormally.phase == 1">
+                    <div class="big-button-holder">
+                      <button class="begin" type="button" @click="startBreathing(1)">BEGIN</button>
+                    </div>
+                  </dd>
+                  <dd v-if="ui.breatheNormally.phase == 2">
+                    <div class="progress-and-readout">
+                      <div class="progress-holder">
+                        <progress min="0" max="20" step="0.01" :value="ui.breatheNormally.ms"></progress>
+                      </div>
+                      <div class="readout-holder">
+                        <div class="readout" v-html="computedBreathSecondsOutput"></div>
+                      </div>
+                    </div>
+                  </dd>
+                  <dt v-if="ui.breatheNormally.phase == 3">
+                    <div class="please">
+                      <p>Please breathe <strong>NORMALLY</strong>. Breathe as though you weren't being judged on your breathing.</p>
+                      <p>When you are ready to breathe <strong>NORMALLY</strong>, click begin.</p>
+                    </div>
+                  </dt>
+                  <dd v-if="ui.breatheNormally.phase == 3">
+                    <div class="big-button-holder">
+                      <button class="begin" type="button" @click="startBreathing(3)">BEGIN</button>
+                    </div>
+                  </dd>
+                  <dd v-if="ui.breatheNormally.phase == 4">
+                    <div class="progress-and-readout">
+                      <div class="progress-holder">
+                        <progress min="0" max="20" step="0.01" :value="ui.breatheNormally.ms"></progress>
+                      </div>
+                      <div class="readout-holder">
+                        <div class="readout" v-html="computedBreathSecondsOutput"></div>
+                      </div>
+                      <div class="reminder"><span>(please breathe normally.)</span></div>
+                    </div>
+                  </dd>
+                </dl>
+                <dl class="question" v-if="ui.breatheNormally.phase &gt;= 5">
+                  <dt>
+                    <div class="title">Why were you unable to breathe normally?</div>
+                  </dt>
+                  <dt>
+                    <div class="subtitle">(check all that apply)</div>
+                  </dt>
+                  <dd>
+                    <form @submit.prevent="answerQuestion('breatheNormally')">
+                      <ul class="options" count="1">
+                        <li v-for="option in questions.breatheNormally.why.options" @mouseover="saneHover(true)" @mouseleave="saneHover(false)">
+                          <label :class="{'active': answers.breatheNormally.why.includes(option.text) }">
+                            <input type="checkbox" :value="option.text" v-model="answers.breatheNormally.why">
+                            <div class="text"><span>{{option.text}}</span></div>
+                          </label>
+                        </li>
+                      </ul>
+                      <div class="button-row">
+                        <div class="help-text"> <span>Please check all that apply</span></div>
+                        <div class="button-holder">
+                          <button type="submit" :disabled="!answers.breatheNormally.why || answers.breatheNormally.why.length &lt; 2">Proceed</button>
+                        </div>
+                      </div>
+                    </form>
+                  </dd>
+                </dl>
+              </div>
+            </template>
           </div>
         </div>
       </main>
@@ -375,7 +459,7 @@
     <div class="javascripts">
       <script src="js/libraries/vue.full.js"></script>
       <script>const testing = true;</script>
-      <script src="js/min/site.min.js?updated2022-12-04T22:22:49.808Z"></script>
+      <script src="js/min/site.min.js?updated2022-12-05T05:52:06.470Z"></script>
     </div>
   </body>
 </html>

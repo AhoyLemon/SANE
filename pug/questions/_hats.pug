@@ -20,5 +20,12 @@
       form(@submit.prevent="answerQuestion('hatsExplanation')")
         .field
           textarea(v-model="answers.hatsExplanation" :minlength="ui.hatsExplanation.min" :maxlength="ui.hatsExplanation.max" :placeholder="ui.hatsExplanation.placeholder")
-        .button-row
+        .button-row.split
+          .character-count-holder
+            .character-count(v-if="computedHatsCharacters && computedHatsCharacters.display" :class="{'has-error': computedHatsCharacters.error, 'too-short': computedHatsCharacters.status == 'tooShort'}")
+              span.min {{computedHatsCharacters.min}}
+              | /
+              span.current {{computedHatsCharacters.current}}
+              | / 
+              span.max {{computedHatsCharacters.max}}
           button(type="submit" :disabled="!answers.hatsExplanation") Proceed

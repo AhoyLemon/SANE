@@ -1,0 +1,55 @@
+.breathe-normally
+  dl.question(v-if="ui.breatheNormally.phase < 5")
+    dt
+      .title Breathe normally.
+    dt(v-if="ui.breatheNormally.phase == 1")
+      .please
+        p Stare straight ahead and breathe normally for 20 seconds. A timer will take care of the count down for you.
+        p When you are ready, click begin.
+    dd(v-if="ui.breatheNormally.phase == 1")
+      .big-button-holder
+        button.begin(type="button" @click="startBreathing(1)") BEGIN
+    dd(v-if="ui.breatheNormally.phase == 2")
+      .progress-and-readout
+        .progress-holder
+          progress(min="0" max="20" step="0.01" :value="ui.breatheNormally.ms")
+        .readout-holder
+          .readout(v-html="computedBreathSecondsOutput")
+    dt(v-if="ui.breatheNormally.phase == 3")
+      .please
+        p Please breathe 
+          strong NORMALLY
+          | . Breathe as though you weren't being judged on your breathing.
+        p When you are ready to breathe 
+          strong NORMALLY
+          | , click begin.
+    dd(v-if="ui.breatheNormally.phase == 3")
+      .big-button-holder
+        button.begin(type="button" @click="startBreathing(3)") BEGIN
+    dd(v-if="ui.breatheNormally.phase == 4")
+      .progress-and-readout
+        .progress-holder
+          progress(min="0" max="20" step="0.01" :value="ui.breatheNormally.ms")
+        .readout-holder
+          .readout(v-html="computedBreathSecondsOutput")
+        .reminder
+          span (please breathe normally.)
+  dl.question(v-if="ui.breatheNormally.phase >= 5")
+    dt
+      .title Why were you unable to breathe normally?
+    dt
+      .subtitle (check all that apply)
+    dd
+      form(@submit.prevent="answerQuestion('breatheNormally')")
+        ul.options(count="1")
+          li(v-for="option in questions.breatheNormally.why.options" @mouseover="saneHover(true)" @mouseleave="saneHover(false)")
+            label(:class="{'active': answers.breatheNormally.why.includes(option.text) }" )
+              input(type="checkbox" :value="option.text" v-model="answers.breatheNormally.why")
+              .text
+                span {{option.text}}
+        .button-row
+          .help-text 
+            span Please check all that apply
+          .button-holder
+            button(type="submit" :disabled="!answers.breatheNormally.why || answers.breatheNormally.why.length < 2") Proceed
+

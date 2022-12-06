@@ -35,6 +35,14 @@ form { display:grid; gap:$gap;
     &[count="5"] { grid-template-columns: repeat(5,1fr);}
   }
 
+  .simple-options {
+    label { padding:0.5em 1.5em; color:$white; font-size:1.25em; background:rgba(0,0,0,0.45); opacity:0.65;
+      &.active { background-color:$activeLabelBG; opacity: 1; }
+      &.inactive { opacity: 0.4; }
+    }
+  }
+
+
   .error-message { color:$error; font-size: 130%;
     &.centered { text-align: center; }
   }

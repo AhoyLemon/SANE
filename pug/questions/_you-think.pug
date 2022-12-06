@@ -7,7 +7,7 @@
           span.crazy crazy
     dd
       form(@submit.prevent="answerQuestion('youThink')")
-        ul.options(count="2")
+        ul.options.simple-options(count="2")
           li(v-for="option in questions.youThink.options" @mouseover="saneHover(true)" @mouseleave="saneHover(false)")
             label(:class="{'active': option.text == answers.youThink, 'inactive': (answers.youThink && option.text != answers.youThink)}" )
               input(type="radio" :value="option.text" v-model="answers.youThink")

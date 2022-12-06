@@ -43,5 +43,11 @@ html(lang="en")
               include questions/_enter-code-2.pug
             template(v-if="current.question == 13")
               include questions/_breathe-normally.pug
+            template(v-if="current.question == 14")
+              include questions/_tongue.pug
+            template(v-if="current.question == 15")
+              include questions/_rambling-question.pug
+            template(v-if="current.question == 16")
+              include questions/_how-many-lights.pug
 
     include partials/_javascripts

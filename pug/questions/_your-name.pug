@@ -5,6 +5,14 @@
     dd
       form(@submit.prevent="answerQuestion('yourName')")
         .field
-          input(type="text" v-model="answers.yourName" placeholder="Enter what you should be called." :minlength="ui.validName.min" :maxlength="ui.validName.max")
-        .button-row
-          button(type="submit" :disabled="!validNameEntered") Proceed
+          input(type="text" v-model="answers.yourName" placeholder="Enter what you should be called." :minlength="ui.yourName.min" :maxlength="ui.yourName.max")
+        .button-row.split
+          .character-count-holder
+            .character-count(v-if="computedNameCharacters && computedNameCharacters.display" :class="{'has-error': computedNameCharacters.error, 'too-short': computedNameCharacters.status == 'tooShort'}")
+              span.min {{computedNameCharacters.min}}
+              | /
+              span.current {{computedNameCharacters.current}}
+              | / 
+              span.max {{computedNameCharacters.max}}
+          .button-holder
+            button(type="submit" :disabled="!answers.yourName") Proceed

@@ -18,7 +18,7 @@
       .subtitle Did you forget your Personal Code?
     dd
       form(@submit.prevent="answerQuestion('enterCode2FollowUp')")
-        ul.options(count="2")
+        ul.options.simple-options(count="2")
           li
             label(:class="{'active': answers.enterCodeFollowUp.confirmed == 'Yes' }")
               input(type="radio" value="Yes" v-model="answers.enterCodeFollowUp.confirmed" required)
@@ -27,15 +27,10 @@
             label
               input(type="radio" value="No" v-model="answers.enterCodeFollowUp.confirmed" required @click="ui.enterCode.showFollowUpQuestions = false; answers.enterCodeFollowUp.confirmed = null")
               .text No
-          //- li(v-for="option in questions.enterCode2FollowUp.confirmOptions")
-          //-   label(:class="{'active': option.text == answers.enterCodeFollowUp.confirmed, 'inactive': (answers.enterCodeFollowUp.confirmed && option.text != answers.enterCodeFollowUp.confirmed)}" )
-          //-     input(type="radio" :value="option.text" v-model="answers.enterCodeFollowUp.confirmed" required)
-          //-     .text
-                span {{option.text}}
         .follow-up-questions(v-if="answers.enterCodeFollowUp.confirmed === 'Yes'")
           fieldset.follow-up-question(v-for="followUpQuestion,fuqkey in questions.enterCode2FollowUp.questions")
             .field-title {{followUpQuestion.title}}
-            ul.options(:count="followUpQuestion.options.length")
+            ul.options.simple-options(:count="followUpQuestion.options.length")
               li(v-for="fuqOption,key in followUpQuestion.options")
                 label(:class="{'active': fuqOption.text == answers.enterCodeFollowUp.questions[fuqkey], 'inactive': (answers.enterCodeFollowUp.questions[fuqkey] && fuqOption.text != answers.enterCodeFollowUp.questions[fuqkey])}" )
                   input(type="radio" :value="fuqOption.text" v-model="answers.enterCodeFollowUp.questions[fuqkey]" required)

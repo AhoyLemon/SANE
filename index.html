@@ -7,7 +7,7 @@
     <link href="css/site.css" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
-    <meta http-equiv="last-modified" content="2022-12-05T05:52:06.470Z">
+    <meta http-equiv="last-modified" content="2022-12-06T04:41:09.316Z">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Caudex&amp;family=Zen+Dots&amp;display=swap" rel="stylesheet">
@@ -61,10 +61,15 @@
                   <dd>
                     <form @submit.prevent="answerQuestion('yourName')">
                       <div class="field">
-                        <input type="text" v-model="answers.yourName" placeholder="Enter what you should be called." :minlength="ui.validName.min" :maxlength="ui.validName.max">
+                        <input type="text" v-model="answers.yourName" placeholder="Enter what you should be called." :minlength="ui.yourName.min" :maxlength="ui.yourName.max">
                       </div>
-                      <div class="button-row">
-                        <button type="submit" :disabled="!validNameEntered">Proceed</button>
+                      <div class="button-row split">
+                        <div class="character-count-holder">
+                          <div class="character-count" v-if="computedNameCharacters &amp;&amp; computedNameCharacters.display" :class="{'has-error': computedNameCharacters.error, 'too-short': computedNameCharacters.status == 'tooShort'}"><span class="min">{{computedNameCharacters.min}}</span>/<span class="current">{{computedNameCharacters.current}}</span>/ <span class="max">{{computedNameCharacters.max}}</span></div>
+                        </div>
+                        <div class="button-holder">
+                          <button type="submit" :disabled="!answers.yourName">Proceed</button>
+                        </div>
                       </div>
                     </form>
                   </dd>
@@ -126,7 +131,7 @@
                   </dt>
                   <dd>
                     <form @submit.prevent="answerQuestion('youThink')">
-                      <ul class="options" count="2">
+                      <ul class="options simple-options" count="2">
                         <li v-for="option in questions.youThink.options" @mouseover="saneHover(true)" @mouseleave="saneHover(false)">
                           <label :class="{'active': option.text == answers.youThink, 'inactive': (answers.youThink &amp;&amp; option.text != answers.youThink)}">
                             <input type="radio" :value="option.text" v-model="answers.youThink">
@@ -339,7 +344,7 @@
                   </dt>
                   <dd>
                     <form @submit.prevent="answerQuestion('enterCode2FollowUp')">
-                      <ul class="options" count="2">
+                      <ul class="options simple-options" count="2">
                         <li>
                           <label :class="{'active': answers.enterCodeFollowUp.confirmed == 'Yes' }">
                             <input type="radio" value="Yes" v-model="answers.enterCodeFollowUp.confirmed" required>
@@ -356,7 +361,7 @@
                       <div class="follow-up-questions" v-if="answers.enterCodeFollowUp.confirmed === 'Yes'">
                         <fieldset class="follow-up-question" v-for="followUpQuestion,fuqkey in questions.enterCode2FollowUp.questions">
                           <div class="field-title">{{followUpQuestion.title}}</div>
-                          <ul class="options" :count="followUpQuestion.options.length">
+                          <ul class="options simple-options" :count="followUpQuestion.options.length">
                             <li v-for="fuqOption,key in followUpQuestion.options">
                               <label :class="{'active': fuqOption.text == answers.enterCodeFollowUp.questions[fuqkey], 'inactive': (answers.enterCodeFollowUp.questions[fuqkey] &amp;&amp; fuqOption.text != answers.enterCodeFollowUp.questions[fuqkey])}">
                                 <input type="radio" :value="fuqOption.text" v-model="answers.enterCodeFollowUp.questions[fuqkey]" required>
@@ -452,6 +457,134 @@
                 </dl>
               </div>
             </template>
+            <template v-if="current.question == 14">
+              <div class="tongue">
+                <dl class="question">
+                  <dt> 
+                    <div class="title">What does your tongue taste like?</div>
+                  </dt>
+                  <dd>
+                    <form @submit.prevent="answerQuestion('tongue')">
+                      <ul class="options simple-options" count="2">
+                        <li v-for="option in questions.tongue.options" @mouseover="saneHover(true)" @mouseleave="saneHover(false)">
+                          <label :class="{'active': option.text == answers.tongue, 'inactive': (answers.tongue &amp;&amp; option.text != answers.tongue)}">
+                            <input type="radio" :value="option.text" v-model="answers.tongue">
+                            <div class="text"><span>{{option.text}}</span></div>
+                          </label>
+                        </li>
+                      </ul>
+                      <div class="button-row">
+                        <button type="submit" :disabled="!answers.tongue">Proceed</button>
+                      </div>
+                    </form>
+                  </dd>
+                </dl>
+              </div>
+            </template>
+            <template v-if="current.question == 15">
+              <div class="rambling-question">
+                <dl class="question" v-if="!ui.ramblingQuestion.followUp.display">
+                  <dt>
+                    <div class="subtitle">Given that each person lives their life completely within their own mind, is it possible to know the mind of another? That is to say, while we are all trapped within our own singular experiences, can we ever truly empathize with the experiences of another person? Is it truly impossible to know another human being? And if so, does that make us all alone?</div>
+                  </dt>
+                  <dd>
+                    <form @submit.prevent="answerQuestion('ramblingQuestion')">
+                      <ul class="options simple-options" :count="questions.ramblingQuestion.options.length">
+                        <li v-for="option in questions.ramblingQuestion.options">
+                          <label :class="{'active': option.text == answers.ramblingQuestion, 'inactive': (answers.ramblingQuestion &amp;&amp; option.text != answers.ramblingQuestion)}">
+                            <input type="radio" :value="option.text" v-model="answers.ramblingQuestion">
+                            <div class="text"><span>{{option.text}}</span></div>
+                          </label>
+                        </li>
+                      </ul>
+                      <div class="button-row">
+                        <button type="submit" :disabled="!answers.ramblingQuestion">Proceed</button>
+                      </div>
+                    </form>
+                  </dd>
+                </dl>
+                <dl class="question" v-if="ui.ramblingQuestion.followUp.display">
+                  <dt>
+                    <div class="subtitle">You don't know much, do you?</div>
+                  </dt>
+                  <dd>
+                    <form @submit.prevent="answerQuestion('ramblingQuestionFollowUp')">
+                      <ul class="options simple-options" count="1">
+                        <li>
+                          <label :class="{'active': 'I’m sorry, I don’t.' == answers.ramblingQuestionFollowUp }">
+                            <input type="radio" value="I’m sorry, I don’t." v-model="answers.ramblingQuestionFollowUp">
+                            <div class="text"><span>I'm sorry, I don't.</span></div>
+                          </label>
+                        </li>
+                      </ul>
+                      <div class="button-row">
+                        <button type="submit" :disabled="!answers.ramblingQuestionFollowUp">Proceed</button>
+                      </div>
+                    </form>
+                  </dd>
+                </dl>
+              </div>
+            </template>
+            <template v-if="current.question == 16">
+              <div class="how-many-lights">
+                <dl class="question">
+                  <dt v-if="ui.howManyLights.phase &lt; 3"> 
+                    <div class="title">Pay attention to this circle...</div>
+                  </dt>
+                  <dt v-if="ui.howManyLights.phase &lt; 3">
+                    <div class="circle-holder">
+                      <div class="light circle" :class="{'flashing': ui.howManyLights.flashing}"></div>
+                    </div>
+                  </dt>
+                  <dt v-if="ui.howManyLights.phase == 1">
+                    <div class="please">
+                      <p>The circle will flash with a yellow light. Count the number of times you see the yellow light. When you are ready, press the button below.</p>
+                    </div>
+                  </dt>
+                  <dd v-if="ui.howManyLights.phase == 1">
+                    <div class="big-button-holder">
+                      <button class="begin" type="button" @click="startLights()">BEGIN</button>
+                    </div>
+                  </dd>
+                  <dt v-if="ui.howManyLights.phase == 3">
+                    <div class="title">How many times did the light flash?</div>
+                  </dt>
+                  <dd v-if="ui.howManyLights.phase == 3">
+                    <form @submit.prevent="answerQuestion('howManyLights')">
+                      <ul class="options simple-options" count="4">
+                        <li v-for="option,key in questions.howManyLights.options">
+                          <label :class="{'active': answers.howManyLights == option.text, 'inactive': answers.howManyLights &amp;&amp; answers.howManyLights != option.text }">
+                            <input type="radio" :value="option.text" v-model="answers.howManyLights" :disabled="option.disabled">
+                            <div class="text"><span>{{option.text}}</span></div>
+                          </label>
+                        </li>
+                      </ul>
+                      <div class="button-row">
+                        <button type="submit" :disabled="!answers.howManyLights">Proceed</button>
+                      </div>
+                    </form>
+                  </dd>
+                  <dt v-if="ui.howManyLights.phase == 4">
+                    <div class="title">You know that isn't the right number, don't you?</div>
+                  </dt>
+                  <dd v-if="ui.howManyLights.phase == 4">
+                    <form @submit.prevent="answerQuestion('howManyLightsFollowUp')">
+                      <ul class="options simple-options" count="1">
+                        <li v-for="option,key in questions.howManyLights.followUp.options">
+                          <label :class="{'active': answers.howManyLightsFollowUp == option.text, 'inactive': answers.howManyLightsFollowUp &amp;&amp; answers.howManyLightsFollowUp != option.text }">
+                            <input type="radio" :value="option.text" v-model="answers.howManyLightsFollowUp" :disabled="option.disabled">
+                            <div class="text"><span>{{option.text}}</span></div>
+                          </label>
+                        </li>
+                      </ul>
+                      <div class="button-row">
+                        <button type="submit" :disabled="!answers.howManyLightsFollowUp">Proceed</button>
+                      </div>
+                    </form>
+                  </dd>
+                </dl>
+              </div>
+            </template>
           </div>
         </div>
       </main>
@@ -459,7 +592,7 @@
     <div class="javascripts">
       <script src="js/libraries/vue.full.js"></script>
       <script>const testing = true;</script>
-      <script src="js/min/site.min.js?updated2022-12-05T05:52:06.470Z"></script>
+      <script src="js/min/site.min.js?updated2022-12-06T04:41:09.316Z"></script>
     </div>
   </body>
 </html>

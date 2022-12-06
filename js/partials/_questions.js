@@ -35,7 +35,7 @@ const questions = {
   foodHappy: {
     options: [
       { text: "Yes, I choose to believe it will." },
-      { text: "No, I do not think it will." },
+      { text: "Food will not make me happy." },
       { text: "Nothing can do that." },
     ]
   },
@@ -147,6 +147,45 @@ const questions = {
         { text: "Because I am nervous about what this test will uncover" },
       ]
     }
+  },
+
+  tongue: {
+    options: [
+      { text: "me" },
+      { text: "you" },
+      { text: "nothing" },
+      { text: "pine needles" },
+      { text: "dread" },
+      { text: "that is unknowable" },
+    ]
+  },
+
+  ramblingQuestion: {
+    options: [
+      { text: "Yes" },
+      { text: "No." },
+      { text: "I don't know." },
+    ]
+  },
+
+  howManyLights: {
+    options: [
+      { text: "1", disabled: false },
+      { text: "2", disabled: false },
+      { text: "3", disabled: false },
+      { text: "4", disabled: true },
+      { text: "5", disabled: false },
+      { text: "7", disabled: false },
+      { text: "8", disabled: false },
+      { text: "1,000", disabled: false },
+    ],
+    followUp: {
+      options: [
+        { text: "I know that isn't the right number", disabled: false },
+        { text: "I don't know that isn't the right number", disabled: false },
+      ]
+    }
   }
+
 
 }

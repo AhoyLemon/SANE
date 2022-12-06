@@ -1,0 +1,14 @@
+.tongue
+  dl.question
+    dt 
+      .title What does your tongue taste like?
+    dd
+      form(@submit.prevent="answerQuestion('tongue')")
+        ul.options.simple-options(count="2")
+          li(v-for="option in questions.tongue.options" @mouseover="saneHover(true)" @mouseleave="saneHover(false)")
+            label(:class="{'active': option.text == answers.tongue, 'inactive': (answers.tongue && option.text != answers.tongue)}" )
+              input(type="radio" :value="option.text" v-model="answers.tongue")
+              .text
+                span {{option.text}}
+        .button-row
+          button(type="submit" :disabled="!answers.tongue") Proceed

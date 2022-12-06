@@ -5,7 +5,7 @@ var app = new Vue({
     questions: questions,
 
     current: {
-      question: 13
+      question: 1
     },
 
     ui: {
@@ -26,9 +26,9 @@ var app = new Vue({
         min: 27,
         max: 103,
       },
-      validName: {
-        min: 5,
-        max: 22,
+      yourName: {
+        min: 7,
+        max: 21,
       },
       youThink: {
         saneHover: false
@@ -50,6 +50,17 @@ var app = new Vue({
         phase: 1,
         timer: null,
         ms: 0
+      },
+      ramblingQuestion: {
+        followUp: {
+          display:false
+        }
+      },
+      howManyLights: {
+        flashing: false,
+        phase: 1,
+        timer: null,
+        ms: null
       }
     },
 
@@ -67,6 +78,9 @@ var app = new Vue({
       loveObject: null,
       enterCode: null,
       enterCodeAgain: null,
+      ramblingQuestion: null,
+      howManyLights: null,
+      howManyLightsFollowUp: null,
       enterCodeFollowUp: {
         confirmed: null,
         questions: []
@@ -149,6 +163,17 @@ var app = new Vue({
       
     },
 
+    startLights() {
+      const self = this;
+      self.ui.howManyLights.phase = 2;
+      self.ui.howManyLights.flashing = true;
+
+      self.ui.breatheNormally.timer = setTimeout(function() {
+        self.ui.howManyLights.flashing = false;
+        self.ui.howManyLights.phase = 3;
+      }, 7300);
+    },
+
     answerQuestion(q) {
       const self = this;
       
@@ -177,10 +202,20 @@ var app = new Vue({
         self.validateCode(1);
       } else if (q == "enterCode2") {
         self.validateCode(2);
+      } else if (q == "ramblingQuestion") {
+        if (self.answers.ramblingQuestion == "I don't know.") {
+          self.ui.ramblingQuestion.followUp.display = true;
+        } else {
+          self.current.question++;
+        }
+      } else if (q == "howManyLights") {
+        if (self.answers.howManyLights == "1" || self.answers.howManyLights == "2" || self.answers.howManyLights == "7" || self.answers.howManyLights == "8" || self.answers.howManyLights == "1,000") {
+          self.ui.howManyLights.phase = 4;
+        } else {
+          self.current.question++;
+        }
       } else {
-
         // This isn't a special round, go ahead and just advance to the next one.
-        
         self.current.question++;
       }
       
@@ -277,6 +312,50 @@ var app = new Vue({
         }
       } else {
         const current = self.answers.hatsExplanation.length
+        if (current < rules.min)  {
+          return {
+            display:true,
+            current: current,
+            min: rules.min,
+            max: rules.max,
+            error: true,
+            status: "tooShort"
+          }
+        } else if (current > rules.max) {
+          return {
+            display:true,
+            current: current,
+            min: rules.min,
+            max: rules.max,
+            error: true,
+            status: "tooLong"
+          }
+        } else {
+          return {
+            display:true,
+            current: current,
+            min: rules.min,
+            max: rules.max,
+            error: false,
+            status: "valid"
+          }
+        }
+      }
+    },
+    computedNameCharacters() {
+      const self = this;
+      const rules = self.ui.yourName;
+      if (!self.answers.yourName) {
+        return {
+          display:false,
+          current: 0,
+          min: rules.min,
+          max: rules.min,
+          error: true,
+          status: "empty"
+        }
+      } else {
+        const current = self.answers.yourName.length
         if (current < rules.min)  {
           return {
             display:true,

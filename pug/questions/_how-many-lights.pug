@@ -1,0 +1,37 @@
+.how-many-lights
+  dl.question
+    dt(v-if="ui.howManyLights.phase < 3") 
+      .title Pay attention to this circle...
+    dt(v-if="ui.howManyLights.phase < 3")
+      .circle-holder
+        .light.circle(:class="{'flashing': ui.howManyLights.flashing}")
+    dt(v-if="ui.howManyLights.phase == 1")
+      .please
+        p The circle will flash with a yellow light. Count the number of times you see the yellow light. When you are ready, press the button below.
+    dd(v-if="ui.howManyLights.phase == 1")
+      .big-button-holder
+        button.begin(type="button" @click="startLights()") BEGIN
+    dt(v-if="ui.howManyLights.phase == 3")
+      .title How many times did the light flash?
+    dd(v-if="ui.howManyLights.phase == 3")
+      form(@submit.prevent="answerQuestion('howManyLights')")
+        ul.options.simple-options(count="4")
+          li(v-for="option,key in questions.howManyLights.options")
+            label(:class="{'active': answers.howManyLights == option.text, 'inactive': answers.howManyLights && answers.howManyLights != option.text }")
+              input(type="radio" :value="option.text" v-model="answers.howManyLights" :disabled="option.disabled")
+              .text
+                span {{option.text}}
+        .button-row
+          button(type="submit" :disabled="!answers.howManyLights") Proceed
+    dt(v-if="ui.howManyLights.phase == 4")
+      .title You know that isn't the right number, don't you?
+    dd(v-if="ui.howManyLights.phase == 4")
+      form(@submit.prevent="answerQuestion('howManyLightsFollowUp')")
+        ul.options.simple-options(count="1")
+          li(v-for="option,key in questions.howManyLights.followUp.options")
+            label(:class="{'active': answers.howManyLightsFollowUp == option.text, 'inactive': answers.howManyLightsFollowUp && answers.howManyLightsFollowUp != option.text }")
+              input(type="radio" :value="option.text" v-model="answers.howManyLightsFollowUp" :disabled="option.disabled")
+              .text
+                span {{option.text}}
+        .button-row
+          button(type="submit" :disabled="!answers.howManyLightsFollowUp") Proceed

@@ -2,7 +2,7 @@ form { display:grid; gap:$gap;
   button { cursor: pointer; }
 
   // Radio Holder (mainly)
-  label { cursor: pointer; opacity: 50%; position: relative; display: flex; justify-content: center; font-family: $serif; align-items: center;
+  label { cursor: pointer; opacity: 50%; position: relative; display: flex; justify-content: center; font-family: $serif; font-family: $sans-serif; align-items: center;
     input { max-width: 100%; }
     input[type="radio"] { position: absolute; top:5px; left:5px; transform:scale(1.5); transform-origin: top left; }
     input[type="checkbox"] { position: absolute; top:5px; left:5px; transform:scale(1.5); transform-origin: top left; }
@@ -17,13 +17,17 @@ form { display:grid; gap:$gap;
   input[type="number"].simple { appearance: textfield; -moz-appearance: textfield; }
 
   input[type="text"], 
-  textarea { display:block; width:100%; font-size:2rem; padding:0.5em; background:rgba(0,0,0,0.75); color:rgb(64, 197, 34); border:2px solid rgb(43, 43, 43); font-family: $sans-serif;  outline: none;
-    &:placeholder { color:rgb(95, 119, 90); }
-    &:focus { border-color:rgb(64, 197, 34); }
+  textarea { display:block; width:100%; font-size:2rem; padding:0.5em; background:rgba(0,0,0,0.75); color:$white; border:2px solid rgb(43, 43, 43); font-family: $sans-serif;  outline: none;
+    &::placeholder { color:rgb(95, 119, 90); }
+    &:focus { border-color:$valid; color:lighten($valid,50%);
+      &::placeholder { color:rgba(158, 197, 149, 0.75); }
+      &:invalid { border-color:$error; color:lighten($error,30%); }
+    }
+    
   }
   input[type="number"],
   input[type="password"] { background:rgba(0,0,0,0.75); color:rgb(64, 197, 34); border:2px solid rgb(43, 43, 43); outline:none;
-    &:placeholder { color:rgb(95, 119, 90); }
+    &::placeholder { color:rgb(95, 119, 90); }
     &:focus { border-color:rgb(64, 197, 34); }
   }
 
@@ -80,7 +84,7 @@ form { display:grid; gap:$gap;
       *:last-child { text-align: right; }
     }
 
-    button { font-family: $sans-serif; padding:0.25em 0.75em; font-weight: 300; text-transform: uppercase; font-size:1.5rem; border:1px solid rgba(0,0,0,0.25); transition: opacity 0.3s linear;
+    button { font-family: $sans-serif; padding:0.25em 0.75em; font-weight:$semibold; text-transform: uppercase; font-size:1.5rem; border:1px solid rgba(0,0,0,0.25); transition: opacity 0.3s linear;
       &[type="submit"] { background:#eee; color:#194d91;
         &:not([disabled]) {
           &:hover, &:focus { background:#194d91; color:#eee; }

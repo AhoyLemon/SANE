@@ -279,8 +279,10 @@ var app = new Vue({
     },
     computedDrinksError() {
       const self = this;
-      
-      if (self.answers.howManyDrinks > 16) {
+
+      if (!self.answers.howManyDrinks) {
+        return "Answer using the slider above.";
+      } else if (self.answers.howManyDrinks > 16) {
         return "I am worried about you.";
       } else if (self.answers.howManyDrinks > 10) {
         return "You have a drinking problem.";

@@ -7,7 +7,7 @@
         .field
           input(type="range" :min="ui.howManyDrinks.min" :max="ui.howManyDrinks.max" v-model="answers.howManyDrinks")
         .field
-          .readout {{computedDrinksOutput}}
+          .readout(:class="{ 'warning': answers.howManyDrinks >= (ui.howManyDrinks.max * 0.8)}") {{computedDrinksOutput}}
         .button-row.split(style="grid-column: span 2")
           .error-message
             span(v-if="computedDrinksError") {{computedDrinksError}}

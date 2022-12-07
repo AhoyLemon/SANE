@@ -39,7 +39,7 @@
 
 .favorite-color {
   label { height:8rem; }
-  span { font-size:3rem; font-weight: $bold; display:block; }
+  span { font-size:3rem; font-weight: $semibold; display:block; }
 }
 
 
@@ -47,7 +47,9 @@
   form { grid-template-columns: 1fr 6em; gap:($gap * 2);
     input { width:100%; }
     input[type="range"] { height: 3rem; }
-    .readout { font-family:monospace; font-size:3.7rem; line-height: 100%; }
+    .readout { font-family:monospace; font-size:3.7rem; line-height: 100%;
+      &.warning { color:orange; }
+    }
   }
 }
 

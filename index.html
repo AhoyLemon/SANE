@@ -7,11 +7,11 @@
     <link href="css/site.css" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
-    <meta http-equiv="last-modified" content="2022-12-07T05:13:56.163Z">
+    <meta http-equiv="last-modified" content="2022-12-07T23:06:39.938Z">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Caudex&amp;family=Zen+Dots&amp;display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk&amp;display=swap" rel="stylesheet">
+    <link href="	https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700" rel="stylesheet">
   </head>
   <body>
     <div id="app" v-cloak>
@@ -41,7 +41,7 @@
                         <input type="range" :min="ui.howManyDrinks.min" :max="ui.howManyDrinks.max" v-model="answers.howManyDrinks">
                       </div>
                       <div class="field">
-                        <div class="readout">{{computedDrinksOutput}}</div>
+                        <div class="readout" :class="{ 'warning': answers.howManyDrinks &gt;= (ui.howManyDrinks.max * 0.8)}">{{computedDrinksOutput}}</div>
                       </div>
                       <div class="button-row split" style="grid-column: span 2">
                         <div class="error-message"><span v-if="computedDrinksError">{{computedDrinksError}}</span></div>
@@ -658,7 +658,7 @@
       <script src="js/libraries/vue.full.js"></script>
       <script>const testing = true;</script>
       <script src="js/libraries/howler.min.js"></script>
-      <script src="js/min/site.min.js?updated2022-12-07T05:13:56.163Z"></script>
+      <script src="js/min/site.min.js?updated2022-12-07T23:06:39.938Z"></script>
     </div>
   </body>
 </html>

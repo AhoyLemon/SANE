@@ -1,0 +1,41 @@
+.hearing-music
+  dl.question(v-if="ui.hearingMusic.phase == 1")
+    dt
+      .title Are you hearing that music?
+    dd
+      form(@submit.prevent="answerQuestion('hearingMusic')")
+        ul.options.simple-options(count="2")
+          li(v-for="option in questions.hearingMusic.options" :span="option.span")
+            label(:class="{'active': option.text == answers.hearingMusic, 'inactive': (answers.hearingMusic && option.text != answers.hearingMusic)}")
+              input(type="radio" :value="option.text" v-model="answers.hearingMusic")
+              .text
+                span {{option.text}}
+        .button-row
+          button(type="submit" :disabled="!answers.hearingMusic") Proceed
+  dl.question(v-if="ui.hearingMusic.phase == 2")
+    dt
+      .title Must have just been your imagination.
+    dd
+      form(@submit.prevent="answerQuestion('hearingMusicFollowUp')")
+        ul.options.simple-options(count="2")
+          li(v-for="option in questions.hearingMusic.followUp.no.options" :span="option.span")
+            label(:class="{'active': option.text == answers.hearingMusicFollowUp, 'inactive': (answers.hearingMusicFollowUp && option.text != answers.hearingMusicFollowUp)}")
+              input(type="radio" :value="option.text" v-model="answers.hearingMusicFollowUp")
+              .text
+                span {{option.text}}
+        .button-row
+          button(type="submit" :disabled="!answers.hearingMusicFollowUp") Proceed
+  dl.question(v-if="ui.hearingMusic.phase == 3")
+    dt
+      .title(v-if="answers.hearingMusic == 'Yes, I hear music.'") What does it sound like?
+      .title(v-if="answers.hearingMusic == 'I did, but not anymore.'") What did it sound like?
+    dd
+      form(@submit.prevent="answerQuestion('hearingMusicFollowUp')")
+        ul.options.simple-options(count="2")
+          li(v-for="option in questions.hearingMusic.followUp.yes.options" :span="option.span")
+            label(:class="{'active': option.text == answers.hearingMusicFollowUp, 'inactive': (answers.hearingMusicFollowUp && option.text != answers.hearingMusicFollowUp)}")
+              input(type="radio" :value="option.text" v-model="answers.hearingMusicFollowUp")
+              .text
+                span {{option.text}}
+        .button-row
+          button(type="submit" :disabled="!answers.hearingMusicFollowUp") Proceed

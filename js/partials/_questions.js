@@ -185,6 +185,32 @@ const questions = {
         { text: "I don't know that isn't the right number", disabled: false },
       ]
     }
+  },
+
+  hearingMusic: {
+    options: [
+      { text: "Yes, I hear music.", span:1 },
+      { text: "I don't hear anything.", span:1 },
+      { text: "I did, but not anymore.", span:2 },
+    ],
+    followUp: {
+      no: {
+        title: "Must have been your imagination",
+        options: [
+          { text: "I guess so." },
+          { text: "I'm sorry." }
+        ]
+      },
+      yes: {
+        title: "What did it sound like?",
+        options: [
+          { text: "Cheerful" },
+          { text: "Ominous" },
+          { text: "Threatening" },
+          { text: "Plesant" },
+        ]
+      }
+    }
   }
 
 

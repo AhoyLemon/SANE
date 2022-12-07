@@ -7,7 +7,7 @@
     <link href="css/site.css" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
-    <meta http-equiv="last-modified" content="2022-12-06T04:41:09.316Z">
+    <meta http-equiv="last-modified" content="2022-12-07T05:13:56.163Z">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Caudex&amp;family=Zen+Dots&amp;display=swap" rel="stylesheet">
@@ -585,6 +585,71 @@
                 </dl>
               </div>
             </template>
+            <template v-if="current.question == 17">
+              <div class="hearing-music">
+                <dl class="question" v-if="ui.hearingMusic.phase == 1">
+                  <dt>
+                    <div class="title">Are you hearing that music?</div>
+                  </dt>
+                  <dd>
+                    <form @submit.prevent="answerQuestion('hearingMusic')">
+                      <ul class="options simple-options" count="2">
+                        <li v-for="option in questions.hearingMusic.options" :span="option.span">
+                          <label :class="{'active': option.text == answers.hearingMusic, 'inactive': (answers.hearingMusic &amp;&amp; option.text != answers.hearingMusic)}">
+                            <input type="radio" :value="option.text" v-model="answers.hearingMusic">
+                            <div class="text"><span>{{option.text}}</span></div>
+                          </label>
+                        </li>
+                      </ul>
+                      <div class="button-row">
+                        <button type="submit" :disabled="!answers.hearingMusic">Proceed</button>
+                      </div>
+                    </form>
+                  </dd>
+                </dl>
+                <dl class="question" v-if="ui.hearingMusic.phase == 2">
+                  <dt>
+                    <div class="title">Must have just been your imagination.</div>
+                  </dt>
+                  <dd>
+                    <form @submit.prevent="answerQuestion('hearingMusicFollowUp')">
+                      <ul class="options simple-options" count="2">
+                        <li v-for="option in questions.hearingMusic.followUp.no.options" :span="option.span">
+                          <label :class="{'active': option.text == answers.hearingMusicFollowUp, 'inactive': (answers.hearingMusicFollowUp &amp;&amp; option.text != answers.hearingMusicFollowUp)}">
+                            <input type="radio" :value="option.text" v-model="answers.hearingMusicFollowUp">
+                            <div class="text"><span>{{option.text}}</span></div>
+                          </label>
+                        </li>
+                      </ul>
+                      <div class="button-row">
+                        <button type="submit" :disabled="!answers.hearingMusicFollowUp">Proceed</button>
+                      </div>
+                    </form>
+                  </dd>
+                </dl>
+                <dl class="question" v-if="ui.hearingMusic.phase == 3">
+                  <dt>
+                    <div class="title" v-if="answers.hearingMusic == 'Yes, I hear music.'">What does it sound like?</div>
+                    <div class="title" v-if="answers.hearingMusic == 'I did, but not anymore.'">What did it sound like?</div>
+                  </dt>
+                  <dd>
+                    <form @submit.prevent="answerQuestion('hearingMusicFollowUp')">
+                      <ul class="options simple-options" count="2">
+                        <li v-for="option in questions.hearingMusic.followUp.yes.options" :span="option.span">
+                          <label :class="{'active': option.text == answers.hearingMusicFollowUp, 'inactive': (answers.hearingMusicFollowUp &amp;&amp; option.text != answers.hearingMusicFollowUp)}">
+                            <input type="radio" :value="option.text" v-model="answers.hearingMusicFollowUp">
+                            <div class="text"><span>{{option.text}}</span></div>
+                          </label>
+                        </li>
+                      </ul>
+                      <div class="button-row">
+                        <button type="submit" :disabled="!answers.hearingMusicFollowUp">Proceed</button>
+                      </div>
+                    </form>
+                  </dd>
+                </dl>
+              </div>
+            </template>
           </div>
         </div>
       </main>
@@ -592,7 +657,8 @@
     <div class="javascripts">
       <script src="js/libraries/vue.full.js"></script>
       <script>const testing = true;</script>
-      <script src="js/min/site.min.js?updated2022-12-06T04:41:09.316Z"></script>
+      <script src="js/libraries/howler.min.js"></script>
+      <script src="js/min/site.min.js?updated2022-12-07T05:13:56.163Z"></script>
     </div>
   </body>
 </html>

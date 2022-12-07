@@ -5,7 +5,7 @@ var app = new Vue({
     questions: questions,
 
     current: {
-      question: 16
+      question: 1
     },
 
     ui: {
@@ -61,6 +61,11 @@ var app = new Vue({
         phase: 1,
         timer: null,
         ms: null
+      },
+
+      hearingMusic: {
+        now: false,
+        phase: 1
       }
     },
 
@@ -87,7 +92,9 @@ var app = new Vue({
       },
       breatheNormally: {
         why: []
-      }
+      },
+      hearingMusic: null,
+      howManyLightsFollowUp: []
     }
   },
 
@@ -174,6 +181,27 @@ var app = new Vue({
       }, 7300);
     },
 
+    startMusic(whatMusic) {
+      const self = this;
+
+      if (whatMusic == "quiet") {
+        if (!self.ui.hearingMusic.now) {
+          comet1.play();
+          comet1.fade(0,0.05, 12000);
+          self.ui.hearingMusic.now = "quiet";
+        }
+        
+      } else if (whatMusic == "loop") {
+        if (self.ui.hearingMusic.now != "loop") {
+          comet1.fade(0.05,0, 6000);
+          cometLoop.play();
+          cometLoop.fade(0,0.1, 6000);
+          self.ui.hearingMusic.now = "loop";
+        }
+      }
+      
+    },
+
     answerQuestion(q) {
       const self = this;
       
@@ -183,6 +211,12 @@ var app = new Vue({
       } else if (q == "favoriteColor") {
         self.ui.aside.nametagBackground = self.ui.favoriteColor.opposite;
         self.ui.aside.showNametag = true;
+      }
+
+      if (self.current.question == 15) {
+        self.startMusic('quiet');
+      } else if (self.current.question == 17) {
+        self.startMusic('loop');
       }
 
       // Advance to next question, unless...
@@ -214,6 +248,15 @@ var app = new Vue({
         } else {
           self.current.question++;
         }
+      } else if (q == "hearingMusic") {
+        if (self.answers.hearingMusic == "I don't hear anything.") {
+          self.ui.hearingMusic.phase = 2;
+        } else if (self.answers.hearingMusic == "Yes, I hear music." || self.answers.hearingMusic == "I did, but not anymore.") {
+          self.ui.hearingMusic.phase = 3;
+        } else {
+          self.current.question++;
+        }
+        
       } else {
         // This isn't a special round, go ahead and just advance to the next one.
         self.current.question++;
@@ -224,14 +267,6 @@ var app = new Vue({
   },
 
   computed: {
-    validNameEntered() {
-      const self = this;
-      if (self.answers.yourName.length >= self.ui.validName.min && self.answers.yourName.length <= self.ui.validName.max) {
-        return true;
-      } else {
-        return false;
-      }
-    },
     computedDrinksOutput() {
       const self = this;
       if (self.answers.howManyDrinks < 1) {

@@ -147,3 +147,64 @@
     &.flashing { animation-name: flashinglight; animation-duration: 7s; animation-timing-function: linear; animation-iteration-count: 1; }
   }
 }
+
+.sort-cities {
+  form { display:grid; grid-template-columns: repeat(2,1fr); gap:$gap; }
+  .draglist {
+    .item.answer { grid-template-columns: 3em 1fr 5.25em;
+      .population { font-family: monospace; font-size: 0.85rem; line-height: 2rem; text-align: right; } padding-right: 10px;
+    }
+    .item.scored { grid-template-columns: 3em 1fr 2em; position: relative;
+      .score { text-align: right; padding-right: 5px; font-family: monospace; }
+      
+      &.perfect { background:rgb(208, 247, 208);
+        .text { color:rgb(17, 31, 17); }
+        .score { transform: scale(0.8); }
+        .order { color:rgb(189, 250, 189); }
+      }
+      &.close { background:rgb(228, 245, 228);
+        .text { color:rgb(17, 31, 17); }
+        .score { transform: scale(0.8); }
+      }
+      &.meh { opacity: 0.8; }
+      &.bad { background-color:#edb2b2;
+        .order { color:#ff3737; }
+        .score { font-weight: 600; }
+      }
+      &.very-bad { background-color:#e65c5c;
+        .score { font-weight: 700; transform: scale(1.35); }
+      }
+      &.terrible { background-color:#e01616;
+        &:before { content: "←"; @include position(absolute,-10px,-40px); color:white; font-size:1.5em; }
+        .text { color:white; }
+        .score { font-weight: 900; transform:scale(1.5); color:#eddedf; text-shadow: 1px 1px 1px black; }
+      }
+      &.pathetic {
+        &:before { color:rgb(255, 49, 49); font-size:1.5em; transform: scale(1.5); }
+        .score { transform:scale(2); color:#eddedf; text-shadow: 3px 3px 3px black; }
+
+      }
+    }
+  }
+  .button-row { grid-column: span 2;
+    .feedback * { text-align: left !important; }
+    .sort-feedback { font-size:1.25rem; font-weight: 625; }
+    .score-feedback {
+      li { text-align: left;
+        // &.wrong { color:#f0a8a8; }
+        &.bad { color:#f5baba; font-size:110%; }
+        &.terrible { color:#dd6b6b; font-size:125%; }
+        &.total-score { font-size:140%;
+          strong { color:rgb(248, 38, 38); }
+        }
+      }
+    }
+    .button-holder { display:flex; align-items: flex-end;
+      button { background:#eee; color:#194d91;
+        &:not([disabled]) {
+          &:hover, &:focus { background:#194d91; color:#eee; }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,72 @@
+.sort-cities
+  dl.question
+    dt 
+      .subtitle Constant criticism can have long-term effects on self worth and relationships.
+      .title Sort these world cities by population.
+      //- .please Do it quickly, and do not screw it up.
+    dd.q-and-a
+      form(@submit.prevent="answerQuestion('answerQuestion')")
+        template(v-if="!ui.sortCities.showScores")
+          draggable.draglist(class="list-group" tag="ul" v-bind="dragOptions" v-model="ui.sortCities.cities" @start="ui.dragList.dragging = true" @end="cityDragged()")
+            transition-group(type="transition" :name="!ui.dragList.dragging ? 'flip-list' : null")
+              li.item.dragitem(v-for="option,key in ui.sortCities.cities" :key="key")
+                .order-holder
+                  span.order {{(key + 1)}}
+                .text
+                  strong.name {{option.name}}
+                  | , 
+                  span.country {{option.country}}
+        template(v-if="ui.sortCities.showScores")
+          draggable.draglist(class="list-group" tag="ul" v-model="ui.sortCities.answers" :disabled="true")
+            transition-group(type="transition")
+              li.item.dragitem.disabled.answer(v-for="option,key in ui.sortCities.answers" :key="key" disabled)
+                .order-holder
+                  span.order {{(key + 1)}}
+                .text
+                  strong.name {{option.name}}
+                  | , 
+                  span.country {{option.country}}
+                .population
+                  span.count {{option.population.toLocaleString()}}
+        template(v-if="ui.sortCities.showScores")
+          draggable.draglist.disabled(class="list-group" tag="ul" v-model="ui.sortCities.cities" :disabled="true")
+            transition-group(type="transition" :name="!ui.dragList.dragging ? 'flip-list' : null")
+              li.item.dragitem.disabled.scored(v-for="option,key in ui.sortCities.cities" :key="key" :class="{'perfect': option.score == 3, 'close': option.score == 2, 'meh': option.score == 0, 'bad': option.score < 0, 'very-bad': option.score < -2, 'terrible': option.score < -3, 'pathetic': option.score < -4 }" :score="option.score" :disabled="true")
+                .order-holder
+                  span.order {{(key + 1)}}
+                .text
+                  strong.name {{option.name}}
+                  | , 
+                  span.country {{option.country}}
+                .score
+                  span.score {{option.score}}
+        .button-row.split
+          .feedback.sort-feedback(v-if="!ui.sortCities.showScores")
+            .message(v-html="ui.sortCities.sortFeedback")
+          .feedback.score-feedback(v-if="ui.sortCities.showScores")
+            ul.your-scores(v-if="ui.sortCities.showScores")
+              li.wrong(v-if="ui.sortCities.count.wrong > 0")
+                span(v-if="ui.sortCities.count.wrong == 1")
+                  | One of your answers was #[bold wrong]
+                span(v-else)
+                  | You got #[strong {{ui.sortCities.count.wrong}}] answers #[strong wrong].
+              li.bad(v-if="ui.sortCities.count.bad > 0 ")
+                span(v-if="ui.sortCities.count.bad == 1")
+                  | One of your answers was #[strong bad].
+                span(v-else)
+                  | #[strong {{ui.sortCities.count.bad}}] of those answers were #[strong bad].
+              li.terrible(v-if="ui.sortCities.count.veryBad > 0 ")
+                span(v-if="ui.sortCities.count.veryBad == 1")
+                  | One of your answers was #[strong just terrible].
+                span(v-else)
+                  | #[strong {{ui.sortCities.count.veryBad}}] of those answers were #[strong simply terrible].
+              
+              li.total-score(v-if="ui.sortCities.totalScore < 0")
+                span
+                  | Your total score is #[strong {{ui.sortCities.totalScore}}]
+
+
+          .button-holder(v-if="!ui.sortCities.showScores")
+            button(type="button" @click="scoreCities()" :disabled="ui.sortCities.dragCount < 2") Calculate
+          .button-holder(v-if="ui.sortCities.showScores")
+            button(type="submit" :disabled="ui.sortCities.submitButtonDisabled") Proceed

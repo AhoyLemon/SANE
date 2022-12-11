@@ -5,7 +5,7 @@ var app = new Vue({
     questions: questions,
 
     current: {
-      question: 1
+      question: 20
     },
 
     ui: {
@@ -66,6 +66,51 @@ var app = new Vue({
       hearingMusic: {
         now: false,
         phase: 1
+      },
+
+      yourPrediction: {
+        diagnosis: null,
+        phase: 1
+      },
+
+      sortCities: {
+        cities: [], 
+        answers: [],
+        totalScore: 0,
+        showScores: false,
+        dragCount: 0,
+        sortFeedback: `Sort the cities by population. Do it quickly and <strong>do not make any mistakes</strong>.`,
+        sortFeedbackOptions: [
+          `Be more efficient when you sort the cities.`,
+          `Go faster.`,
+          `Think about it.`,
+          `Go significantly faster.`,
+          `Be faster in your sorting.`,
+          `That's probably not right.`,
+          `You really think so? <strong>Think about it.</strong>`,
+          `Take your time.`,
+          `Slow down.`,
+          `Be faster.`,
+          `Faster!`,
+          `Don't do it like that.`,
+          `That's probably wrong.`,
+          `You should read more.`,
+          `You're not familiar with other countries.`,
+          `You aren't getting this.`,
+          `You're probably not able to do this.`,
+          `Are you even trying?`,
+          `Don't do it that way.`
+        ],
+        submitButtonDisabled: true,
+        count: {
+          wrong: 0,
+          bad: 0,
+          veryBad: 0
+        }
+      },
+
+      dragList: {
+        dragging: false
       }
     },
 
@@ -94,11 +139,17 @@ var app = new Vue({
         why: []
       },
       hearingMusic: null,
-      howManyLightsFollowUp: []
+      howManyLightsFollowUp: [],
+      whyTest: null,
+      yourPrediction: null,
+      yourPredictionFollowUp: null,
+      sortCities: []
     }
   },
 
   methods: {
+
+
     saneHover(v) { 
       const self = this;
       self.ui.youThink.saneHover = v;
@@ -202,6 +253,77 @@ var app = new Vue({
       
     },
 
+    cityDragged() {
+      const self = this;
+      self.ui.sortCities.dragCount += 1;
+      if (self.ui.sortCities.dragCount < 1) {
+        self.ui.sortCities.sortFeedback = `Sort the cities by population. Do it quickly and <strong>do not screw it up</strong>`;
+      } else {
+        self.ui.sortCities.sortFeedback = randomFrom(self.ui.sortCities.sortFeedbackOptions);
+      }
+    },
+
+    scoreCities() {
+      const self = this;
+      const answers = self.ui.sortCities.answers;
+
+      self.ui.sortCities.cities.forEach(function(element, key) {
+        
+        if (answers[key] && answers[key].name && element.name == answers[key].name) {
+          element.score = 3;
+        } else if (answers[key-1] && answers[key-1].name && element.name == answers[key-1].name) {
+          element.score = 2;
+        } else if (answers[key+1] && answers[key+1].name && element.name == answers[key+1].name) {
+          element.score = 2;
+        } else if (answers[key-2] && answers[key-2].name && element.name == answers[key-2].name) {
+          element.score = 0;
+        } else if (answers[key+2] && answers[key+2].name && element.name == answers[key+2].name) {
+          element.score = 0;
+        } else if (answers[key-3] && answers[key-3].name && element.name == answers[key-3].name) {
+          element.score = -1;
+        } else if (answers[key+3] && answers[key+3].name && element.name == answers[key+3].name) {
+          element.score = -1;
+        } else if (answers[key-4] && answers[key-4].name && element.name == answers[key-4].name) {
+          element.score = -2;
+        } else if (answers[key+4] && answers[key+4].name && element.name == answers[key+4].name) {
+          element.score = -2;
+        } else if (answers[key-5] && answers[key-5].name && element.name == answers[key-5].name) {
+          element.score = -3;
+        } else if (answers[key+5] && answers[key+5].name && element.name == answers[key+5].name) {
+          element.score = -3;
+        } else if (answers[key-6] && answers[key-6].name && element.name == answers[key-6].name) {
+          element.score = -4;
+        } else if (answers[key+6] && answers[key+6].name && element.name == answers[key+6].name) {
+          element.score = -4;
+        } else {
+          element.score = -5;
+        }
+
+        self.ui.sortCities.totalScore += element.score;
+
+        if (element.score < 3) {
+          self.ui.sortCities.count.wrong += 1;
+        }
+        if (element.score < 0) {
+          self.ui.sortCities.count.bad += 1;
+        }
+        if (element.score < -2) {
+          self.ui.sortCities.count.veryBad += 1;
+        }
+
+
+      });
+
+      self.ui.sortCities.showScores = true;
+
+      setTimeout(() => {
+        self.ui.sortCities.submitButtonDisabled = false
+      }, 3000)
+      
+      
+
+    },
+
     answerQuestion(q) {
       const self = this;
       
@@ -220,7 +342,16 @@ var app = new Vue({
       }
 
       // Advance to next question, unless...
-      if (q == "hats") {
+      if (q == 'yourPrediction') {
+        if (self.answers.yourPrediction.includes(" SANE")) {
+          self.ui.yourPrediction.diagnosis = "sane";
+        } else if (self.answers.yourPrediction.includes(" INSANE")) {
+          self.ui.yourPrediction.diagnosis = "insane";
+        } else {
+          self.ui.yourPrediction.diagnosis = "uncertain";
+        }
+        self.ui.yourPrediction.phase = 2;
+      } else if (q == "hats") {
         
         if (self.answers.hats == 'strongly disagree') {
           self.ui.hatsExplanation.placeholder = "You have confessed to an unhealthy aversion to hats. What makes you so afraid?"
@@ -447,11 +578,35 @@ var app = new Vue({
         let ms = parts[1].substring(0,2);
         return `<span class="big">${seconds}</span><span class="small">${ms}</span>`;
       }
+    },
+
+    dragOptions() {
+      return {
+        animation: 200,
+        group: "description",
+        disabled: false,
+        ghostClass: "ghost"
+      };
     }
   },
 
   mounted: function() {
+    const self = this;
+    self.ui.sortCities.cities = [...self.questions.sortCities.cities];
+    self.ui.sortCities.cities = shuffle(self.ui.sortCities.cities);
+    self.ui.sortCities.cities.length = 10;
 
+    self.ui.sortCities.answers = [...self.ui.sortCities.cities];
+    self.ui.sortCities.answers.sort(function(a, b) {
+      
+      if (a.population > b.population) return -1;
+      if (a.population < b.population) return 1;
+      return 0;
+    });
+
+    // self.ui.sortCities.cities.forEach(function(element, key) {
+    //   element.score = 0;
+    // });
   }
 
 });

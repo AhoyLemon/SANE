@@ -1,0 +1,60 @@
+.your-prediction
+  dl.question(v-if="ui.yourPrediction.phase == 1")
+    dt 
+      .title What do you predict your results will be?
+    dd
+      form(@submit.prevent="answerQuestion('yourPrediction')")
+        ul.options.simple-options(count="2")
+          li(v-for="option,key in questions.yourPrediction.options")
+            label(:class="{'active': answers.yourPrediction == option.text, 'inactive': answers.yourPrediction && answers.yourPrediction != option.text }")
+              input(type="radio" :value="option.text" v-model="answers.yourPrediction")
+              .text
+                span(v-html="option.html")
+        .button-row
+          button(type="submit" :disabled="!answers.yourPrediction") Proceed
+  dl.question(v-if="ui.yourPrediction.phase == 2")
+
+    // SANE follow-up
+    dt(v-if="ui.yourPrediction.diagnosis == 'sane'")
+      .title {{questions.yourPrediction.followUp.sane.title}}
+    dd(v-if="ui.yourPrediction.diagnosis == 'sane'")
+      form(@submit.prevent="answerQuestion('yourPredictionFollowUp')")
+        ul.options.simple-options(count="2")
+          li(v-for="option,key in questions.yourPrediction.followUp.sane.options")
+            label(:class="{'active': answers.yourPredictionFollowUp == option.text, 'inactive': answers.yourPredictionFollowUp && answers.yourPredictionFollowUp != option.text }")
+              input(type="radio" :value="option.text" v-model="answers.yourPredictionFollowUp")
+              .text
+                span {{option.text}}
+        .button-row
+          button(type="submit" :disabled="!answers.yourPredictionFollowUp") Proceed
+    
+    // INSANE follow-up
+    dt(v-if="ui.yourPrediction.diagnosis == 'insane'")
+      .title {{questions.yourPrediction.followUp.insane.title}}
+    dd(v-if="ui.yourPrediction.diagnosis == 'insane'")
+      form(@submit.prevent="answerQuestion('yourPredictionFollowUp')")
+        ul.options.simple-options(count="2")
+          li(v-for="option,key in questions.yourPrediction.followUp.insane.options")
+            label(:class="{'active': answers.yourPredictionFollowUp == option.text, 'inactive': answers.yourPredictionFollowUp && answers.yourPredictionFollowUp != option.text }")
+              input(type="radio" :value="option.text" v-model="answers.yourPredictionFollowUp" @change="ui.yourPrediction.diagnosis = option.diagnosis")
+              .text
+                span {{option.text}}
+        .button-row
+          button(type="submit" :disabled="!answers.yourPredictionFollowUp") Proceed
+
+    // UNCERTAIN follow-up
+    dt(v-if="ui.yourPrediction.diagnosis == 'uncertain'")
+      .title {{questions.yourPrediction.followUp.uncertain.title}}
+    dd(v-if="ui.yourPrediction.diagnosis == 'uncertain'")
+      form(@submit.prevent="answerQuestion('yourPredictionFollowUp')")
+
+        ul.options.likert(:count="questions.yourPrediction.followUp.uncertain.options.length")
+          li(v-for="option,key in questions.yourPrediction.followUp.uncertain.options")
+            label(:class="{'active': answers.yourPredictionFollowUp == option.text, 'inactive': answers.yourPredictionFollowUp && answers.yourPredictionFollowUp != option.text }")
+              .inside
+                .radio-holder
+                  input(type="radio" :value="option.text" v-model="answers.yourPredictionFollowUp")
+                .text
+                  span {{option.text}}
+        .button-row
+          button(type="submit" :disabled="!answers.yourPredictionFollowUp") Proceed

@@ -211,6 +211,115 @@ const questions = {
         ]
       }
     }
+  },
+
+  whyTest: {
+    options: [
+      { text: "I want to learn more about myself." },
+      { text: "Someone suggested I do this." },
+      { text: "I would like a SANE sticker." },
+      { text: "I am worried that I might be insane." },
+    ],
+  },
+  yourPrediction: {
+    options: [
+      { text: `I expect to be labeled SANE, which I am.`, html: `I expect to be labeled <strong>SANE</strong>, which I am.`, diagnosis:"sane" },
+      { text: `I expect to be labeled SANE, but I am not.`, html: `I expect to be labeled <strong>SANE</strong>, but I am not.`, diagnosis:"sane" },
+      { text: `I expect to be labeled INSANE, which may or may not be true.`, html: `I expect to be labeled <strong>INSANE</strong>, which may or may not be true.`, diagnosis:"insane" },
+      { text: "I do not know what to expect.", html: "I do not know what to expect.", diagnosis:"uncertain" },
+    ],
+    followUp: {
+      sane: {
+        title: "Why do you expect to be labeled SANE?",
+        options: [
+          { text: "I process my thoughts and emotions well." },
+          { text: "I take great care to maintain my mental health."},
+          { text: "I know the answers you’re looking for, and will use those answers regardless of truth." },
+          { text: "I’ve been pretending for years." },
+        ]
+      },
+      insane: {
+        title: "Why do you expect to be labeled INSANE?",
+        options: [
+          { text: "I do not easily conform to arbitrary standards." },
+          { text: "I see little value in being emotionally guarded." },
+          { text: "I reject convention." },
+          { text: "Everyone else says I am." }
+        ]
+      },
+      uncertain: {
+        title: "Does that uncertainty make you nervous?",
+        options: [
+          { text: "extremely nervous" },
+          { text: "very nervous" },
+          { text: "modestly calm" },
+          { text: "no" },
+        ]
+      }
+    }
+  },
+
+  sortCities: {
+    cities: [
+
+      // EUROPE
+      { name: "London", country: "United Kingdom", continent: "EU", score:0,
+        population: 8799800
+      },
+      { name: "Oslo", country: "Norway", continent: "EU", score:0,
+        population: 702543
+      },
+      { name: "Vilnius", country: "Lithuania", continent: "EU", score:0,
+        population: 592389
+      },
+      { name: "Lisbon", country: "Portugal", continent: "EU", score:0,
+        population: 544851
+      },
+
+      // NORTH & SOUTH AMERICA
+      { name: "Bogotá", country: "Colombia", continent: "SA", score:0,
+        population: 6747815
+      },
+      { name: "Rio de Janeiro", country: "Brazil", continent: "SA", score:0,
+        population: 6747815
+      },
+      { name: "Chicago", country: "United States", continent: "NA", score:0,
+        population: 2746388
+      },
+      { name: "Vancouver", country: "Canada", continent: "NA", score:0,
+        population: 662248
+      },
+
+      // ASIA
+      { name: "Beijing", country: "China", continent: "AS", score:0,
+        population: 21893095
+      },
+      { name: "Seoul", country: "South Korea", continent: "AS", score:0,
+        population: 9443722
+      },
+      { name: "Ho Chi Minh City", country: "Vietnam", continent: "AS", score:0,
+        population: 8799800
+      },
+      { name: "Bangkok", country: "Thailand", continent: "AS", score:0,
+        population: 8305218
+      },
+      
+      // AFRICA
+      { name: "Cairo", country: "Egypt", continent: "AF", score:0,
+        population: 10100166
+      },
+      { name: "Nairobi", country: "Kenya", continent: "AF", score:0,
+        population: 928850
+      },
+      { name: "Marrakesh", country: "Morocco", continent: "AF", score:0,
+        population: 928850
+      },
+
+      // AUSTRALIA
+      { name: "Melbourne", country: "Australia", continent: "AU", score:0,
+        population: 4917750
+      },
+    ]
   }
 
 

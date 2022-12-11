@@ -50,6 +50,12 @@ html(lang="en")
             template(v-if="current.question == 16")
               include questions/_how-many-lights.pug
             template(v-if="current.question == 17")
-              include questions/_hearing-music.pug 
+              include questions/_hearing-music.pug
+            template(v-if="current.question == 18")
+              include questions/_why-test.pug
+            template(v-if="current.question == 19")
+              include questions/_your-prediction.pug
+            template(v-if="current.question == 20")
+              include questions/_sort-cities.pug
 
     include partials/_javascripts 

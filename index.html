@@ -7,7 +7,7 @@
     <link href="css/site.css" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
-    <meta http-equiv="last-modified" content="2022-12-07T23:06:39.938Z">
+    <meta http-equiv="last-modified" content="2022-12-11T20:54:27.930Z">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Caudex&amp;family=Zen+Dots&amp;display=swap" rel="stylesheet">
@@ -650,6 +650,183 @@
                 </dl>
               </div>
             </template>
+            <template v-if="current.question == 18">
+              <div class="why-test">
+                <dl class="question">
+                  <dt> 
+                    <div class="title">Why are you testing your sanity?</div>
+                  </dt>
+                  <dd>
+                    <form @submit.prevent="answerQuestion('whyTest')">
+                      <ul class="options simple-options" count="2">
+                        <li v-for="option,key in questions.whyTest.options">
+                          <label :class="{'active': answers.whyTest == option.text, 'inactive': answers.whyTest &amp;&amp; answers.whyTest != option.text }">
+                            <input type="radio" :value="option.text" v-model="answers.whyTest">
+                            <div class="text"><span>{{option.text}}</span></div>
+                          </label>
+                        </li>
+                      </ul>
+                      <div class="button-row">
+                        <button type="submit" :disabled="!answers.whyTest">Proceed</button>
+                      </div>
+                    </form>
+                  </dd>
+                </dl>
+              </div>
+            </template>
+            <template v-if="current.question == 19">
+              <div class="your-prediction">
+                <dl class="question" v-if="ui.yourPrediction.phase == 1">
+                  <dt> 
+                    <div class="title">What do you predict your results will be?</div>
+                  </dt>
+                  <dd>
+                    <form @submit.prevent="answerQuestion('yourPrediction')">
+                      <ul class="options simple-options" count="2">
+                        <li v-for="option,key in questions.yourPrediction.options">
+                          <label :class="{'active': answers.yourPrediction == option.text, 'inactive': answers.yourPrediction &amp;&amp; answers.yourPrediction != option.text }">
+                            <input type="radio" :value="option.text" v-model="answers.yourPrediction">
+                            <div class="text"><span v-html="option.html"></span></div>
+                          </label>
+                        </li>
+                      </ul>
+                      <div class="button-row">
+                        <button type="submit" :disabled="!answers.yourPrediction">Proceed</button>
+                      </div>
+                    </form>
+                  </dd>
+                </dl>
+                <dl class="question" v-if="ui.yourPrediction.phase == 2">
+                  <!-- SANE follow-up-->
+                  <dt v-if="ui.yourPrediction.diagnosis == 'sane'">
+                    <div class="title">{{questions.yourPrediction.followUp.sane.title}}</div>
+                  </dt>
+                  <dd v-if="ui.yourPrediction.diagnosis == 'sane'">
+                    <form @submit.prevent="answerQuestion('yourPredictionFollowUp')">
+                      <ul class="options simple-options" count="2">
+                        <li v-for="option,key in questions.yourPrediction.followUp.sane.options">
+                          <label :class="{'active': answers.yourPredictionFollowUp == option.text, 'inactive': answers.yourPredictionFollowUp &amp;&amp; answers.yourPredictionFollowUp != option.text }">
+                            <input type="radio" :value="option.text" v-model="answers.yourPredictionFollowUp">
+                            <div class="text"><span>{{option.text}}</span></div>
+                          </label>
+                        </li>
+                      </ul>
+                      <div class="button-row">
+                        <button type="submit" :disabled="!answers.yourPredictionFollowUp">Proceed</button>
+                      </div>
+                    </form>
+                  </dd>
+                  <!-- INSANE follow-up-->
+                  <dt v-if="ui.yourPrediction.diagnosis == 'insane'">
+                    <div class="title">{{questions.yourPrediction.followUp.insane.title}}</div>
+                  </dt>
+                  <dd v-if="ui.yourPrediction.diagnosis == 'insane'">
+                    <form @submit.prevent="answerQuestion('yourPredictionFollowUp')">
+                      <ul class="options simple-options" count="2">
+                        <li v-for="option,key in questions.yourPrediction.followUp.insane.options">
+                          <label :class="{'active': answers.yourPredictionFollowUp == option.text, 'inactive': answers.yourPredictionFollowUp &amp;&amp; answers.yourPredictionFollowUp != option.text }">
+                            <input type="radio" :value="option.text" v-model="answers.yourPredictionFollowUp" @change="ui.yourPrediction.diagnosis = option.diagnosis">
+                            <div class="text"><span>{{option.text}}</span></div>
+                          </label>
+                        </li>
+                      </ul>
+                      <div class="button-row">
+                        <button type="submit" :disabled="!answers.yourPredictionFollowUp">Proceed</button>
+                      </div>
+                    </form>
+                  </dd>
+                  <!-- UNCERTAIN follow-up-->
+                  <dt v-if="ui.yourPrediction.diagnosis == 'uncertain'">
+                    <div class="title">{{questions.yourPrediction.followUp.uncertain.title}}</div>
+                  </dt>
+                  <dd v-if="ui.yourPrediction.diagnosis == 'uncertain'">
+                    <form @submit.prevent="answerQuestion('yourPredictionFollowUp')">
+                      <ul class="options likert" :count="questions.yourPrediction.followUp.uncertain.options.length">
+                        <li v-for="option,key in questions.yourPrediction.followUp.uncertain.options">
+                          <label :class="{'active': answers.yourPredictionFollowUp == option.text, 'inactive': answers.yourPredictionFollowUp &amp;&amp; answers.yourPredictionFollowUp != option.text }">
+                            <div class="inside">
+                              <div class="radio-holder">
+                                <input type="radio" :value="option.text" v-model="answers.yourPredictionFollowUp">
+                              </div>
+                              <div class="text"><span>{{option.text}}</span></div>
+                            </div>
+                          </label>
+                        </li>
+                      </ul>
+                      <div class="button-row">
+                        <button type="submit" :disabled="!answers.yourPredictionFollowUp">Proceed</button>
+                      </div>
+                    </form>
+                  </dd>
+                </dl>
+              </div>
+            </template>
+            <template v-if="current.question == 20">
+              <div class="sort-cities">
+                <dl class="question">
+                  <dt> 
+                    <div class="subtitle">Constant criticism can have long-term effects on self worth and relationships.</div>
+                    <div class="title">Sort these world cities by population.</div>
+                  </dt>
+                  <dd class="q-and-a">
+                    <form @submit.prevent="answerQuestion('answerQuestion')">
+                      <template v-if="!ui.sortCities.showScores">
+                        <draggable class="draglist list-group" tag="ul" v-bind="dragOptions" v-model="ui.sortCities.cities" @start="ui.dragList.dragging = true" @end="cityDragged()">
+                          <transition-group type="transition" :name="!ui.dragList.dragging ? 'flip-list' : null">
+                            <li class="item dragitem" v-for="option,key in ui.sortCities.cities" :key="key">
+                              <div class="order-holder"><span class="order">{{(key + 1)}}</span></div>
+                              <div class="text"><strong class="name">{{option.name}}</strong>, <span class="country">{{option.country}}</span></div>
+                            </li>
+                          </transition-group>
+                        </draggable>
+                      </template>
+                      <template v-if="ui.sortCities.showScores">
+                        <draggable class="draglist list-group" tag="ul" v-model="ui.sortCities.answers" :disabled="true">
+                          <transition-group type="transition">
+                            <li class="item dragitem disabled answer" v-for="option,key in ui.sortCities.answers" :key="key" disabled>
+                              <div class="order-holder"><span class="order">{{(key + 1)}}</span></div>
+                              <div class="text"><strong class="name">{{option.name}}</strong>, <span class="country">{{option.country}}</span></div>
+                              <div class="population"><span class="count">{{option.population.toLocaleString()}}</span></div>
+                            </li>
+                          </transition-group>
+                        </draggable>
+                      </template>
+                      <template v-if="ui.sortCities.showScores">
+                        <draggable class="draglist disabled list-group" tag="ul" v-model="ui.sortCities.cities" :disabled="true">
+                          <transition-group type="transition" :name="!ui.dragList.dragging ? 'flip-list' : null">
+                            <li class="item dragitem disabled scored" v-for="option,key in ui.sortCities.cities" :key="key" :class="{'perfect': option.score == 3, 'close': option.score == 2, 'meh': option.score == 0, 'bad': option.score &lt; 0, 'very-bad': option.score &lt; -2, 'terrible': option.score &lt; -3, 'pathetic': option.score &lt; -4 }" :score="option.score" :disabled="true">
+                              <div class="order-holder"><span class="order">{{(key + 1)}}</span></div>
+                              <div class="text"><strong class="name">{{option.name}}</strong>, <span class="country">{{option.country}}</span></div>
+                              <div class="score"><span class="score">{{option.score}}</span></div>
+                            </li>
+                          </transition-group>
+                        </draggable>
+                      </template>
+                      <div class="button-row split">
+                        <div class="feedback sort-feedback" v-if="!ui.sortCities.showScores">
+                          <div class="message" v-html="ui.sortCities.sortFeedback"></div>
+                        </div>
+                        <div class="feedback score-feedback" v-if="ui.sortCities.showScores">
+                          <ul class="your-scores" v-if="ui.sortCities.showScores">
+                            <li class="wrong" v-if="ui.sortCities.count.wrong &gt; 0"><span v-if="ui.sortCities.count.wrong == 1">One of your answers was 
+                                <bold>wrong</bold></span><span v-else>You got <strong>{{ui.sortCities.count.wrong}}</strong> answers <strong>wrong</strong>.</span></li>
+                            <li class="bad" v-if="ui.sortCities.count.bad &gt; 0 "><span v-if="ui.sortCities.count.bad == 1">One of your answers was <strong>bad</strong>.</span><span v-else><strong>{{ui.sortCities.count.bad}}</strong> of those answers were <strong>bad</strong>.</span></li>
+                            <li class="terrible" v-if="ui.sortCities.count.veryBad &gt; 0 "><span v-if="ui.sortCities.count.veryBad == 1">One of your answers was <strong>just terrible</strong>.</span><span v-else><strong>{{ui.sortCities.count.veryBad}}</strong> of those answers were <strong>simply terrible</strong>.</span></li>
+                            <li class="total-score" v-if="ui.sortCities.totalScore &lt; 0"><span>Your total score is <strong>{{ui.sortCities.totalScore}}</strong></span></li>
+                          </ul>
+                        </div>
+                        <div class="button-holder" v-if="!ui.sortCities.showScores">
+                          <button type="button" @click="scoreCities()" :disabled="ui.sortCities.dragCount &lt; 2">Calculate</button>
+                        </div>
+                        <div class="button-holder" v-if="ui.sortCities.showScores">
+                          <button type="submit" :disabled="ui.sortCities.submitButtonDisabled">Proceed</button>
+                        </div>
+                      </div>
+                    </form>
+                  </dd>
+                </dl>
+              </div>
+            </template>
           </div>
         </div>
       </main>
@@ -658,7 +835,9 @@
       <script src="js/libraries/vue.full.js"></script>
       <script>const testing = true;</script>
       <script src="js/libraries/howler.min.js"></script>
-      <script src="js/min/site.min.js?updated2022-12-07T23:06:39.938Z"></script>
+      <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.8.4/Sortable.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/Vue.Draggable/2.20.0/vuedraggable.umd.min.js"></script>
+      <script src="js/min/site.min.js?updated2022-12-11T20:54:27.930Z"></script>
     </div>
   </body>
 </html>

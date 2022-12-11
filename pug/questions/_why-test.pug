@@ -1,0 +1,14 @@
+.why-test
+  dl.question
+    dt 
+      .title Why are you testing your sanity?
+    dd
+      form(@submit.prevent="answerQuestion('whyTest')")
+        ul.options.simple-options(count="2")
+          li(v-for="option,key in questions.whyTest.options")
+            label(:class="{'active': answers.whyTest == option.text, 'inactive': answers.whyTest && answers.whyTest != option.text }")
+              input(type="radio" :value="option.text" v-model="answers.whyTest")
+              .text
+                span {{option.text}}
+        .button-row
+          button(type="submit" :disabled="!answers.whyTest") Proceed

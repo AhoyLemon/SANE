@@ -103,6 +103,10 @@ form { display:grid; gap:$gap;
       *:last-child { text-align: right; }
     }
 
+    .help-text {
+      .error { color:$error; font-size:125%; }
+    }
+
     button { font-family: $sans-serif; padding:0.25em 0.75em; font-weight:$semibold; text-transform: uppercase; font-size:1.5rem; border:1px solid rgba(0,0,0,0.25); transition: opacity 0.3s linear;
       &[type="submit"] { background:#eee; color:#194d91;
         &:not([disabled]) {

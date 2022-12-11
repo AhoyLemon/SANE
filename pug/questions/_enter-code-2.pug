@@ -36,7 +36,10 @@
                   input(type="radio" :value="fuqOption.text" v-model="answers.enterCodeFollowUp.questions[fuqkey]" required)
                   .text
                     span {{fuqOption.text}}
-          .button-row
-            button(type="submit" :disabled="!computedFollowUpQuestionsFinished") Proceed
+          .button-row.split
+            .help-text 
+              span.error(v-if="!computedFollowUpQuestionsFinished") Answer all questions.
+            .button-holder
+              button(type="submit" :disabled="!computedFollowUpQuestionsFinished") Proceed
 
 

@@ -5,7 +5,7 @@ var app = new Vue({
     questions: questions,
 
     current: {
-      question: 10
+      question: 1
     },
 
     ui: {

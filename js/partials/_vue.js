@@ -5,7 +5,9 @@ var app = new Vue({
     questions: questions,
 
     current: {
-      question: 1
+      interface: "outro",
+      question: 1,
+      diagnosis: "INSANE"
     },
 
     ui: {
@@ -111,6 +113,10 @@ var app = new Vue({
 
       dragList: {
         dragging: false
+      },
+
+      diagnosis: {
+        showHow: false
       }
     },
 
@@ -393,8 +399,16 @@ var app = new Vue({
         self.current.question++;
       }
       
-    }
+    },
     
+
+    showHow() {
+      const self = this;
+      self.ui.diagnosis.showHow = true;
+      setTimeout(() => {
+        hljs.highlightAll();
+      }, 100)
+    }
   },
 
   computed: {

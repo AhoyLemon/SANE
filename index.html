@@ -7,7 +7,7 @@
     <link href="css/site.css" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
-    <meta http-equiv="last-modified" content="2022-12-11T21:07:47.108Z">
+    <meta http-equiv="last-modified" content="2022-12-11T21:59:55.142Z">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Caudex&amp;family=Zen+Dots&amp;display=swap" rel="stylesheet">
@@ -25,7 +25,19 @@
           </li>
         </ul>
       </aside>
-      <main style="min-height:100vh; display:flex; align-items:end; justify-content:center; padding:4rem;">
+      <main class="intro" v-if="current.interface == 'intro'">
+        <section class="intro-screen" v-if="current.interface == 'intro'">
+          <h1>This is the science of sanity.</h1>
+          <p>Here at sane.science , we will provide a legitimate determination as to whether or not you are SANE or not. If you are declared SANE, we will provide you the opportunity to receive a sticker to make it official.</p>
+          <h2>This is a gaslighting simulator.</h2>
+          <p>In an effort to make our determination, we will ask you a series of questions. We will not make it easy to answer. Expect things to get uncomfortable.</p>
+          <p>When you are ready, click the button below.</p>
+          <div class="button-holder">
+            <button class="begin" type="button" @click="current.interface = 'questions'">BEGIN</button>
+          </div>
+        </section>
+      </main>
+      <main class="questions" v-if="current.interface == 'questions'" style="min-height:100vh; display:flex; align-items:end; justify-content:center; padding:4rem;">
         <div class="inner">
           <div class="questions">
             <template v-if="current.question == 1">
@@ -832,6 +844,37 @@
           </div>
         </div>
       </main>
+      <main class="outro" v-if="current.interface == 'outro'">
+        <div class="inner">
+          <section class="diagnosis">
+            <dl class="diagnosis">
+              <dt>Your diagnosis</dt>
+              <dd>
+                <div class="sticker-holder">
+                  <div class="sticker">{{current.diagnosis}}</div>
+                </div>
+                <div class="button-holder" v-if="!ui.diagnosis.showHow">
+                  <button type="button" @click="showHow()">How was this determined?</button>
+                </div>
+              </dd>
+            </dl>
+          </section>
+          <section class="how" v-if="ui.diagnosis.showHow">
+            <dl>
+              <dt>Q: How was this determined?</dt>
+              <dd>A: Randomly.</dd>
+            </dl>
+            <pre><code class="language-js">const sanityBarrier = 50;
+const yourScore = Math.floor(Math.random() * 100);
+if (yourScore < sanityBarrier) {
+  current.diagnosis = "INSANE";
+} else {
+  current.diagnosis = "SANE";
+}
+</code></pre>
+          </section>
+        </div>
+      </main>
     </div>
     <div class="javascripts">
       <script src="js/libraries/vue.full.js"></script>
@@ -839,7 +882,10 @@
       <script src="js/libraries/howler.min.js"></script>
       <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.8.4/Sortable.min.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/Vue.Draggable/2.20.0/vuedraggable.umd.min.js"></script>
-      <script src="js/min/site.min.js?updated2022-12-11T21:07:47.108Z"></script>
+      <script src="js/min/site.min.js?updated2022-12-11T21:59:55.142Z"></script>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css">
+      <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.7.0/build/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script>
     </div>
   </body>
 </html>

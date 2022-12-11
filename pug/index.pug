@@ -13,11 +13,22 @@ html(lang="en")
 
       include partials/_aside.pug
 
-      main(style="min-height:100vh; display:flex; align-items:end; justify-content:center; padding:4rem;")
+      main.intro(v-if="current.interface == 'intro'")
+        section.intro-screen(v-if="current.interface == 'intro'")
+
+          h1 This is the science of sanity.
+          p Here at sane.science , we will provide a legitimate determination as to whether or not you are SANE or not. If you are declared SANE, we will provide you the opportunity to receive a sticker to make it official.
+          h2 This is a gaslighting simulator.
+          p In an effort to make our determination, we will ask you a series of questions. We will not make it easy to answer. Expect things to get uncomfortable.
+          p When you are ready, click the button below.
+          .button-holder
+            button.begin(type="button" @click="current.interface = 'questions'") BEGIN
+
+      main.questions(v-if="current.interface == 'questions'" style="min-height:100vh; display:flex; align-items:end; justify-content:center; padding:4rem;")
         .inner
 
           .questions
-          
+
             template(v-if="current.question == 1")
               include questions/_why-test.pug
             template(v-if="current.question == 2")
@@ -58,5 +69,31 @@ html(lang="en")
               include questions/_breathe-normally.pug
             template(v-if="current.question == 20")
               include questions/_sort-cities.pug
+
+      main.outro(v-if="current.interface == 'outro'")
+
+        .inner
+          section.diagnosis
+            dl.diagnosis
+              dt Your diagnosis
+              dd
+                .sticker-holder
+                  .sticker {{current.diagnosis}}
+                .button-holder(v-if="!ui.diagnosis.showHow")
+                  button(type="button" @click="showHow()") How was this determined?
+
+          section.how(v-if="ui.diagnosis.showHow")
+            dl
+              dt Q: How was this determined?
+              dd A: Randomly.
+            pre
+              code(class="language-js").
+                const sanityBarrier = 50;
+                const yourScore = Math.floor(Math.random() * 100);
+                if (yourScore < sanityBarrier) {
+                  current.diagnosis = "INSANE";
+                } else {
+                  current.diagnosis = "SANE";
+                }
 
     include partials/_javascripts 

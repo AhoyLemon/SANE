@@ -116,6 +116,7 @@ var app = new Vue({
       },
 
       diagnosis: {
+        sanityScore: -1,
         showHow: false
       }
     },
@@ -400,6 +401,17 @@ var app = new Vue({
       }
       
     },
+
+    determineSanity() {
+      const self = this;
+      const sanityBarrier = 50;      // const yourScore = Math.floor(Math.random() * 100);
+      self.ui.diagnosis.sanityScore = Math.floor(Math.random() * 100);
+      if (self.ui.diagnosis.sanityScore < sanityBarrier) {
+        current.diagnosis = "INSANE";
+      } else {
+        current.diagnosis = "SANE";
+      }
+    },
     
 
     showHow() {
@@ -617,6 +629,8 @@ var app = new Vue({
       if (a.population < b.population) return 1;
       return 0;
     });
+
+    self.determineSanity();
 
     // self.ui.sortCities.cities.forEach(function(element, key) {
     //   element.score = 0;

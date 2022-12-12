@@ -22,7 +22,7 @@ html(lang="en")
           p In an effort to make our determination, we will ask you a series of questions. We will not make it easy to answer. Expect things to get uncomfortable.
           p When you are ready, click the button below.
           .button-holder
-            button.begin(type="button" @click="current.interface = 'questions'") BEGIN
+            button.begin(type="button" @click="current.interface = 'questions'") Begin The Exam
 
       main.questions(v-if="current.interface == 'questions'" style="min-height:100vh; display:flex; align-items:end; justify-content:center; padding:4rem;")
         .inner
@@ -70,30 +70,6 @@ html(lang="en")
             template(v-if="current.question == 20")
               include questions/_sort-cities.pug
 
-      main.outro(v-if="current.interface == 'outro'")
-
-        .inner
-          section.diagnosis
-            dl.diagnosis
-              dt Your diagnosis
-              dd
-                .sticker-holder
-                  .sticker {{current.diagnosis}}
-                .button-holder(v-if="!ui.diagnosis.showHow")
-                  button(type="button" @click="showHow()") How was this determined?
-
-          section.how(v-if="ui.diagnosis.showHow")
-            dl
-              dt Q: How was this determined?
-              dd A: Randomly.
-            pre
-              code(class="language-js").
-                const sanityBarrier = 50;
-                const yourScore = Math.floor(Math.random() * 100);
-                if (yourScore < sanityBarrier) {
-                  current.diagnosis = "INSANE";
-                } else {
-                  current.diagnosis = "SANE";
-                }
+      include screens/_outro.pug
 
     include partials/_javascripts 

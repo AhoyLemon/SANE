@@ -1,21 +1,29 @@
-.outro(v-if="current.interface == 'outro'")
+.outro
 
   header.diagnosis-header
-    .sticker {{current.diagnosis}}
+    .sticker-holder
+      .sticker {{current.diagnosis}}
     .diagnosis-text
-      .text #[strong {{answers.yourName}}], our scientific algorith has determined that you are #[code {{ui.diagnosis.sanityScore +'%' }}] sane.
+      .text #[strong {{answers.yourName}}], our scientific algorithm has given you a sanity score of #[code {{ui.diagnosis.sanityScore +'%' }}].
     .button-holder
-      a.button Buy A Sticker
+      a.button(:href="stickerURL" v-if="current.diagnosis == 'SANE'") Get A Sticker
+
   main
     .inner
-      //- section.diagnosis
-      //-   dl.diagnosis
-      //-     dt Your diagnosis:
-      //-     dd
-      //-       .sticker-holder
-      //-         .sticker 
-      //-       .button-holder(v-if="!ui.diagnosis.showHow")
-      //-         button(type="button" @click="showHow()") How was this determined?
+
+      section.diagnosis
+        dl.diagnosis
+          dt Your diagnosis:
+          dd
+            .sticker-holder
+              .sticker {{current.diagnosis}}
+            .score-summary
+              span You have been given a Sanity Score of #[code {{ui.diagnosis.sanityScore +'%' }}], offically labeling you as #[strong {{current.diagnosis}}].
+
+            .button-holder(v-if="!ui.diagnosis.showHow")
+              button(type="button" @click="showHow()") How was this determined?
+              a.button(:href="stickerURL" v-if="current.diagnosis == 'SANE'") Get A Sticker
+
 
       section.how(v-if="ui.diagnosis.showHow")
         dl
@@ -26,12 +34,12 @@
               | After completing the exam, you were randomly assigned a #[code sanityScore] of #[code {{ui.diagnosis.sanityScore +'%' }}]. This assigned you the ranking of #[strong {{current.diagnosis}}].
             p 
               | None of your exam questions were considered when assigning your #[code sanityScore].
-            //- p Matter of fact, your sanity was scored like this...
             pre
               code(class="language-js").
                 function calculateSanity() {
                   const sanityBarrier = 50;
                   const sanityScore = Math.floor(Math.random() * 100);
+                  // In this case, sanityScore was {{ui.diagnosis.sanityScore}}
                   if (sanityScore < sanityBarrier) {
                     current.diagnosis = "INSANE";
                   } else {
@@ -39,3 +47,6 @@
                   }
                 }
             p If you'd like, you can recalculate your score.
+            p
+              button.button(type="button" @click="determineSanity()") Recalculate Sanity
+              a.button(:href="stickerURL" v-if="current.diagnosis == 'SANE'") Get A Sticker

@@ -14,62 +14,12 @@ html(lang="en")
       include partials/_aside.pug
 
       main.intro(v-if="current.interface == 'intro'")
-        section.intro-screen(v-if="current.interface == 'intro'")
+        include screens/_intro.pug
 
-          h1 This is the science of sanity.
-          p Here at sane.science , we will provide a legitimate determination as to whether or not you are SANE or not. If you are declared SANE, we will provide you the opportunity to receive a sticker to make it official.
-          h2 This is a gaslighting simulator.
-          p In an effort to make our determination, we will ask you a series of questions. We will not make it easy to answer. Expect things to get uncomfortable.
-          p When you are ready, click the button below.
-          .button-holder
-            button.begin(type="button" @click="current.interface = 'questions'") Begin The Exam
+      main.questions(v-if="current.interface == 'questions'")
+        include screens/_questions.pug
 
-      main.questions(v-if="current.interface == 'questions'" style="min-height:100vh; display:flex; align-items:end; justify-content:center; padding:4rem;")
-        .inner
+      main.outro(v-if="current.interface == 'outro'")
+        include screens/_outro.pug
 
-          .questions
-
-            template(v-if="current.question == 1")
-              include questions/_why-test.pug
-            template(v-if="current.question == 2")
-              include questions/_your-prediction.pug
-            template(v-if="current.question == 3")
-              include questions/_your-name.pug
-            template(v-if="current.question == 4")
-              include questions/_enter-code-1.pug
-            template(v-if="current.question == 5")
-              include questions/_favorite-color.pug
-            template(v-if="current.question == 6")
-              include questions/_how-many-drinks.pug
-            template(v-if="current.question == 7")
-              include questions/_rorschach.pug
-            template(v-if="current.question == 8")
-              include questions/_sink.pug
-            template(v-if="current.question == 9")
-              include questions/_food-happy.pug
-            template(v-if="current.question == 10")
-              include questions/_you-think.pug
-            template(v-if="current.question == 11")
-              include questions/_enter-code-2.pug
-            template(v-if="current.question == 12")
-              include questions/_ashamed.pug
-            template(v-if="current.question == 13")
-              include questions/_hats.pug
-            template(v-if="current.question == 14")
-              include questions/_love-object.pug
-            template(v-if="current.question == 15")
-              include questions/_rambling-question.pug
-            template(v-if="current.question == 16")
-              include questions/_tongue.pug
-            template(v-if="current.question == 17")
-              include questions/_how-many-lights.pug
-            template(v-if="current.question == 18")
-              include questions/_hearing-music.pug
-            template(v-if="current.question == 19")
-              include questions/_breathe-normally.pug
-            template(v-if="current.question == 20")
-              include questions/_sort-cities.pug
-
-      include screens/_outro.pug
-
-    include partials/_javascripts 
+    include partials/_javascripts

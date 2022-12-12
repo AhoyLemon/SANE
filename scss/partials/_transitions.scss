@@ -1,0 +1,7 @@
+.fade-enter-active {
+  transition: transform 1s ease-in-out, opacity 3s linear;
+}
+.fade-enter {
+  opacity: 0;
+  transform: translateY(-200px);
+}

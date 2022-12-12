@@ -3,11 +3,12 @@ var app = new Vue({
   data: {
 
     questions: questions,
+    stickerURL: "https://ahoylemon.square.site/product/sane-sticker/6",
 
     current: {
-      interface: "outro",
-      question: 1,
-      diagnosis: "INSANE"
+      interface: "intro",
+      question: 0,
+      diagnosis: null
     },
 
     ui: {
@@ -157,6 +158,14 @@ var app = new Vue({
   methods: {
 
 
+    beginExam() {
+      const self = this;
+      self.current.interface = 'questions';
+      setTimeout(() => {
+        self.current.question = 1;
+      }, 2225)
+    },
+
     saneHover(v) { 
       const self = this;
       self.ui.youThink.saneHover = v;
@@ -254,8 +263,16 @@ var app = new Vue({
           comet1.fade(0.05,0, 6000);
           cometLoop.play();
           cometLoop.fade(0,0.1, 6000);
-          self.ui.hearingMusic.now = "loop";
         }
+      } else if (whatMusic == "stop") {
+        comet1.fade(0.05,0, 6000);
+        cometLoop.fade(0.1,0, 6000);
+        setTimeout(() => {
+          comet1.stop();
+          cometLoop.stop();
+          self.ui.hearingMusic.now = null;
+        }, 6000)
+        
       }
       
     },
@@ -344,8 +361,9 @@ var app = new Vue({
 
       if (self.current.question == 15) {
         self.startMusic('quiet');
-      } else if (self.current.question == 17) {
-        self.startMusic('loop');
+      }
+      if (self.current.question == 18) {
+        self.startMusic('stop');
       }
 
       // Advance to next question, unless...
@@ -389,8 +407,10 @@ var app = new Vue({
       } else if (q == "hearingMusic") {
         if (self.answers.hearingMusic == "I don't hear anything.") {
           self.ui.hearingMusic.phase = 2;
+          self.startMusic('loop');
         } else if (self.answers.hearingMusic == "Yes, I hear music." || self.answers.hearingMusic == "I did, but not anymore.") {
           self.ui.hearingMusic.phase = 3;
+          self.startMusic('loop');
         } else {
           self.current.question++;
         }
@@ -398,19 +418,47 @@ var app = new Vue({
       } else {
         // This isn't a special round, go ahead and just advance to the next one.
         self.current.question++;
+        let url = new URL(window.location);
+        url.searchParams.set('question', self.current.question);
+        window.history.pushState({question: self.current.question}, '', url);
+
+        if (self.current.question > 20) {
+          self.determineSanity();
+        }
       }
       
     },
 
     determineSanity() {
       const self = this;
-      const sanityBarrier = 50;      // const yourScore = Math.floor(Math.random() * 100);
-      self.ui.diagnosis.sanityScore = Math.floor(Math.random() * 100);
-      if (self.ui.diagnosis.sanityScore < sanityBarrier) {
-        current.diagnosis = "INSANE";
-      } else {
-        current.diagnosis = "SANE";
+      const sanityBarrier = 50;
+
+      if (!self.ui.diagnosis.sanityScore) {
+        self.ui.diagnosis.sanityScore = Math.floor(Math.random() * 99) + 1;
+      } else if (self.ui.diagnosis.sanityScore <= 50) {
+        self.ui.diagnosis.sanityScore = Math.floor(Math.random() * 49) + 50;
+      } else if (self.ui.diagnosis.sanityScore > 50) {
+        self.ui.diagnosis.sanityScore = Math.floor(Math.random() * 49);
       }
+
+      if (self.ui.diagnosis.sanityScore == 50 || self.ui.diagnosis.sanityScore == 0) {
+        self.determineSanity();
+      }
+
+      if (self.ui.diagnosis.sanityScore < sanityBarrier) {
+        self.current.diagnosis = "INSANE";
+      } else {
+        self.current.diagnosis = "SANE";
+      }
+      self.current.interface = "outro";
+      self.ui.diagnosis.showHow = false;
+
+      let url = new URL(window.location);
+      url.searchParams.delete('question');
+      url.searchParams.set('show', 'outro');
+      url.searchParams.set('diagnosis', self.current.diagnosis);
+      window.history.pushState({question: self.current.question}, '', url);
+
     },
     
 
@@ -629,12 +677,6 @@ var app = new Vue({
       if (a.population < b.population) return 1;
       return 0;
     });
-
-    self.determineSanity();
-
-    // self.ui.sortCities.cities.forEach(function(element, key) {
-    //   element.score = 0;
-    // });
   }
 
 });

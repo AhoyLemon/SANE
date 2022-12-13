@@ -1,5 +1,6 @@
-main.intro { min-height: 100vh; min-height:100vh; display:flex; align-items:center; justify-content:center;
-  background-image:url(../img/bg/josh-riemer-OH5BRdggi2w-unsplash.jpg); background-size: cover; background-repeat: no-repeat;
+main.intro { min-height: 100vh; min-height:100vh; display:flex; align-items:center; justify-content:center; padding:$gap;
+  background-color: #111;
+  background-image:url(../img/bg/plasmaball.jpg); background-size: cover; background-repeat: no-repeat; background-attachment: fixed;
 } 
 section.intro-screen { background:white; color:black; padding:$gap; box-shadow: 1em 1em 1em black, -2px -2px 2px black; max-width: 740px;
   h1 { font-size:clamp(2rem,7vw,3.5rem); color:#ee3a97; 

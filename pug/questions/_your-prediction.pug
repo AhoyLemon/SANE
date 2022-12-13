@@ -36,7 +36,7 @@
         ul.options.simple-options(count="2")
           li(v-for="option,key in questions.yourPrediction.followUp.insane.options")
             label(:class="{'active': answers.yourPredictionFollowUp == option.text, 'inactive': answers.yourPredictionFollowUp && answers.yourPredictionFollowUp != option.text }")
-              input(type="radio" :value="option.text" v-model="answers.yourPredictionFollowUp" @change="ui.yourPrediction.diagnosis = option.diagnosis")
+              input(type="radio" :value="option.text" v-model="answers.yourPredictionFollowUp")
               .text
                 span {{option.text}}
         .button-row

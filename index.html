@@ -7,7 +7,7 @@
     <link href="css/site.css" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
-    <meta http-equiv="last-modified" content="2022-12-12T06:10:20.296Z">
+    <meta http-equiv="last-modified" content="2022-12-13T04:35:53.141Z">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Caudex&amp;family=Zen+Dots&amp;display=swap" rel="stylesheet">
@@ -117,7 +117,7 @@
                       <ul class="options simple-options" count="2">
                         <li v-for="option,key in questions.yourPrediction.followUp.insane.options">
                           <label :class="{'active': answers.yourPredictionFollowUp == option.text, 'inactive': answers.yourPredictionFollowUp &amp;&amp; answers.yourPredictionFollowUp != option.text }">
-                            <input type="radio" :value="option.text" v-model="answers.yourPredictionFollowUp" @change="ui.yourPrediction.diagnosis = option.diagnosis">
+                            <input type="radio" :value="option.text" v-model="answers.yourPredictionFollowUp">
                             <div class="text"><span>{{option.text}}</span></div>
                           </label>
                         </li>
@@ -808,7 +808,7 @@
                         </draggable>
                       </template>
                       <template v-if="ui.sortCities.showScores">
-                        <draggable class="draglist disabled list-group" tag="ul" v-model="ui.sortCities.cities" :disabled="true">
+                        <draggable class="draglist disabled answers list-group" tag="ul" v-model="ui.sortCities.cities" :disabled="true">
                           <transition-group type="transition" :name="!ui.dragList.dragging ? 'flip-list' : null">
                             <li class="item dragitem disabled scored" v-for="option,key in ui.sortCities.cities" :key="key" :class="{'perfect': option.score == 3, 'close': option.score == 2, 'meh': option.score == 0, 'bad': option.score &lt; 0, 'very-bad': option.score &lt; -2, 'terrible': option.score &lt; -3, 'pathetic': option.score &lt; -4 }" :score="option.score" :disabled="true">
                               <div class="order-holder"><span class="order">{{(key + 1)}}</span></div>
@@ -846,42 +846,41 @@
           </div>
         </div>
       </main>
-      <main class="outro" v-if="current.interface == 'outro'">
-        <div class="outro">
-          <header class="diagnosis-header">
-            <div class="sticker-holder">
-              <div class="sticker">{{current.diagnosis}}</div>
-            </div>
-            <div class="diagnosis-text">
-              <div class="text"><strong>{{answers.yourName}}</strong>, our scientific algorithm has given you a sanity score of <code>{{ui.diagnosis.sanityScore +'%' }}</code>.</div>
-            </div>
-            <div class="button-holder"><a class="button" :href="stickerURL" v-if="current.diagnosis == 'SANE'">Get A Sticker</a></div>
-          </header>
-          <main>
-            <div class="inner">
-              <section class="diagnosis">
-                <dl class="diagnosis">
-                  <dt>Your diagnosis:</dt>
-                  <dd>
-                    <div class="sticker-holder">
-                      <div class="sticker">{{current.diagnosis}}</div>
-                    </div>
-                    <div class="score-summary"><span>You have been given a Sanity Score of <code>{{ui.diagnosis.sanityScore +'%' }}</code>, offically labeling you as <strong>{{current.diagnosis}}</strong>.</span></div>
-                    <div class="button-holder" v-if="!ui.diagnosis.showHow">
-                      <button type="button" @click="showHow()">How was this determined?</button><a class="button" :href="stickerURL" v-if="current.diagnosis == 'SANE'">Get A Sticker</a>
-                    </div>
-                  </dd>
-                </dl>
-              </section>
-              <section class="how" v-if="ui.diagnosis.showHow">
-                <dl>
-                  <dt>Q: How was this determined?</dt>
-                  <dd> 
-                    <p>A: <strong>Randomly</strong>.</p>
-                    <p>After completing the exam, you were randomly assigned a <code>sanityScore</code> of <code>{{ui.diagnosis.sanityScore +'%' }}</code>. This assigned you the ranking of <strong>{{current.diagnosis}}</strong>.</p>
-                    <p>
-                       None of your exam questions were considered when assigning your <code>sanityScore</code>.</p>
-                    <pre><code class="language-js">function calculateSanity() {
+      <div class="outro" v-if="current.interface == 'outro'">
+        <header class="diagnosis-header">
+          <div class="sticker-holder">
+            <div class="sticker">{{current.diagnosis}}</div>
+          </div>
+          <div class="diagnosis-text">
+            <div class="text"><strong>{{answers.yourName}}</strong>, our scientific algorithm has given you a sanity score of <code>{{ui.diagnosis.sanityScore +'%' }}</code>.</div>
+          </div>
+          <div class="button-holder"><a class="button" :href="stickerURL" v-if="current.diagnosis == 'SANE'">Get A Sticker</a></div>
+        </header>
+        <main>
+          <div class="inner">
+            <section class="diagnosis">
+              <dl class="diagnosis">
+                <dt>Your diagnosis:</dt>
+                <dd>
+                  <div class="sticker-holder">
+                    <div class="sticker">{{current.diagnosis}}</div>
+                  </div>
+                  <div class="score-summary"><span>You have been given a Sanity Score of <code>{{ui.diagnosis.sanityScore +'%' }}</code>, offically labeling you as <strong>{{current.diagnosis}}</strong>.</span></div>
+                  <div class="button-holder" v-if="!ui.diagnosis.showHow">
+                    <button type="button" @click="showHow()">How was this determined?</button><a class="button" :href="stickerURL" v-if="current.diagnosis == 'SANE'">Get A Sticker</a>
+                  </div>
+                </dd>
+              </dl>
+            </section>
+            <section class="how" v-if="ui.diagnosis.showHow">
+              <dl>
+                <dt>Q: How was this determined?</dt>
+                <dd> 
+                  <p>A: <strong>Randomly</strong>.</p>
+                  <p>After completing the exam, you were randomly assigned a <code>sanityScore</code> of <code>{{ui.diagnosis.sanityScore +'%' }}</code>. This assigned you the ranking of <strong>{{current.diagnosis}}</strong>.</p>
+                  <p>
+                     None of your exam questions were considered when assigning your <code>sanityScore</code>.</p>
+                  <pre><code class="language-js">function calculateSanity() {
   const sanityBarrier = 50;
   const sanityScore = Math.floor(Math.random() * 100);
   // In this case, sanityScore was {{ui.diagnosis.sanityScore}}
@@ -891,17 +890,16 @@
     current.diagnosis = "SANE";
   }
 }</code></pre>
-                    <p>If you'd like, you can recalculate your score.</p>
-                    <p>
-                      <button class="button" type="button" @click="determineSanity()">Recalculate Sanity</button><a class="button" :href="stickerURL" v-if="current.diagnosis == 'SANE'">Get A Sticker</a>
-                    </p>
-                  </dd>
-                </dl>
-              </section>
-            </div>
-          </main>
-        </div>
-      </main>
+                  <p>If you'd like, you can recalculate your score.</p>
+                  <p>
+                    <button class="button" type="button" @click="determineSanity()">Recalculate Sanity</button><a class="button" :href="stickerURL" v-if="current.diagnosis == 'SANE'">Get A Sticker</a>
+                  </p>
+                </dd>
+              </dl>
+            </section>
+          </div>
+        </main>
+      </div>
     </div>
     <div class="javascripts">
       <script src="js/libraries/vue.full.js"></script>
@@ -909,7 +907,7 @@
       <script src="js/libraries/howler.min.js"></script>
       <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.8.4/Sortable.min.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/Vue.Draggable/2.20.0/vuedraggable.umd.min.js"></script>
-      <script src="js/min/site.min.js?updated2022-12-12T06:10:20.296Z"></script>
+      <script src="js/min/site.min.js?updated2022-12-13T04:35:53.141Z"></script>
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css">
       <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.7.0/build/highlight.min.js"></script>
       <script>hljs.highlightAll();</script>

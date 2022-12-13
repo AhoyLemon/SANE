@@ -195,7 +195,7 @@ var app = new Vue({
           self.ui.enterCode.errorMessage = `That is not the correct code. Enter <tt>${self.ui.enterCode.code}</tt>`;
         }
       } else if (w == 2) {
-        const enteredCode = self.answers.enterCodeAgain.trim();
+        const enteredCode = self.answers.enterCodeAgain.trim().toUpperCase();
         if (!enteredCode || enteredCode.length < 3) {
           self.ui.enterCode.errorMessageAgain = `You must enter the Personal Code (PC) given to you earlier.`;
         } else if (enteredCode == self.ui.enterCode.code) {

@@ -9,7 +9,20 @@
   100% { opacity: 0; }
 }
 
-main.questions { min-height:100vh; display:flex; align-items:end; justify-content:center; padding:4rem;
+main.questions { min-height:100vh; display:flex; justify-content:center; align-items:end;
+
+  @media (min-width:721px) { padding:4rem;  }
+  @media (max-width:720px) { padding:$gap; padding-top:5rem; }
+
+  background-size:cover;  background-attachment: fixed; background-position: top center;
+
+  //background-image:url(../img/bg/bg2.jpg);
+  @media (orientation: landscape) {
+    background-image:url(../img/bg/bg3-wide.jpg);
+  }
+  @media (orientation: portrait) { 
+    background-image:url(../img/bg/bg3-tall.jpg);
+  }
   .darken { @include position(fixed,0,0,0,0); background:#161616;
     animation: flickerOff 3s linear forwards;
   }
@@ -153,18 +166,23 @@ main.questions { min-height:100vh; display:flex; align-items:end; justify-conten
 
 
 .how-many-lights {
-  .circle { width:25vw; height:25vw; border:2rem solid white; border-radius: 50%; margin-left: auto; margin-right: auto; background:rgba(0,0,0,0.8); 
+  .circle { width:clamp(200px,25vw,600px); height:clamp(200px,25vw,600px); border:clamp(1rem,4vw,2rem) solid white; border-radius: 50%; margin-left: auto; margin-right: auto; background:rgba(0,0,0,0.8); 
     &.flashing { animation-name: flashinglight; animation-duration: 7s; animation-timing-function: linear; animation-iteration-count: 1; }
   }
 }
 
 .sort-cities {
-  form { display:grid; grid-template-columns: repeat(2,1fr); gap:$gap; }
+  form { display:grid; gap:$gap;
+    @media (min-width:721px) { grid-template-columns: repeat(2,1fr); }
+    @media (max-width:720px) { grid-template-columns: 1fr; }
+  }
   .draglist {
+    @media (max-width:720px) { grid-column: 1; }
     .item.answer { grid-template-columns: 3em 1fr 5.25em;
       .population { font-family: monospace; font-size: 0.85rem; line-height: 2rem; text-align: right; } padding-right: 10px;
     }
     .item.scored { grid-template-columns: 3em 1fr 2em; position: relative;
+      
       .score { text-align: right; padding-right: 5px; font-family: monospace; }
       
       &.perfect { background:rgb(208, 247, 208);

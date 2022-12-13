@@ -15,16 +15,4 @@ p { margin-bottom: 1rem; }
 
 img { max-width: 100%; }
 
-html { background-size:cover;  background-attachment: fixed; background-position: top center;
-
-  //background-image:url(../img/bg/bg2.jpg);
-  @media (orientation: landscape) {
-    background-image:url(../img/bg/bg3-wide.jpg);
-  }
-  @media (orientation: portrait) { 
-    background-image:url(../img/bg/bg3-tall.jpg);
-  }
-
-}
-
 .inner { width: 100%; max-width: 920px; margin-left:auto; margin-right: auto; }

@@ -19,7 +19,7 @@ html(lang="en")
       main.questions(v-if="current.interface == 'questions'")
         include screens/_questions.pug
 
-      main.outro(v-if="current.interface == 'outro'")
+      .outro(v-if="current.interface == 'outro'")
         include screens/_outro.pug
 
     include partials/_javascripts

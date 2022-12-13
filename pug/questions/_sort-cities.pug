@@ -29,7 +29,7 @@
                 .population
                   span.count {{option.population.toLocaleString()}}
         template(v-if="ui.sortCities.showScores")
-          draggable.draglist.disabled(class="list-group" tag="ul" v-model="ui.sortCities.cities" :disabled="true")
+          draggable.draglist.disabled.answers(class="list-group" tag="ul" v-model="ui.sortCities.cities" :disabled="true")
             transition-group(type="transition" :name="!ui.dragList.dragging ? 'flip-list' : null")
               li.item.dragitem.disabled.scored(v-for="option,key in ui.sortCities.cities" :key="key" :class="{'perfect': option.score == 3, 'close': option.score == 2, 'meh': option.score == 0, 'bad': option.score < 0, 'very-bad': option.score < -2, 'terrible': option.score < -3, 'pathetic': option.score < -4 }" :score="option.score" :disabled="true")
                 .order-holder

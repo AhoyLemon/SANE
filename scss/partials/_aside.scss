@@ -1,7 +1,16 @@
-aside { @include position(fixed,0,0,null,0); width:260px;
+aside { 
   .notices { display: grid; gap:$gap; }
   .notice { padding:1rem; background:white; color:#111;
     dt { text-transform: uppercase; font-weight: 300; letter-spacing: 0.1em; font-size:90%; }
-    dd { font-weight: 600; font-size:125%; line-height: 90%; }
+    dd { font-weight: 600; line-height: 90%; }
+  }
+
+  @media (min-width:721px) { @include position(fixed,0,0); width:260px;
+    .notice {
+      dd { font-size:125%; }
+    }
+  }
+  @media (max-width:720px) { @include position(absolute,0,0,null,0); font-size:14px;
+    .notice { padding:10px; }
   }
 }

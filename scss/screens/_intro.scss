@@ -1,16 +1,11 @@
 main.intro { min-height: 100vh; min-height:100vh; display:flex; align-items:center; justify-content:center; padding:$gap;
   background-color: #111;
-  background-image:url(../img/bg/plasmaball.jpg); background-size: cover; background-repeat: no-repeat; background-attachment: fixed;
+  background-size: cover; background-repeat: no-repeat; background-attachment: fixed; background-position: center;
+  @media (min-width:721px) { background-image:url(../img/bg/plasmaball.jpg); }
+  @media (max-width:720px) { background-image:url(../img/bg/plasmaball-smaller.jpg); }
 } 
 section.intro-screen { background:white; color:black; padding:$gap; box-shadow: 1em 1em 1em black, -2px -2px 2px black; max-width: 740px;
   h1 { font-size:clamp(2rem,7vw,3.5rem); color:#ee3a97; 
-    // text-shadow:
-    //   -1px 1px 1px #414141,               
-    //   1px 1px 1px #414141,
-    //   1px 2px 1px #414141,
-    //   1px 3px 1px #414141,
-    //   1px 4px 1px #414141,
-    //   1px 5px 1px #414141;
     color:magenta;
     text-shadow: 1px 1px 0 rgba(0,0,0,0.5), -1px -1px 0 rgba(0,0,0,0.5), 0.06em 0.06em 0 yellow, 0.12em 0.12em 0 #1009ee, 0.2em 0.2em 0 limegreen;
     }

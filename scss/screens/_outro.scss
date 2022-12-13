@@ -37,6 +37,11 @@
       &:nth-child(1n+2) { margin-left: 0.5em; }
     }
     @media (max-width:720px) { width:100%; display: block; text-align: center; }
+    &[href] { color:#aa0e83;
+      &:not([disabled]) {
+        &:hover, &:focus { background:#aa0e83; color:#eee; }
+      }
+    }
   }
 
   

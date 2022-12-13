@@ -5,7 +5,7 @@ aside {
     dd { font-weight: 600; line-height: 90%; }
   }
 
-  @media (min-width:721px) { @include position(fixed,0,0); width:260px;
+  @media (min-width:721px) { @include position(fixed,0,null,null,0); width:260px;
     .notice {
       dd { font-size:125%; }
     }

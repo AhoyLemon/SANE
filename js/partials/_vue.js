@@ -418,12 +418,28 @@ var app = new Vue({
       } else {
         // This isn't a special round, go ahead and just advance to the next one.
         self.current.question++;
+
+
         let url = new URL(window.location);
         url.searchParams.set('question', self.current.question);
         window.history.pushState({question: self.current.question}, '', url);
 
         if (self.current.question > 20) {
-          self.determineSanity();
+
+          self.current.interface = "outro";
+          self.ui.diagnosis.showHow = false;
+          
+          let url = new URL(window.location);
+          url.searchParams.delete('question');
+          url.searchParams.set('show', 'outro');
+          window.history.pushState({question: self.current.question}, '', url);
+
+          self.current.diagnosis = "calculating";
+          setTimeout(() => {
+            self.determineSanity();
+          }, 6300);
+
+          
         }
       }
       
@@ -445,20 +461,23 @@ var app = new Vue({
         self.determineSanity();
       }
 
+      self.ui.diagnosis.showHow = false;
       if (self.ui.diagnosis.sanityScore < sanityBarrier) {
         self.current.diagnosis = "INSANE";
       } else {
         self.current.diagnosis = "SANE";
       }
-      self.current.interface = "outro";
-      self.ui.diagnosis.showHow = false;
 
       let url = new URL(window.location);
-      url.searchParams.delete('question');
-      url.searchParams.set('show', 'outro');
       url.searchParams.set('diagnosis', self.current.diagnosis);
       window.history.pushState({question: self.current.question}, '', url);
-
+      
+      if (self.current.diagnosis == "INSANE") {
+        insaneSound.play();
+      }
+      if (self.current.diagnosis == "SANE") {
+        saneSound.play();
+      }
     },
     
 

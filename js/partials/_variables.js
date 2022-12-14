@@ -10,20 +10,14 @@ const codeLetters = [
 const comet1 = new Howl({
   src: ['audio/comet1.mp3'],
   volume: 0.00,
-  autoplay:false,
-  onend: function() {
-    console.log('Clip: Comet1 is finished');
-  }
+  autoplay:false
 });
 
 const comet2 = new Howl({
   src: ['audio/comet2.mp3'],
   loop: false,
   autoplay:false,
-  volume: 0.00,
-  onend: function() {
-    console.log('Clip: Comet2 is finished');
-  }
+  volume: 0.00
 });
 
 const cometLoop = new Howl({
@@ -31,4 +25,18 @@ const cometLoop = new Howl({
   autoplay:false,
   loop: true,
   volume: 0,
+});
+
+const saneSound = new Howl({
+  src: ['audio/smile.mp3', 'audio/smile.ogg' ],
+  loop: false,
+  autoplay:false,
+  volume:1
+});
+
+const insaneSound = new Howl({
+  src: ['audio/trespassing.mp3', 'audio/trespassing.ogg' ],
+  loop: false,
+  autoplay:false,
+  volume:1
 });

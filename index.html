@@ -7,12 +7,11 @@
     <link href="css/site.css" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="An Online Gaslighting Simulator">
-    <meta http-equiv="last-modified" content="2022-12-13T15:39:20.957Z">
+    <meta http-equiv="last-modified" content="2022-12-14T03:37:40.293Z">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Caudex&amp;family=Zen+Dots&amp;display=swap" rel="stylesheet">
     <link href="	https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700" rel="stylesheet">
-    <link rel="stylesheet" href="https://unpkg.com/vue2-animate/dist/vue2-animate.min.css">
     <link rel="apple-touch-icon" sizes="180x180" href="https://ahoylemon.github.io/SANE/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="https://ahoylemon.github.io/SANE/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="https://ahoylemon.github.io/SANE/favicon-16x16.png">
@@ -283,7 +282,7 @@
                       <ul class="options wider" :count="questions.rorschach.options.length">
                         <li v-for="option,key in questions.rorschach.options">
                           <label :class="{'active': answers.rorschach == option.text, 'inactive': answers.rorschach &amp;&amp; answers.rorschach != option.text }">
-                            <input type="radio" :value="option.text" v-model="answers.rorschach"><img :src="'img/rorschach/'+(key+1)+'.png'">
+                            <input type="radio" :value="option.text" v-model="answers.rorschach"><img :src="'img/rorschach/'+(key+1)+'.jpg'">
                           </label>
                         </li>
                       </ul>
@@ -858,7 +857,7 @@
                           <button type="button" @click="scoreCities()" :disabled="ui.sortCities.dragCount &lt; 2">Calculate</button>
                         </div>
                         <div class="button-holder" v-if="ui.sortCities.showScores">
-                          <button type="submit" :disabled="ui.sortCities.submitButtonDisabled">Proceed</button>
+                          <button type="submit" :disabled="ui.sortCities.submitButtonDisabled">Finish Exam</button>
                         </div>
                       </div>
                     </form>
@@ -872,10 +871,20 @@
       <div class="outro" v-if="current.interface == 'outro'">
         <header class="diagnosis-header">
           <div class="sticker-holder">
-            <div class="sticker">{{current.diagnosis}}</div>
+            <div class="calculating" v-if="current.diagnosis =='calculating'">
+              <div class="loader">
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+              </div>
+            </div>
+            <div class="sticker" v-else>{{current.diagnosis}}</div>
           </div>
           <div class="diagnosis-text">
-            <div class="text"><strong>{{answers.yourName}}</strong>, our scientific algorithm has given you a sanity score of <code>{{ui.diagnosis.sanityScore +'%' }}</code>.</div>
+            <div class="text" v-if="ui.diagnosis.sanityScore &lt; 0">Calculating your sanity...</div>
+            <div class="text" v-else><strong>{{answers.yourName}}</strong>, our scientific algorithm has given you a sanity score of <code>{{ui.diagnosis.sanityScore +'%' }}</code>.</div>
           </div>
           <div class="button-holder"><a class="button" :href="stickerURL" v-if="current.diagnosis == 'SANE'">Get A Sticker</a></div>
         </header>
@@ -884,11 +893,22 @@
             <section class="diagnosis">
               <dl class="diagnosis">
                 <dt>Your diagnosis:</dt>
-                <dd>
-                  <div class="sticker-holder">
+                <dd v-if="current.diagnosis =='calculating'">
+                  <div class="calculating">
+                    <div class="loader">
+                      <div class="dot"></div>
+                      <div class="dot"></div>
+                      <div class="dot"></div>
+                      <div class="dot"></div>
+                      <div class="dot"></div>
+                    </div>
+                  </div>
+                </dd>
+                <dd v-else>
+                  <div class="sticker-holder" v-if="current.diagnosis == 'INSANE' || current.diagnosis == 'SANE'">
                     <div class="sticker">{{current.diagnosis}}</div>
                   </div>
-                  <div class="score-summary"><span>You have been given a Sanity Score of <code>{{ui.diagnosis.sanityScore +'%' }}</code>, offically labeling you as <strong>{{current.diagnosis}}</strong>.</span></div>
+                  <div class="score-summary" v-if="ui.diagnosis.sanityScore &gt; 0"><span>You have been given a Sanity Score of <code>{{ui.diagnosis.sanityScore +'%' }}</code>, offically labeling you as <strong>{{current.diagnosis}}</strong>.</span></div>
                   <div class="button-holder" v-if="!ui.diagnosis.showHow">
                     <button type="button" @click="showHow()">How was this determined?</button><a class="button" :href="stickerURL" v-if="current.diagnosis == 'SANE'">Get A Sticker</a>
                   </div>
@@ -925,12 +945,12 @@
       </div>
     </div>
     <div class="javascripts">
-      <script src="js/libraries/vue.full.js"></script>
-      <script>const testing = true;</script>
+      <script src="js/libraries/vue.min.js"></script>
+      <script>const testing = false;</script>
       <script src="js/libraries/howler.min.js"></script>
       <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.8.4/Sortable.min.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/Vue.Draggable/2.20.0/vuedraggable.umd.min.js"></script>
-      <script src="js/min/site.min.js?updated2022-12-13T15:39:20.957Z"></script>
+      <script src="js/min/site.min.js?updated2022-12-14T03:37:40.293Z"></script>
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css">
       <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.7.0/build/highlight.min.js"></script>
       <script>hljs.highlightAll();</script>

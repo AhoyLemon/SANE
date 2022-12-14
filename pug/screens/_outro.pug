@@ -1,8 +1,16 @@
 header.diagnosis-header
   .sticker-holder
-    .sticker {{current.diagnosis}}
+    .calculating(v-if="current.diagnosis =='calculating'")
+      .loader
+        .dot
+        .dot
+        .dot
+        .dot
+        .dot
+    .sticker(v-else) {{current.diagnosis}}
   .diagnosis-text
-    .text #[strong {{answers.yourName}}], our scientific algorithm has given you a sanity score of #[code {{ui.diagnosis.sanityScore +'%' }}].
+    .text(v-if="ui.diagnosis.sanityScore < 0") Calculating your sanity...
+    .text(v-else) #[strong {{answers.yourName}}], our scientific algorithm has given you a sanity score of #[code {{ui.diagnosis.sanityScore +'%' }}].
   .button-holder
     a.button(:href="stickerURL" v-if="current.diagnosis == 'SANE'") Get A Sticker
 
@@ -12,15 +20,31 @@ main
     section.diagnosis
       dl.diagnosis
         dt Your diagnosis:
-        dd
-          .sticker-holder
+
+        dd(v-if="current.diagnosis =='calculating'")
+          .calculating
+            .loader
+              .dot
+              .dot
+              .dot
+              .dot
+              .dot
+
+
+        dd(v-else)
+          .sticker-holder(v-if="current.diagnosis == 'INSANE' || current.diagnosis == 'SANE'")
             .sticker {{current.diagnosis}}
-          .score-summary
+          .score-summary(v-if="ui.diagnosis.sanityScore > 0")
             span You have been given a Sanity Score of #[code {{ui.diagnosis.sanityScore +'%' }}], offically labeling you as #[strong {{current.diagnosis}}].
 
           .button-holder(v-if="!ui.diagnosis.showHow")
             button(type="button" @click="showHow()") How was this determined?
             a.button(:href="stickerURL" v-if="current.diagnosis == 'SANE'") Get A Sticker
+
+        //- dd
+        //-   .button-holder(style="position:fixed; bottom:0; right:0;")
+        //-     button(type="button" @click="current.diagnosis = 'calculating', ui.diagnosis.sanityScore = -1") void
+        //-     button(type="button" @click="determineSanity()") Calculate
 
 
     section.how(v-if="ui.diagnosis.showHow")

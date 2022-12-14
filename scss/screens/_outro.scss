@@ -1,5 +1,5 @@
 .outro { min-height: 100vh; background:white; color:black; min-height:100vh; 
-  @media (min-width:721px) { display:flex; align-items:center; justify-content:center; padding:4rem; }
+  @media (min-width:721px) { display:flex; align-items:center; justify-content:center; padding:4rem; padding-top:8rem; }
   header.diagnosis-header { background:$black; padding:$gap; display:grid; gap:$gap; color:$white;
     
     .diagnosis-text, 
@@ -14,6 +14,9 @@
     @media (max-width:720px) { padding-top:5rem;
       .sticker-holder { text-align: center; }
       .sticker { font-size:18vw; }
+    }
+    .loader {
+      .dot { width: 12px; height: 12px; background:#555; }
     }
   }
 
@@ -44,6 +47,8 @@
     }
   }
 
+  code { margin-bottom: 1em; }
+
   
   .sticker { background: red; color:white; text-shadow: 0.02em 0.02em 0.02em black, -1px -1px 1px black; display: inline-block; padding:0 0.25em; line-height: 100%; font-weight: 900; }
   // code { font-size: 2.25em;}
@@ -51,6 +56,83 @@
   section.diagnosis {
     .sticker { font-size:clamp(4rem, 18vw, 220px); }
     .button-holder { margin-top: $gap; }
+    .calculating {
+      .loader { padding:($gap * 4);
+        .dot { width: 36px; height: 36px; }
+      }
+    }
+    .score-summary { padding-top:$gap; padding-bottom: 1.25rem; }
+    
   }
+
 }
 
+$dotSize: 100px;
+$halfDot: ($dotSize / 2);
+
+@keyframes slide {
+  0% { transform: scale(1); }
+  20% { transform: scale(1); opacity: 1; }
+  50% { opacity: 0; transform: scale(2); }
+  80% { transform:scale(1); opacity: 1; }
+  100% { transform:scale(1) }
+}
+
+.loader {
+  text-align: center;
+}
+
+.dot {
+	
+	background: #3ac;
+	border-radius: 100%;
+	display: inline-block;
+	animation: slide 2.5s infinite;
+  &:nth-child(1) {
+		animation-delay: 0.25s;
+		background: #32aacc;
+	}
+	&:nth-child(2) {
+		animation-delay: 0.5s;
+		background: #64aacc;
+	}
+	&:nth-child(3) {
+		animation-delay: 0.75s;
+		background: #96aacc;
+	}
+	&:nth-child(4) {
+		animation-delay: 1s;
+		background: #c8aacc;
+	}
+	&:nth-child(5) {
+		animation-delay: 1.25s;
+		background: #faaacc;
+	}
+}
+
+
+// @keyframes firstDot {
+//   0%   { transform: scale(0.5); opacity: 0.5; }
+//   25%  { transform: scale(1); opacity: 1; }
+//   75%  { transform: scale(1); opacity: 1; }
+//   100% { transform: scale(0.5); opacity: 0.5; }
+// }
+
+
+
+
+
+
+
+
+
+// .calculating {
+//   .mine { 
+//     .dot { display: inline-block; width:$dotSize; height: $dotSize; margin-right: $halfDot; background:red; border-radius: 50%;
+//       &.one { animation:firstDot 3s ease; animation-iteration-count: infinite; }
+//       &.two { animation:firstDot 3s ease; animation-iteration-count: infinite; animation-delay: 1.5s; }
+//       &.three { animation:firstDot 3s ease; animation-iteration-count: infinite; animation-delay: 3s; }
+//     }
+
+//   }
+// }

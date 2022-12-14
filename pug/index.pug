@@ -12,7 +12,11 @@ html(lang="en")
   body
     #app(v-cloak)
 
+      if testing
+        .testing
+          span TEST MODE IS ACTIVE
       include partials/_aside.pug
+      
 
       main.intro(v-if="current.interface == 'intro'")
         include screens/_intro.pug

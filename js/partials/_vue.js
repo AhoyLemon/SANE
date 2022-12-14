@@ -377,7 +377,7 @@ var app = new Vue({
         } else {
           self.ui.yourPrediction.diagnosis = "uncertain";
         }
-        _paq.push(['setCustomVariable', 1, "prediction", self.ui.yourPrediction.diagnosis, "visit"]);
+        _paq.push(['setCustomVariable', 2, "prediction", self.ui.yourPrediction.diagnosis.toUpperCase(), "visit"]);
         self.ui.yourPrediction.phase = 2;
       } else if (q == "hats") {
         
@@ -474,7 +474,7 @@ var app = new Vue({
       } else {
         self.current.diagnosis = "SANE";
       }
-      _paq.push(['setCustomVariable', 1, "diagnosis", self.current.diagnosis, "visit"]);
+      _paq.push(['setCustomVariable', 3, "diagnosis", self.current.diagnosis, "visit"]);
 
       if (self.current.diagnosis == "INSANE") {
         insaneSound.play();
@@ -706,6 +706,13 @@ var app = new Vue({
       if (a.population < b.population) return 1;
       return 0;
     });
+
+
+    let url = new URL(window.location);
+    url.searchParams.delete('question');
+    url.searchParams.delete('show');
+    url.searchParams.delete('diagnosis');
+    window.history.replaceState({'vue': 'mounted'}, '', url);
   }
 
 });

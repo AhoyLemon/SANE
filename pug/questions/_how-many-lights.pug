@@ -14,7 +14,7 @@
     dt(v-if="ui.howManyLights.phase == 3")
       .title How many times did the light flash?
     dd(v-if="ui.howManyLights.phase == 3")
-      form(@submit.prevent="answerQuestion('howManyLights')")
+      form(@submit.prevent="answerQuestion('howManyLights', 'How many lights?', answers.howManyLights)")
         ul.options.simple-options(count="4")
           li(v-for="option,key in questions.howManyLights.options")
             label(:class="{'active': answers.howManyLights == option.text, 'inactive': answers.howManyLights && answers.howManyLights != option.text }")

@@ -3,7 +3,7 @@
     dt
       .subtitle Given that each person lives their life completely within their own mind, is it possible to know the mind of another? That is to say, while we are all trapped within our own singular experiences, can we ever truly empathize with the experiences of another person? Is it truly impossible to know another human being? And if so, does that make us all alone?
     dd
-      form(@submit.prevent="answerQuestion('ramblingQuestion')")
+      form(@submit.prevent="answerQuestion('ramblingQuestion', 'Rambling Question:', answers.ramblingQuestion)")
         ul.options.simple-options(:count="questions.ramblingQuestion.options.length")
           li(v-for="option in questions.ramblingQuestion.options")
             label(:class="{'active': option.text == answers.ramblingQuestion, 'inactive': (answers.ramblingQuestion && option.text != answers.ramblingQuestion)}" )

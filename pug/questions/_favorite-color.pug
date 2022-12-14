@@ -3,7 +3,7 @@
     dt 
       .title Which of these colors calms your thoughts?
     dd
-      form(@submit.prevent="answerQuestion('favoriteColor')")
+      form(@submit.prevent="answerQuestion('favoriteColor', 'Favorite Color?', answers.favoriteColor)")
         ul.options(:count="3")
           li(v-for="(option, key) in questions.colors.options") 
             label(:style="{'background-color':option.hex}" :class="{'active': option.name == answers.favoriteColor, 'inactive': (answers.favoriteColor && option.name != answers.favoriteColor)}")

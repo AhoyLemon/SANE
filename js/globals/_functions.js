@@ -43,14 +43,31 @@ function percentOf(total,part) {
 }
 
 function sendEvent(c, a, l, v) {
-  if (v) {
-    ga('send', 'event', { eventCategory: c, eventAction: a, eventLabel: l, eventValue:v });
-    //console.log('CATEGORY: '+c+', ACTION:'+a+', LABEL:'+l+', VALUE:'+v);
-  } else if (l) {
-    ga('send', 'event', { eventCategory: c, eventAction: a, eventLabel: l });
-    //console.log('CATEGORY: '+c+', ACTION:'+a+', LABEL:'+l);
+  if (_paq && _paq != undefined) {
+    if (v) {
+      _paq.push(['trackEvent', c, a, l, v]);
+      //ga('send', 'event', { eventCategory: c, eventAction: a, eventLabel: l, eventValue:v });
+      if (testing) {
+        console.log('CATEGORY: '+c+', ACTION:'+a+', LABEL:'+l+', VALUE:'+v);
+      }
+      
+    } else if (l) {
+      _paq.push(['trackEvent', c, a, l]);
+      //ga('send', 'event', { eventCategory: c, eventAction: a, eventLabel: l });
+      if (testing) {
+        console.log('CATEGORY: '+c+', ACTION:'+a+', LABEL:'+l);
+      }
+      
+    } else {
+      _paq.push(['trackEvent', c, a]);
+      //ga('send', 'event', { eventCategory: c, eventAction: a });
+      if (testing) {
+        console.log('CATEGORY: '+c+', ACTION:'+a);
+      }
+    }
   } else {
-    ga('send', 'event', { eventCategory: c, eventAction: a });
-    //console.log('CATEGORY: '+c+', ACTION:'+a);
+    if (testing) {
+      alert("Motomo seems to be broken");
+    }
   }
 }

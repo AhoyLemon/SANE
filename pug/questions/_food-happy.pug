@@ -6,7 +6,7 @@
     dt 
       .title Do you think this will actually make you happy?
     dd
-      form(@submit.prevent="answerQuestion('foodHappy')")
+      form(@submit.prevent="answerQuestion('foodHappy', 'Do you think this will actually make you happy?', answers.foodHappy)")
         ul.options(count="2")
           li(v-for="option,key in questions.foodHappy.options")
             label(:class="{'active': answers.foodHappy == option.text, 'inactive': answers.foodHappy && answers.foodHappy != option.text }")

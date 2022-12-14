@@ -7,7 +7,7 @@
     <link href="css/site.css" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="An Online Gaslighting Simulator">
-    <meta http-equiv="last-modified" content="2022-12-14T04:15:46.142Z">
+    <meta http-equiv="last-modified" content="2022-12-14T15:29:36.124Z">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Caudex&amp;family=Zen+Dots&amp;display=swap" rel="stylesheet">
@@ -71,7 +71,7 @@
                     <div class="title">Why are you testing your sanity?</div>
                   </dt>
                   <dd>
-                    <form @submit.prevent="answerQuestion('whyTest')">
+                    <form @submit.prevent="answerQuestion('whyTest', 'Why Test?', answers.whyTest)">
                       <ul class="options simple-options" count="2">
                         <li v-for="option,key in questions.whyTest.options">
                           <label :class="{'active': answers.whyTest == option.text, 'inactive': answers.whyTest &amp;&amp; answers.whyTest != option.text }">
@@ -95,7 +95,7 @@
                     <div class="title">What do you predict your results will be?</div>
                   </dt>
                   <dd>
-                    <form @submit.prevent="answerQuestion('yourPrediction')">
+                    <form @submit.prevent="answerQuestion('yourPrediction', 'Your Prediction?', answers.yourPrediction)">
                       <ul class="options simple-options" count="2">
                         <li v-for="option,key in questions.yourPrediction.options">
                           <label :class="{'active': answers.yourPrediction == option.text, 'inactive': answers.yourPrediction &amp;&amp; answers.yourPrediction != option.text }">
@@ -116,7 +116,7 @@
                     <div class="title">{{questions.yourPrediction.followUp.sane.title}}</div>
                   </dt>
                   <dd v-if="ui.yourPrediction.diagnosis == 'sane'">
-                    <form @submit.prevent="answerQuestion('yourPredictionFollowUp')">
+                    <form @submit.prevent="answerQuestion('yourPredictionFollowUp', questions.yourPrediction.followUp.sane.title, answers.yourPrediction)">
                       <ul class="options simple-options" count="2">
                         <li v-for="option,key in questions.yourPrediction.followUp.sane.options">
                           <label :class="{'active': answers.yourPredictionFollowUp == option.text, 'inactive': answers.yourPredictionFollowUp &amp;&amp; answers.yourPredictionFollowUp != option.text }">
@@ -135,7 +135,7 @@
                     <div class="title">{{questions.yourPrediction.followUp.insane.title}}</div>
                   </dt>
                   <dd v-if="ui.yourPrediction.diagnosis == 'insane'">
-                    <form @submit.prevent="answerQuestion('yourPredictionFollowUp')">
+                    <form @submit.prevent="answerQuestion('yourPredictionFollowUp', questions.yourPrediction.followUp.insane.title, answers.yourPrediction)">
                       <ul class="options simple-options" count="2">
                         <li v-for="option,key in questions.yourPrediction.followUp.insane.options">
                           <label :class="{'active': answers.yourPredictionFollowUp == option.text, 'inactive': answers.yourPredictionFollowUp &amp;&amp; answers.yourPredictionFollowUp != option.text }">
@@ -154,7 +154,7 @@
                     <div class="title">{{questions.yourPrediction.followUp.uncertain.title}}</div>
                   </dt>
                   <dd v-if="ui.yourPrediction.diagnosis == 'uncertain'">
-                    <form @submit.prevent="answerQuestion('yourPredictionFollowUp')">
+                    <form @submit.prevent="answerQuestion('yourPredictionFollowUp', questions.yourPrediction.followUp.uncertain.title, answers.yourPrediction)">
                       <ul class="options likert" :count="questions.yourPrediction.followUp.uncertain.options.length">
                         <li v-for="option,key in questions.yourPrediction.followUp.uncertain.options">
                           <label :class="{'active': answers.yourPredictionFollowUp == option.text, 'inactive': answers.yourPredictionFollowUp &amp;&amp; answers.yourPredictionFollowUp != option.text }">
@@ -182,7 +182,7 @@
                     <div class="title">What is your true name?</div>
                   </dt>
                   <dd>
-                    <form @submit.prevent="answerQuestion('yourName')">
+                    <form @submit.prevent="answerQuestion('yourName', 'Your Name?', answers.yourName)">
                       <div class="field">
                         <input type="text" v-model="answers.yourName" placeholder="Enter what you should be called." :minlength="ui.yourName.min" :maxlength="ui.yourName.max">
                       </div>
@@ -231,7 +231,7 @@
                     <div class="title">Which of these colors calms your thoughts?</div>
                   </dt>
                   <dd>
-                    <form @submit.prevent="answerQuestion('favoriteColor')">
+                    <form @submit.prevent="answerQuestion('favoriteColor', 'Favorite Color?', answers.favoriteColor)">
                       <ul class="options" :count="3">
                         <li v-for="(option, key) in questions.colors.options"> 
                           <label :style="{'background-color':option.hex}" :class="{'active': option.name == answers.favoriteColor, 'inactive': (answers.favoriteColor &amp;&amp; option.name != answers.favoriteColor)}">
@@ -255,7 +255,7 @@
                     <div class="title">How many alcoholic drinks do you <strong>need</strong> to have in a week?</div>
                   </dt>
                   <dd>
-                    <form @submit.prevent="answerQuestion('howManyDrinks')">
+                    <form @submit.prevent="answerQuestion('howManyDrinks', 'How Many Drinks?', answers.howManyDrinks)">
                       <div class="field">
                         <input type="range" :min="ui.howManyDrinks.min" :max="ui.howManyDrinks.max" v-model="answers.howManyDrinks">
                       </div>
@@ -278,7 +278,7 @@
                     <div class="title">Which of these images reminds you of your mother?</div>
                   </dt>
                   <dd>
-                    <form @submit.prevent="answerQuestion('rorschach')">
+                    <form @submit.prevent="answerQuestion('rorschach', 'Mother looks like...', answers.rorschach)">
                       <ul class="options wider" :count="questions.rorschach.options.length">
                         <li v-for="option,key in questions.rorschach.options">
                           <label :class="{'active': answers.rorschach == option.text, 'inactive': answers.rorschach &amp;&amp; answers.rorschach != option.text }">
@@ -304,7 +304,7 @@
                     <div class="title">Why did you let it get like this?</div>
                   </dt>
                   <dd>
-                    <form @submit.prevent="answerQuestion('sink')">
+                    <form @submit.prevent="answerQuestion('sink', 'Why did you let it get like this?', answers.sink)">
                       <div class="field">
                         <textarea v-model="answers.sink" :minlength="ui.sink.min" :maxlength="ui.sink.max" placeholder="Explain your reasoning in this area."></textarea>
                       </div>
@@ -329,7 +329,7 @@
                     <div class="title">Do you think this will actually make you happy?</div>
                   </dt>
                   <dd>
-                    <form @submit.prevent="answerQuestion('foodHappy')">
+                    <form @submit.prevent="answerQuestion('foodHappy', 'Do you think this will actually make you happy?', answers.foodHappy)">
                       <ul class="options" count="2">
                         <li v-for="option,key in questions.foodHappy.options">
                           <label :class="{'active': answers.foodHappy == option.text, 'inactive': answers.foodHappy &amp;&amp; answers.foodHappy != option.text }">
@@ -353,7 +353,7 @@
                     <div class="title">Do you think you are <span class="sane-holder"> <span class="sane">sane?</span><span class="crazy">crazy</span></span></div>
                   </dt>
                   <dd>
-                    <form @submit.prevent="answerQuestion('youThink')">
+                    <form @submit.prevent="answerQuestion('youThink', 'Do You Think...?', answers.youThink)">
                       <ul class="options simple-options" count="2">
                         <li v-for="option in questions.youThink.options" @mouseover="saneHover(true)" @mouseleave="saneHover(false)">
                           <label :class="{'active': option.text == answers.youThink, 'inactive': (answers.youThink &amp;&amp; option.text != answers.youThink)}">
@@ -440,7 +440,7 @@
                     <div class="title">Are you ashamed of what you've done?</div>
                   </dt>
                   <dd>
-                    <form @submit.prevent="answerQuestion('ashamed')">
+                    <form @submit.prevent="answerQuestion('ashamed', 'Are you ashamed of what you have done?', answers.ashamed)">
                       <ul class="options likert" :count="questions.ashamed.options.length">
                         <li v-for="option,key in questions.ashamed.options">
                           <label :class="{'active': answers.ashamed == option.text, 'inactive': answers.ashamed &amp;&amp; answers.ashamed != option.text }">
@@ -468,7 +468,7 @@
                     <div class="title">Do you like hats?</div>
                   </dt>
                   <dd v-if="!ui.hatsExplanation.demand">
-                    <form @submit.prevent="answerQuestion('hats')">
+                    <form @submit.prevent="answerQuestion('hats', 'Do you like hats?', answers.hats)">
                       <ul class="options likert" :count="questions.hats.options.length">
                         <li v-for="option,key in questions.hats.options">
                           <label :class="{'active': answers.hats == option.text, 'inactive': answers.hats &amp;&amp; answers.hats != option.text }">
@@ -490,7 +490,7 @@
                     <div class="subtitle">Please Explain.</div>
                   </dt>
                   <dd v-if="ui.hatsExplanation.demand">
-                    <form @submit.prevent="answerQuestion('hatsExplanation')">
+                    <form @submit.prevent="answerQuestion('hatsExplanation', 'Hats Explanation:', answers.hatsExplanation)">
                       <div class="field">
                         <textarea v-model="answers.hatsExplanation" :minlength="ui.hatsExplanation.min" :maxlength="ui.hatsExplanation.max" :placeholder="ui.hatsExplanation.placeholder"></textarea>
                       </div>
@@ -512,7 +512,7 @@
                     <div class="title">Which of these objects do you love?</div>
                   </dt>
                   <dd>
-                    <form @submit.prevent="answerQuestion('loveObject')">
+                    <form @submit.prevent="answerQuestion('loveObject', 'Which of these objects do you love?', answers.loveObject)">
                       <ul class="options wider" :count="questions.loveObject.options.length">
                         <li v-for="option,key in questions.loveObject.options">
                           <label :class="{'active': answers.loveObject == option.text, 'inactive': answers.loveObject &amp;&amp; answers.loveObject != option.text }" :title="option.title">
@@ -553,7 +553,7 @@
                     <div class="title">How many times did the light flash?</div>
                   </dt>
                   <dd v-if="ui.howManyLights.phase == 3">
-                    <form @submit.prevent="answerQuestion('howManyLights')">
+                    <form @submit.prevent="answerQuestion('howManyLights', 'How many lights?', answers.howManyLights)">
                       <ul class="options simple-options" count="4">
                         <li v-for="option,key in questions.howManyLights.options">
                           <label :class="{'active': answers.howManyLights == option.text, 'inactive': answers.howManyLights &amp;&amp; answers.howManyLights != option.text }">
@@ -595,7 +595,7 @@
                     <div class="subtitle">Given that each person lives their life completely within their own mind, is it possible to know the mind of another? That is to say, while we are all trapped within our own singular experiences, can we ever truly empathize with the experiences of another person? Is it truly impossible to know another human being? And if so, does that make us all alone?</div>
                   </dt>
                   <dd>
-                    <form @submit.prevent="answerQuestion('ramblingQuestion')">
+                    <form @submit.prevent="answerQuestion('ramblingQuestion', 'Rambling Question:', answers.ramblingQuestion)">
                       <ul class="options simple-options" :count="questions.ramblingQuestion.options.length">
                         <li v-for="option in questions.ramblingQuestion.options">
                           <label :class="{'active': option.text == answers.ramblingQuestion, 'inactive': (answers.ramblingQuestion &amp;&amp; option.text != answers.ramblingQuestion)}">
@@ -639,7 +639,7 @@
                     <div class="title">Are you hearing that music?</div>
                   </dt>
                   <dd>
-                    <form @submit.prevent="answerQuestion('hearingMusic')">
+                    <form @submit.prevent="answerQuestion('hearingMusic', 'Are you hearing that music?', answers.hearingMusic)">
                       <ul class="options simple-options" count="2">
                         <li v-for="option in questions.hearingMusic.options" :span="option.span">
                           <label :class="{'active': option.text == answers.hearingMusic, 'inactive': (answers.hearingMusic &amp;&amp; option.text != answers.hearingMusic)}">
@@ -659,7 +659,7 @@
                     <div class="title">Must have just been your imagination.</div>
                   </dt>
                   <dd>
-                    <form @submit.prevent="answerQuestion('hearingMusicFollowUp')">
+                    <form @submit.prevent="answerQuestion('hearingMusicFollowUp', 'Must have just been your imagination.', answers.hearingMusicFollowUp)">
                       <ul class="options simple-options" count="2">
                         <li v-for="option in questions.hearingMusic.followUp.no.options" :span="option.span">
                           <label :class="{'active': option.text == answers.hearingMusicFollowUp, 'inactive': (answers.hearingMusicFollowUp &amp;&amp; option.text != answers.hearingMusicFollowUp)}">
@@ -680,7 +680,7 @@
                     <div class="title" v-if="answers.hearingMusic == 'I did, but not anymore.'">What did it sound like?</div>
                   </dt>
                   <dd>
-                    <form @submit.prevent="answerQuestion('hearingMusicFollowUp')">
+                    <form @submit.prevent="answerQuestion('hearingMusicFollowUp', 'What did/does it sound like?', answers.hearingMusicFollowUp)">
                       <ul class="options simple-options" count="2">
                         <li v-for="option in questions.hearingMusic.followUp.yes.options" :span="option.span">
                           <label :class="{'active': option.text == answers.hearingMusicFollowUp, 'inactive': (answers.hearingMusicFollowUp &amp;&amp; option.text != answers.hearingMusicFollowUp)}">
@@ -704,7 +704,7 @@
                     <div class="title">What does your tongue taste like?</div>
                   </dt>
                   <dd>
-                    <form @submit.prevent="answerQuestion('tongue')">
+                    <form @submit.prevent="answerQuestion('tongue', 'What does your tongue taste like?', answers.tongue)">
                       <ul class="options simple-options" count="2">
                         <li v-for="option in questions.tongue.options" @mouseover="saneHover(true)" @mouseleave="saneHover(false)">
                           <label :class="{'active': option.text == answers.tongue, 'inactive': (answers.tongue &amp;&amp; option.text != answers.tongue)}">
@@ -779,7 +779,7 @@
                     <div class="subtitle">(check all that apply)</div>
                   </dt>
                   <dd>
-                    <form @submit.prevent="answerQuestion('breatheNormally')">
+                    <form @submit.prevent="answerQuestion('breatheNormally', 'Why were you unable to breathe normally?',answers.breatheNormally.why)">
                       <ul class="options" count="1">
                         <li v-for="option in questions.breatheNormally.why.options" @mouseover="saneHover(true)" @mouseleave="saneHover(false)">
                           <label :class="{'active': answers.breatheNormally.why.includes(option.text) }">
@@ -807,7 +807,7 @@
                     <div class="title">Sort these world cities by population.</div>
                   </dt>
                   <dd class="q-and-a">
-                    <form @submit.prevent="answerQuestion('answerQuestion')">
+                    <form @submit.prevent="answerQuestion('sortCities', 'City Score:', ui.sortCities.totalScore)">
                       <template v-if="!ui.sortCities.showScores">
                         <draggable class="draglist list-group" tag="ul" v-bind="dragOptions" v-model="ui.sortCities.cities" @start="ui.dragList.dragging = true" @end="cityDragged()">
                           <transition-group type="transition" :name="!ui.dragList.dragging ? 'flip-list' : null">
@@ -950,7 +950,7 @@
       <script src="js/libraries/howler.min.js"></script>
       <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.8.4/Sortable.min.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/Vue.Draggable/2.20.0/vuedraggable.umd.min.js"></script>
-      <script src="js/min/site.min.js?updated2022-12-14T04:15:46.142Z"></script>
+      <script src="js/min/site.min.js?updated2022-12-14T15:29:36.124Z"></script>
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css">
       <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.7.0/build/highlight.min.js"></script>
       <script>

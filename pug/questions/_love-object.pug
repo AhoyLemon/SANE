@@ -3,7 +3,7 @@
     dt 
       .title Which of these objects do you love?
     dd
-      form(@submit.prevent="answerQuestion('loveObject')")
+      form(@submit.prevent="answerQuestion('loveObject', 'Which of these objects do you love?', answers.loveObject)")
         ul.options.wider(:count="questions.loveObject.options.length")
           li(v-for="option,key in questions.loveObject.options")
             label(:class="{'active': answers.loveObject == option.text, 'inactive': answers.loveObject && answers.loveObject != option.text }" :title="option.title")

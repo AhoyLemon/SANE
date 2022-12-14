@@ -3,9 +3,8 @@
     dt 
       .subtitle Constant criticism can have long-term effects on self worth and relationships.
       .title Sort these world cities by population.
-      //- .please Do it quickly, and do not screw it up.
     dd.q-and-a
-      form(@submit.prevent="answerQuestion('answerQuestion')")
+      form(@submit.prevent="answerQuestion('sortCities', 'City Score:', ui.sortCities.totalScore)")
         template(v-if="!ui.sortCities.showScores")
           draggable.draglist(class="list-group" tag="ul" v-bind="dragOptions" v-model="ui.sortCities.cities" @start="ui.dragList.dragging = true" @end="cityDragged()")
             transition-group(type="transition" :name="!ui.dragList.dragging ? 'flip-list' : null")

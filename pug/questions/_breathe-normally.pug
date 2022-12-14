@@ -40,7 +40,7 @@
     dt
       .subtitle (check all that apply)
     dd
-      form(@submit.prevent="answerQuestion('breatheNormally')")
+      form(@submit.prevent="answerQuestion('breatheNormally', 'Why were you unable to breathe normally?',answers.breatheNormally.why)")
         ul.options(count="1")
           li(v-for="option in questions.breatheNormally.why.options" @mouseover="saneHover(true)" @mouseleave="saneHover(false)")
             label(:class="{'active': answers.breatheNormally.why.includes(option.text) }" )

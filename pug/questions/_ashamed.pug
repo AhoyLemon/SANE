@@ -3,7 +3,7 @@
     dt 
       .title Are you ashamed of what you've done?
     dd
-      form(@submit.prevent="answerQuestion('ashamed')")
+      form(@submit.prevent="answerQuestion('ashamed', 'Are you ashamed of what you have done?', answers.ashamed)")
         ul.options.likert(:count="questions.ashamed.options.length")
           li(v-for="option,key in questions.ashamed.options")
             label(:class="{'active': answers.ashamed == option.text, 'inactive': answers.ashamed && answers.ashamed != option.text }")

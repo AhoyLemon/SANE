@@ -3,7 +3,7 @@
     dt 
       .title Do you like hats?
     dd(v-if="!ui.hatsExplanation.demand")
-      form(@submit.prevent="answerQuestion('hats')")
+      form(@submit.prevent="answerQuestion('hats', 'Do you like hats?', answers.hats)")
         ul.options.likert(:count="questions.hats.options.length")
           li(v-for="option,key in questions.hats.options")
             label(:class="{'active': answers.hats == option.text, 'inactive': answers.hats && answers.hats != option.text }")
@@ -17,7 +17,7 @@
     dt(v-if="ui.hatsExplanation.demand")
       .subtitle Please Explain.
     dd(v-if="ui.hatsExplanation.demand")
-      form(@submit.prevent="answerQuestion('hatsExplanation')")
+      form(@submit.prevent="answerQuestion('hatsExplanation', 'Hats Explanation:', answers.hatsExplanation)")
         .field
           textarea(v-model="answers.hatsExplanation" :minlength="ui.hatsExplanation.min" :maxlength="ui.hatsExplanation.max" :placeholder="ui.hatsExplanation.placeholder")
         .button-row.split

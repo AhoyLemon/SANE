@@ -3,7 +3,7 @@
     dt 
       .title How many alcoholic drinks do you #[strong need] to have in a week?
     dd
-      form(@submit.prevent="answerQuestion('howManyDrinks')")
+      form(@submit.prevent="answerQuestion('howManyDrinks', 'How Many Drinks?', answers.howManyDrinks)")
         .field
           input(type="range" :min="ui.howManyDrinks.min" :max="ui.howManyDrinks.max" v-model="answers.howManyDrinks")
         .field

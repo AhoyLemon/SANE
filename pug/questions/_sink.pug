@@ -6,7 +6,7 @@
     dt 
       .title Why did you let it get like this?
     dd
-      form(@submit.prevent="answerQuestion('sink')")
+      form(@submit.prevent="answerQuestion('sink', 'Why did you let it get like this?', answers.sink)")
         .field
           textarea(v-model="answers.sink" :minlength="ui.sink.min" :maxlength="ui.sink.max" placeholder="Explain your reasoning in this area.")
         .button-row.split

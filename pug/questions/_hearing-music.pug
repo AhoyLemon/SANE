@@ -3,7 +3,7 @@
     dt
       .title Are you hearing that music?
     dd
-      form(@submit.prevent="answerQuestion('hearingMusic')")
+      form(@submit.prevent="answerQuestion('hearingMusic', 'Are you hearing that music?', answers.hearingMusic)")
         ul.options.simple-options(count="2")
           li(v-for="option in questions.hearingMusic.options" :span="option.span")
             label(:class="{'active': option.text == answers.hearingMusic, 'inactive': (answers.hearingMusic && option.text != answers.hearingMusic)}")
@@ -16,7 +16,7 @@
     dt
       .title Must have just been your imagination.
     dd
-      form(@submit.prevent="answerQuestion('hearingMusicFollowUp')")
+      form(@submit.prevent="answerQuestion('hearingMusicFollowUp', 'Must have just been your imagination.', answers.hearingMusicFollowUp)")
         ul.options.simple-options(count="2")
           li(v-for="option in questions.hearingMusic.followUp.no.options" :span="option.span")
             label(:class="{'active': option.text == answers.hearingMusicFollowUp, 'inactive': (answers.hearingMusicFollowUp && option.text != answers.hearingMusicFollowUp)}")
@@ -30,7 +30,7 @@
       .title(v-if="answers.hearingMusic == 'Yes, I hear music.'") What does it sound like?
       .title(v-if="answers.hearingMusic == 'I did, but not anymore.'") What did it sound like?
     dd
-      form(@submit.prevent="answerQuestion('hearingMusicFollowUp')")
+      form(@submit.prevent="answerQuestion('hearingMusicFollowUp', 'What did/does it sound like?', answers.hearingMusicFollowUp)")
         ul.options.simple-options(count="2")
           li(v-for="option in questions.hearingMusic.followUp.yes.options" :span="option.span")
             label(:class="{'active': option.text == answers.hearingMusicFollowUp, 'inactive': (answers.hearingMusicFollowUp && option.text != answers.hearingMusicFollowUp)}")

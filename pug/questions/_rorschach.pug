@@ -3,7 +3,7 @@
     dt 
       .title Which of these images reminds you of your mother?
     dd
-      form(@submit.prevent="answerQuestion('rorschach')")
+      form(@submit.prevent="answerQuestion('rorschach', 'Mother looks like...', answers.rorschach)")
         ul.options.wider(:count="questions.rorschach.options.length")
           li(v-for="option,key in questions.rorschach.options")
             label(:class="{'active': answers.rorschach == option.text, 'inactive': answers.rorschach && answers.rorschach != option.text }")

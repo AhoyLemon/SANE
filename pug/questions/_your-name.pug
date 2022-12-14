@@ -3,7 +3,7 @@
     dt 
       .title What is your true name?
     dd
-      form(@submit.prevent="answerQuestion('yourName')")
+      form(@submit.prevent="answerQuestion('yourName', 'Your Name?', answers.yourName)")
         .field
           input(type="text" v-model="answers.yourName" placeholder="Enter what you should be called." :minlength="ui.yourName.min" :maxlength="ui.yourName.max")
         .button-row.split

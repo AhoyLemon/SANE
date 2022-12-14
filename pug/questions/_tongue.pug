@@ -3,7 +3,7 @@
     dt 
       .title What does your tongue taste like?
     dd
-      form(@submit.prevent="answerQuestion('tongue')")
+      form(@submit.prevent="answerQuestion('tongue', 'What does your tongue taste like?', answers.tongue)")
         ul.options.simple-options(count="2")
           li(v-for="option in questions.tongue.options" @mouseover="saneHover(true)" @mouseleave="saneHover(false)")
             label(:class="{'active': option.text == answers.tongue, 'inactive': (answers.tongue && option.text != answers.tongue)}" )

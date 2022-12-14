@@ -348,8 +348,9 @@ var app = new Vue({
 
     },
 
-    answerQuestion(q) {
+    answerQuestion(q, theQuestion, theAnswer) {
       const self = this;
+      
       
       if (q == "yourName") {
         self.answers.yourName = self.answers.yourName.slice(0, -1)
@@ -442,6 +443,10 @@ var app = new Vue({
           
         }
       }
+
+      if (theQuestion && theAnswer) {
+        sendEvent("Question Answered", theQuestion, theAnswer);
+      }
       
     },
 
@@ -449,7 +454,7 @@ var app = new Vue({
       const self = this;
       const sanityBarrier = 50;
 
-      if (!self.ui.diagnosis.sanityScore) {
+      if (!self.ui.diagnosis.sanityScore || self.ui.diagnosis.sanityScore < 1) {
         self.ui.diagnosis.sanityScore = Math.floor(Math.random() * 99) + 1;
       } else if (self.ui.diagnosis.sanityScore <= 50) {
         self.ui.diagnosis.sanityScore = Math.floor(Math.random() * 49) + 50;
@@ -468,16 +473,18 @@ var app = new Vue({
         self.current.diagnosis = "SANE";
       }
 
-      let url = new URL(window.location);
-      url.searchParams.set('diagnosis', self.current.diagnosis);
-      window.history.pushState({question: self.current.question}, '', url);
-      
       if (self.current.diagnosis == "INSANE") {
         insaneSound.play();
       }
       if (self.current.diagnosis == "SANE") {
         saneSound.play();
       }
+
+      let url = new URL(window.location);
+      url.searchParams.set('diagnosis', self.current.diagnosis);
+      window.history.pushState({question: self.current.question}, '', url);
+      sendEvent("Diagnosis", self.current.diagnosis);
+      
     },
     
 

@@ -3,7 +3,7 @@
     dt 
       .title Why are you testing your sanity?
     dd
-      form(@submit.prevent="answerQuestion('whyTest')")
+      form(@submit.prevent="answerQuestion('whyTest', 'Why Test?', answers.whyTest)")
         ul.options.simple-options(count="2")
           li(v-for="option,key in questions.whyTest.options")
             label(:class="{'active': answers.whyTest == option.text, 'inactive': answers.whyTest && answers.whyTest != option.text }")

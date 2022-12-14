@@ -355,6 +355,7 @@ var app = new Vue({
       if (q == "yourName") {
         self.answers.yourName = self.answers.yourName.slice(0, -1)
         self.ui.aside.showNametag = true;
+        _paq.push(['setCustomVariable', 1, "patientName", self.answers.yourName, "visit"]);
       } else if (q == "favoriteColor") {
         self.ui.aside.nametagBackground = self.ui.favoriteColor.opposite;
         self.ui.aside.showNametag = true;
@@ -376,6 +377,7 @@ var app = new Vue({
         } else {
           self.ui.yourPrediction.diagnosis = "uncertain";
         }
+        _paq.push(['setCustomVariable', 1, "prediction", self.ui.yourPrediction.diagnosis, "visit"]);
         self.ui.yourPrediction.phase = 2;
       } else if (q == "hats") {
         
@@ -472,6 +474,7 @@ var app = new Vue({
       } else {
         self.current.diagnosis = "SANE";
       }
+      _paq.push(['setCustomVariable', 1, "diagnosis", self.current.diagnosis, "visit"]);
 
       if (self.current.diagnosis == "INSANE") {
         insaneSound.play();

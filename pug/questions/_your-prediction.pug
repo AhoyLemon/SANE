@@ -18,7 +18,7 @@
     dt(v-if="ui.yourPrediction.diagnosis == 'sane'")
       .title {{questions.yourPrediction.followUp.sane.title}}
     dd(v-if="ui.yourPrediction.diagnosis == 'sane'")
-      form(@submit.prevent="answerQuestion('yourPredictionFollowUp', questions.yourPrediction.followUp.sane.title, answers.yourPrediction)")
+      form(@submit.prevent="answerQuestion('yourPredictionFollowUp', questions.yourPrediction.followUp.sane.title, answers.yourPredictionFollowUp)")
         ul.options.simple-options(count="2")
           li(v-for="option,key in questions.yourPrediction.followUp.sane.options")
             label(:class="{'active': answers.yourPredictionFollowUp == option.text, 'inactive': answers.yourPredictionFollowUp && answers.yourPredictionFollowUp != option.text }")
@@ -32,7 +32,7 @@
     dt(v-if="ui.yourPrediction.diagnosis == 'insane'")
       .title {{questions.yourPrediction.followUp.insane.title}}
     dd(v-if="ui.yourPrediction.diagnosis == 'insane'")
-      form(@submit.prevent="answerQuestion('yourPredictionFollowUp', questions.yourPrediction.followUp.insane.title, answers.yourPrediction)")
+      form(@submit.prevent="answerQuestion('yourPredictionFollowUp', questions.yourPrediction.followUp.insane.title, answers.yourPredictionFollowUp)")
         ul.options.simple-options(count="2")
           li(v-for="option,key in questions.yourPrediction.followUp.insane.options")
             label(:class="{'active': answers.yourPredictionFollowUp == option.text, 'inactive': answers.yourPredictionFollowUp && answers.yourPredictionFollowUp != option.text }")
@@ -46,7 +46,7 @@
     dt(v-if="ui.yourPrediction.diagnosis == 'uncertain'")
       .title {{questions.yourPrediction.followUp.uncertain.title}}
     dd(v-if="ui.yourPrediction.diagnosis == 'uncertain'")
-      form(@submit.prevent="answerQuestion('yourPredictionFollowUp', questions.yourPrediction.followUp.uncertain.title, answers.yourPrediction)")
+      form(@submit.prevent="answerQuestion('yourPredictionFollowUp', questions.yourPrediction.followUp.uncertain.title, answers.yourPredictionFollowUp)")
 
         ul.options.likert(:count="questions.yourPrediction.followUp.uncertain.options.length")
           li(v-for="option,key in questions.yourPrediction.followUp.uncertain.options")

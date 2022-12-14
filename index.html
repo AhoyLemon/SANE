@@ -7,7 +7,7 @@
     <link href="css/site.css" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="An Online Gaslighting Simulator">
-    <meta http-equiv="last-modified" content="2022-12-14T18:14:26.399Z">
+    <meta http-equiv="last-modified" content="2022-12-14T18:34:08.166Z">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Caudex&amp;family=Zen+Dots&amp;display=swap" rel="stylesheet">
@@ -116,7 +116,7 @@
                     <div class="title">{{questions.yourPrediction.followUp.sane.title}}</div>
                   </dt>
                   <dd v-if="ui.yourPrediction.diagnosis == 'sane'">
-                    <form @submit.prevent="answerQuestion('yourPredictionFollowUp', questions.yourPrediction.followUp.sane.title, answers.yourPrediction)">
+                    <form @submit.prevent="answerQuestion('yourPredictionFollowUp', questions.yourPrediction.followUp.sane.title, answers.yourPredictionFollowUp)">
                       <ul class="options simple-options" count="2">
                         <li v-for="option,key in questions.yourPrediction.followUp.sane.options">
                           <label :class="{'active': answers.yourPredictionFollowUp == option.text, 'inactive': answers.yourPredictionFollowUp &amp;&amp; answers.yourPredictionFollowUp != option.text }">
@@ -135,7 +135,7 @@
                     <div class="title">{{questions.yourPrediction.followUp.insane.title}}</div>
                   </dt>
                   <dd v-if="ui.yourPrediction.diagnosis == 'insane'">
-                    <form @submit.prevent="answerQuestion('yourPredictionFollowUp', questions.yourPrediction.followUp.insane.title, answers.yourPrediction)">
+                    <form @submit.prevent="answerQuestion('yourPredictionFollowUp', questions.yourPrediction.followUp.insane.title, answers.yourPredictionFollowUp)">
                       <ul class="options simple-options" count="2">
                         <li v-for="option,key in questions.yourPrediction.followUp.insane.options">
                           <label :class="{'active': answers.yourPredictionFollowUp == option.text, 'inactive': answers.yourPredictionFollowUp &amp;&amp; answers.yourPredictionFollowUp != option.text }">
@@ -154,7 +154,7 @@
                     <div class="title">{{questions.yourPrediction.followUp.uncertain.title}}</div>
                   </dt>
                   <dd v-if="ui.yourPrediction.diagnosis == 'uncertain'">
-                    <form @submit.prevent="answerQuestion('yourPredictionFollowUp', questions.yourPrediction.followUp.uncertain.title, answers.yourPrediction)">
+                    <form @submit.prevent="answerQuestion('yourPredictionFollowUp', questions.yourPrediction.followUp.uncertain.title, answers.yourPredictionFollowUp)">
                       <ul class="options likert" :count="questions.yourPrediction.followUp.uncertain.options.length">
                         <li v-for="option,key in questions.yourPrediction.followUp.uncertain.options">
                           <label :class="{'active': answers.yourPredictionFollowUp == option.text, 'inactive': answers.yourPredictionFollowUp &amp;&amp; answers.yourPredictionFollowUp != option.text }">
@@ -950,7 +950,7 @@
       <script src="js/libraries/howler.min.js"></script>
       <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.8.4/Sortable.min.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/Vue.Draggable/2.20.0/vuedraggable.umd.min.js"></script>
-      <script src="js/min/site.min.js?updated2022-12-14T18:14:26.399Z"></script>
+      <script src="js/min/site.min.js?updated2022-12-14T18:34:08.166Z"></script>
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css">
       <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.7.0/build/highlight.min.js"></script>
       <script>

@@ -207,7 +207,7 @@ const questions = {
           { text: "Cheerful" },
           { text: "Ominous" },
           { text: "Threatening" },
-          { text: "Plesant" },
+          { text: "Pleasant" },
         ]
       }
     }

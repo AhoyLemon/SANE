@@ -6,8 +6,8 @@ var app = new Vue({
     stickerURL: "https://ahoylemon.square.site/product/sane-sticker/6",
 
     current: {
-      interface: "intro",
-      question: 0,
+      interface: "questions",
+      question: 20,
       diagnosis: null
     },
 
@@ -456,6 +456,7 @@ var app = new Vue({
       const self = this;
       const sanityBarrier = 50;
 
+      // Randomly generate a sanity score....
       if (!self.ui.diagnosis.sanityScore || self.ui.diagnosis.sanityScore < 1) {
         self.ui.diagnosis.sanityScore = Math.floor(Math.random() * 99) + 1;
       } else if (self.ui.diagnosis.sanityScore <= 50) {
@@ -465,17 +466,22 @@ var app = new Vue({
       }
 
       if (self.ui.diagnosis.sanityScore == 50 || self.ui.diagnosis.sanityScore == 0) {
+        // 50 and 0 are not acceptable numbers, try again.
         self.determineSanity();
       }
 
+      // Determine sanity from the sanity score.
       self.ui.diagnosis.showHow = false;
       if (self.ui.diagnosis.sanityScore < sanityBarrier) {
         self.current.diagnosis = "INSANE";
       } else {
         self.current.diagnosis = "SANE";
       }
-      _paq.push(['setCustomVariable', 3, "diagnosis", self.current.diagnosis, "visit"]);
 
+      // Scroll to diagnosis
+      document.getElementById('DiagnosisMain').scrollIntoView({behavior: "smooth"});
+
+      // Play the appropriate sound.
       if (self.current.diagnosis == "INSANE") {
         insaneSound.play();
       }
@@ -483,10 +489,14 @@ var app = new Vue({
         saneSound.play();
       }
 
+      // Change the URL
       let url = new URL(window.location);
       url.searchParams.set('diagnosis', self.current.diagnosis);
       window.history.pushState({question: self.current.question}, '', url);
+
+      // Send diagnosis to Matomo
       sendEvent("Diagnosis", self.current.diagnosis);
+      _paq.push(['setCustomVariable', 3, "diagnosis", self.current.diagnosis, "visit"]);
       
     },
     

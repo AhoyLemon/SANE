@@ -14,10 +14,11 @@ header.diagnosis-header
   .button-holder
     a.button(:href="stickerURL" v-if="current.diagnosis == 'SANE'") Get A Sticker
 
-main
+main#DiagnosisMain
   .inner
 
     section.diagnosis
+      a(name="Diagnosis")
       dl.diagnosis
         dt Your diagnosis:
 
@@ -40,12 +41,6 @@ main
           .button-holder(v-if="!ui.diagnosis.showHow")
             button(type="button" @click="showHow()") How was this determined?
             a.button(:href="stickerURL" v-if="current.diagnosis == 'SANE'") Get A Sticker
-
-        //- dd
-        //-   .button-holder(style="position:fixed; bottom:0; right:0;")
-        //-     button(type="button" @click="current.diagnosis = 'calculating', ui.diagnosis.sanityScore = -1") void
-        //-     button(type="button" @click="determineSanity()") Calculate
-
 
     section.how(v-if="ui.diagnosis.showHow")
       dl
@@ -72,3 +67,10 @@ main
           p
             button.button(type="button" @click="determineSanity()") Recalculate Sanity
             a.button(:href="stickerURL" v-if="current.diagnosis == 'SANE'") Get A Sticker
+
+footer.by-lemon(v-if="current.diagnosis && current.diagnosis != 'calculating'")
+  a.lemonlink(href="https://ahoylemon.xyz")
+    .content
+      h3 This exam is 
+        span by Lemon.
+      img(src="/svg/lemon.svg" alt="Lemon")

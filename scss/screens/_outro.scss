@@ -1,5 +1,4 @@
-.outro { min-height: 100vh; background:white; color:black; min-height:100vh; 
-  @media (min-width:721px) { display:flex; align-items:center; justify-content:center; padding:4rem; padding-top:8rem; }
+.outro { background:$white;
   header.diagnosis-header { background:$black; padding:$gap; display:grid; gap:$gap; color:$white;
     
     .diagnosis-text, 
@@ -20,8 +19,9 @@
     }
   }
 
-  main { padding:$gap; }
-
+  main { padding:$gap; min-height: 100vh; color:$black;
+    @media (min-width:721px) { display:flex; align-items:center; justify-content:center; padding:4rem; padding-top:8rem; }
+  }
 
   dl { font-size:1.25rem;
     dt { text-transform: uppercase; font-weight: $semibold; letter-spacing: 0.1em; font-size:110%; }
@@ -111,28 +111,19 @@ $halfDot: ($dotSize / 2);
 }
 
 
-// @keyframes firstDot {
-//   0%   { transform: scale(0.5); opacity: 0.5; }
-//   25%  { transform: scale(1); opacity: 1; }
-//   75%  { transform: scale(1); opacity: 1; }
-//   100% { transform: scale(0.5); opacity: 0.5; }
-// }
-
-
-
-
-
-
-
-
-
-// .calculating {
-//   .mine { 
-//     .dot { display: inline-block; width:$dotSize; height: $dotSize; margin-right: $halfDot; background:red; border-radius: 50%;
-//       &.one { animation:firstDot 3s ease; animation-iteration-count: infinite; }
-//       &.two { animation:firstDot 3s ease; animation-iteration-count: infinite; animation-delay: 1.5s; }
-//       &.three { animation:firstDot 3s ease; animation-iteration-count: infinite; animation-delay: 3s; }
-//     }
-
-//   }
-// }
+footer.by-lemon { background:$lemonYellow; color:$lemonBlack; padding:($gap * 4) ($gap * 2);
+  
+  .content { display:grid; grid-template-columns: 1fr 37vw;
+    h3 { font-family: $sans-serif; font-weight: $ultrabold; text-align: right; font-size: 4.25vw;
+      transform: translate(17%,17%);
+    }
+  }
+  .lemonlink { color:currentColor; text-decoration: none; 
+    &:hover, &:focus {
+      h3 span { color: $lemonOrange; text-decoration: underline; }
+    }
+  }
+  .issue-prompt { text-align: center; font-size:1.25rem;
+    
+  }
+}

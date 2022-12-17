@@ -7,7 +7,7 @@
     <link href="css/site.css" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="An Online Gaslighting Simulator">
-    <meta http-equiv="last-modified" content="2022-12-14T18:34:08.166Z">
+    <meta http-equiv="last-modified" content="2022-12-17T16:43:41.819Z">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Caudex&amp;family=Zen+Dots&amp;display=swap" rel="stylesheet">
@@ -888,9 +888,9 @@
           </div>
           <div class="button-holder"><a class="button" :href="stickerURL" v-if="current.diagnosis == 'SANE'">Get A Sticker</a></div>
         </header>
-        <main>
+        <main id="DiagnosisMain">
           <div class="inner">
-            <section class="diagnosis">
+            <section class="diagnosis"><a name="Diagnosis"></a>
               <dl class="diagnosis">
                 <dt>Your diagnosis:</dt>
                 <dd v-if="current.diagnosis =='calculating'">
@@ -942,6 +942,10 @@
             </section>
           </div>
         </main>
+        <footer class="by-lemon" v-if="current.diagnosis &amp;&amp; current.diagnosis != 'calculating'"><a class="lemonlink" href="https://ahoylemon.xyz">
+            <div class="content">
+              <h3>This exam is <span>by Lemon.</span></h3><img src="/svg/lemon.svg" alt="Lemon">
+            </div></a></footer>
       </div>
     </div>
     <div class="javascripts">
@@ -950,7 +954,7 @@
       <script src="js/libraries/howler.min.js"></script>
       <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.8.4/Sortable.min.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/Vue.Draggable/2.20.0/vuedraggable.umd.min.js"></script>
-      <script src="js/min/site.min.js?updated2022-12-14T18:34:08.166Z"></script>
+      <script src="js/min/site.min.js?updated2022-12-17T16:43:41.819Z"></script>
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css">
       <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.7.0/build/highlight.min.js"></script>
       <script>

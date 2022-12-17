@@ -6,8 +6,8 @@ var app = new Vue({
     stickerURL: "https://ahoylemon.square.site/product/sane-sticker/6",
 
     current: {
-      interface: "questions",
-      question: 20,
+      interface: "intro",
+      question: 0,
       diagnosis: null
     },
 

@@ -7,11 +7,11 @@
     <link href="css/sane.css" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="An Online Gaslighting Simulator">
-    <meta http-equiv="last-modified" content="2022-12-22T20:53:26.617Z">
+    <meta http-equiv="last-modified" content="2022-12-22T22:17:51.874Z">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Caudex&amp;family=Zen+Dots&amp;display=swap" rel="stylesheet">
     <link href="	https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Zen+Dots&amp;display=swap" rel="stylesheet">
     <link rel="apple-touch-icon" sizes="180x180" href="https://sane.science/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="https://sane.science/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="https://sane.science/favicon-16x16.png">
@@ -37,7 +37,6 @@
   </head>
   <body>
     <div id="app" v-cloak>
-      <div class="testing"><span>TEST MODE IS ACTIVE</span></div>
       <aside>
         <ul class="notices">
           <li class="notice" v-if="ui.aside.showNametag" :style="{ 'background-color': ui.aside.nametagBackground }">
@@ -949,12 +948,12 @@
       </div>
     </div>
     <div class="javascripts">
-      <script src="js/libraries/vue.full.js"></script>
-      <script>const testing = true;</script>
+      <script src="js/libraries/vue.min.js"></script>
+      <script>const testing = false;</script>
       <script src="js/libraries/howler.min.js"></script>
       <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.8.4/Sortable.min.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/Vue.Draggable/2.20.0/vuedraggable.umd.min.js"></script>
-      <script src="js/min/site.min.js?updated2022-12-22T20:53:26.617Z"></script>
+      <script src="js/min/site.min.js?updated2022-12-22T22:17:51.874Z"></script>
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css">
       <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.7.0/build/highlight.min.js"></script>
       <script>

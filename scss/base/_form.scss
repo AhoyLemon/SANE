@@ -2,7 +2,7 @@ form { display:grid; gap:$gap;
   button { cursor: pointer; }
 
   // Radio Holder (mainly)
-  label { cursor: pointer; opacity: 50%; position: relative; display: flex; justify-content: center; font-family: $serif; font-family: $sans-serif; align-items: center;
+  label { cursor: pointer; opacity: 50%; position: relative; display: flex; justify-content: center; font-family: $sans-serif; font-family: $sans-serif; align-items: center;
     input { max-width: 100%; }
     input[type="radio"] { position: absolute; top:5px; left:5px; transform:scale(1.5); transform-origin: top left; }
     input[type="checkbox"] { position: absolute; top:5px; left:5px; transform:scale(1.5); transform-origin: top left; }

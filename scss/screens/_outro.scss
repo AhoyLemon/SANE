@@ -51,7 +51,6 @@
 
   
   .sticker { background: red; color:white; text-shadow: 0.02em 0.02em 0.02em black, -1px -1px 1px black; display: inline-block; padding:0 0.25em; line-height: 100%; font-weight: 900; }
-  // code { font-size: 2.25em;}
 
   section.diagnosis {
     .sticker { font-size:clamp(4rem, 18vw, 220px); }
@@ -66,9 +65,6 @@
   }
 
 }
-
-$dotSize: 100px;
-$halfDot: ($dotSize / 2);
 
 @keyframes slide {
   0% { transform: scale(1); }

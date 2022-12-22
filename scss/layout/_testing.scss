@@ -1,0 +1,1 @@
+.testing { @include position(fixed, 0, 0); z-index: 999; background:red; padding:1.5rem; width:100%; max-width: calc(100% - 280px); color:$white; }

@@ -1,0 +1,49 @@
+// COLORS //////////////////////////////////////////////////////////////////////////////////
+$white: #eee;
+$black: #212121;
+$blue: #4885ed;
+$red: #ee2a2a;
+$green: #17680f;
+$yellow:#e9eab9;
+$teal: #4e7f71;
+$copy: #eee;
+$green: rgb(64, 197, 34);
+$error: rgb(221, 85, 85);
+$activeLabelBG: rgba(14, 11, 106, 1);
+$lemonYellow: #e4e72c;
+$lemonBlack: #121212;
+$lemonOrange: #c85c0d;
+
+
+  // COLOR UTILITIES
+  $body: $white;
+  $copy: $black;
+  $link: $blue;
+  $accent: $teal;
+  $focus: $yellow;
+  $valid: $green;
+
+  // BRAND COLORS /////////////////////////////////////////////////////////////////////////
+  $color-twitter: #55acee;
+  $color-github: #181616;
+  $color-facebook: #3B5998;
+
+// FONTS /////////////////////////////////////////////////////////////////////
+$display-font:  'Zen Dots', serif;
+$sans-serif: 'Space Grotesk', sans-serif;
+$font-family: $sans-serif;
+$headline:$display-font;
+
+
+// FONT WEIGHTS
+$light: 300;
+$medium: 400;
+$semibold:525;
+$bold: 625;
+$ultrabold: 700;
+
+
+// MEASUREMENTS //////////////////////////////////////////////////////////////////////
+$mobile-max: 767px;
+$desktop-min: 768px;
+$gap:20px;

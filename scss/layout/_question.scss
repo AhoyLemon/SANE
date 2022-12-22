@@ -1,5 +1,5 @@
 .question { 
-  dt { font-family: $headline; font-size:clamp(1.5rem,6vw, 3rem); text-align: center; line-height: 112%; margin-bottom: 1em;
+  dt { font-family: $headline; color:$white; font-size:clamp(1.5rem,6vw, 3rem); text-align: center; line-height: 112%; margin-bottom: 1em;
     text-shadow:  1px 1px 1px #616161,
                   1px 2px 1px #717171,
                   1px 3px 1px #616161,
@@ -28,5 +28,6 @@
       }
     }
   }
+  dd { color:$white; }
 }
 figure { margin-bottom: 2rem; }

@@ -16,7 +16,7 @@
   "icons": [
     {
       "src": "/favicon_maskable-1200x1200.png?v=2024",
-      "sizes": "600x600",
+      "sizes": "1200x1200",
       "type": "image/png",
       "purpose": "maskable"
     },
@@ -43,6 +43,18 @@
       "sizes": "256x256",
       "type": "image/png",
       "purpose": "monochrome"
+    },
+    {
+      "src": "/favicon-1200x1200.png?v=2024",
+      "sizes": "1200x1200",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/favicon-600x600.png?v=2024",
+      "sizes": "600x600",
+      "type": "image/png",
+      "purpose": "maskable"
     },
     {
       "src": "/android-chrome-512x512.png?v=2024",

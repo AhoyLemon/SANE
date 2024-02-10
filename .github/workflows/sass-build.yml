@@ -31,7 +31,7 @@ jobs:
       - name: 🗜️ Compile CSS from SCSS files
         uses: gha-utilities/sass-build@v0.5.1
         with:
-          source: sass/site.scss
+          source: scss/site.scss
           destination: css/site.css
       
       - name: 🫠 This job's status is ${{ job.status }}.
